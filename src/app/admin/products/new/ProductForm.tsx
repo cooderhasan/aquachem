@@ -10,27 +10,41 @@ interface Category {
     title: string;
 }
 
-interface ProductFormProps {
-    categories: Category[];
+interface Product {
+    id: number;
+    title: string;
+    categoryId: number;
+    description: string | null;
+    usage: string | null;
+    slug: string;
+    image: string | null;
 }
 
-export default function ProductForm({ categories }: ProductFormProps) {
+interface ProductFormProps {
+    categories: Category[];
+    product?: Product;
+}
+
+export default function ProductForm({ categories, product }: ProductFormProps) {
     const [loading, setLoading] = useState(false);
-
-    // We can use the server action directly in the form action, 
-    // but for specific UI loading states we might wrap it.
-    // However, simplest way with current Next.js is using `action` prop or handleSubmit.
-
-    // For this example let's stick to standard form submission to server action
-    // but we want to show loading state.
-
-    // Note: To properly show loading with Server Actions + useFormStatus is better, 
-    // but here we can just use a wrapper.
+    const isEditing = !!product;
 
     async function clientAction(formData: FormData) {
         setLoading(true);
-        await createProduct(formData);
-        // Redirect happens on server, so client state update might be moot if redirect works fast.
+        if (isEditing && product) {
+            // Append ID for update
+            formData.append('id', product.id.toString());
+            // We need to import updateProduct. Since it's a server action, 
+            // we should probably pass it as a prop or import it.
+            // For now, let's assume we import it or handle it here.
+            // Ideally, we'd have separate logic, but let's dynamically import or use a conditional.
+            // Since we can't easily dynamically swap actions in the form attribute without client JS,
+            // we'll handle the call ourselves.
+            const { updateProduct } = await import('../actions');
+            await updateProduct(formData);
+        } else {
+            await createProduct(formData);
+        }
     }
 
     return (
@@ -40,7 +54,9 @@ export default function ProductForm({ categories }: ProductFormProps) {
                     <ArrowLeft size={18} />
                     Ürünlere Dön
                 </Link>
-                <h1 className="text-2xl font-bold text-slate-800">Yeni Ürün Ekle</h1>
+                <h1 className="text-2xl font-bold text-slate-800">
+                    {isEditing ? 'Ürünü Düzenle' : 'Yeni Ürün Ekle'}
+                </h1>
             </div>
 
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
@@ -53,6 +69,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
                                 name="title"
                                 type="text"
                                 required
+                                defaultValue={product?.title}
                                 className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                             />
                         </div>
@@ -60,6 +77,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
                             <label className="block text-sm font-medium text-slate-700 mb-2">Kategori</label>
                             <select
                                 name="categoryId"
+                                defaultValue={product?.categoryId}
                                 className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none bg-white"
                             >
                                 {categories.map((cat) => (
@@ -74,6 +92,9 @@ export default function ProductForm({ categories }: ProductFormProps) {
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">Ürün Görseli</label>
                         <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 hover:bg-slate-50 transition-colors cursor-pointer text-center">
+                            {product?.image && (
+                                <img src={product.image} alt="Current" className="mx-auto h-32 object-cover mb-4 rounded-lg" />
+                            )}
                             <Upload className="mx-auto text-slate-400 mb-2" size={32} />
                             <p className="text-slate-500 text-sm">Görsel seçmek için tıklayın veya sürükleyin</p>
                             <input type="file" className="hidden" accept="image/*" />
@@ -84,6 +105,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
                         <label className="block text-sm font-medium text-slate-700 mb-2">Ürün Açıklaması</label>
                         <textarea
                             name="description"
+                            defaultValue={product?.description || ''}
                             className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none h-32"
                             placeholder="Ürün özelliklerini buraya yazın..."
                         />
@@ -93,6 +115,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
                         <label className="block text-sm font-medium text-slate-700 mb-2">Kullanım Alanları</label>
                         <textarea
                             name="usage"
+                            defaultValue={product?.usage || ''}
                             className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none h-24"
                             placeholder="Örn: Otomotiv, Tekstil, Gıda sanayi..."
                         />
@@ -105,7 +128,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
                             className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg font-medium flex items-center gap-2 disabled:opacity-70"
                         >
                             {loading && <Loader2 size={18} className="animate-spin" />}
-                            {loading ? 'Kaydediliyor...' : 'Ürünü Kaydet'}
+                            {loading ? 'Kaydediliyor...' : (isEditing ? 'Güncelle' : 'Ürünü Kaydet')}
                         </button>
                     </div>
 

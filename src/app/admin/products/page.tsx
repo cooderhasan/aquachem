@@ -77,9 +77,9 @@ export default async function ProductsPage() {
                                     </td>
                                     <td className="p-4 text-right">
                                         <div className="flex justify-end gap-2">
-                                            <button className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                            <Link href={`/admin/products/${product.id}`} className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
                                                 <Pencil size={18} />
-                                            </button>
+                                            </Link>
                                             <button className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
                                                 <Trash2 size={18} />
                                             </button>

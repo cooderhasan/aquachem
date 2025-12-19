@@ -95,3 +95,41 @@ export async function getProducts() {
         });
     }
 }
+
+export async function getProduct(id: number) {
+    try {
+        const result = await db.select().from(products).where(eq(products.id, id)).limit(1);
+        return result[0];
+    } catch (error) {
+        console.error('Database connection failed, using mock product:', error);
+        return mockProducts.find(p => p.id === id);
+    }
+}
+
+export async function updateProduct(formData: FormData) {
+    try {
+        const id = parseInt(formData.get('id') as string);
+        const title = formData.get('title') as string;
+        const categoryId = parseInt(formData.get('categoryId') as string);
+        const description = formData.get('description') as string;
+        const usage = formData.get('usage') as string;
+        const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+
+        await db.update(products)
+            .set({
+                title,
+                slug,
+                categoryId,
+                description,
+                usage,
+            })
+            .where(eq(products.id, id));
+
+        revalidatePath('/admin/products');
+        revalidatePath('/products');
+        redirect('/admin/products');
+    } catch (error) {
+        console.error('Failed to update product:', error);
+        throw error;
+    }
+}
