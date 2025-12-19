@@ -1,4 +1,4 @@
-```
+
 import React from 'react';
 import { getSettings } from '@/app/admin/settings/actions';
 import { Building2, Target, Eye, Users, CheckCircle2 } from 'lucide-react';
@@ -14,10 +14,10 @@ export default async function CorporatePage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/90 to-transparent z-10" />
                 <div className="absolute inset-0">
                     <Image
-                         src="/images/corporate-hero.jpg" // You might want to make this dynamic too later
-                         alt="Corporate Hero"
-                         fill
-                         className="object-cover opacity-50"
+                        src="/images/corporate-hero.jpg" // You might want to make this dynamic too later
+                        alt="Corporate Hero"
+                        fill
+                        className="object-cover opacity-50"
                     />
                 </div>
                 <div className="container mx-auto px-4 relative z-20">
@@ -45,7 +45,7 @@ export default async function CorporatePage() {
                             </p>
                         </div>
                         <div className="flex-1 relative">
-                             <div className="relative h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl">
+                            <div className="relative h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl">
                                 <Image
                                     src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80"
                                     alt="About Us"
@@ -88,8 +88,8 @@ export default async function CorporatePage() {
                 </div>
             </div>
 
-             {/* Human Policy */}
-             <div className="py-20">
+            {/* Human Policy */}
+            <div className="py-20">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto text-center">
                         <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center mx-auto mb-6">
@@ -97,7 +97,7 @@ export default async function CorporatePage() {
                         </div>
                         <h2 className="text-3xl font-bold text-slate-900 mb-6">İnsan Kaynakları Politikamız</h2>
                         <p className="text-lg text-slate-600 leading-relaxed whitespace-pre-wrap">
-                             {settings?.humanPolicy || 'İnsan kaynakları politikası henüz eklenmedi.'}
+                            {settings?.humanPolicy || 'İnsan kaynakları politikası henüz eklenmedi.'}
                         </p>
                     </div>
                 </div>
@@ -105,4 +105,4 @@ export default async function CorporatePage() {
         </div>
     );
 }
-```
+
