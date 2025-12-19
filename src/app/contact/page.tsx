@@ -1,4 +1,4 @@
-```
+
 import React from 'react';
 import { getContactLocations } from '@/app/admin/contact/actions';
 import { Mail, Phone, MapPin, MessageSquare, Send } from 'lucide-react';
@@ -38,7 +38,7 @@ export default async function ContactPage() {
                                         {loc.phone && (
                                             <div className="flex items-center gap-3">
                                                 <Phone className="text-primary-500 shrink-0" size={20} />
-                                                <a href={`tel:${ loc.phone } `} className="hover:text-primary-600 transition-colors">
+                                                <a href={'tel:' + loc.phone.replace(/\s/g, '')} className="hover:text-primary-600 transition-colors">
                                                     {loc.phone}
                                                 </a>
                                             </div>
@@ -46,7 +46,7 @@ export default async function ContactPage() {
                                         {loc.email && (
                                             <div className="flex items-center gap-3">
                                                 <Mail className="text-primary-500 shrink-0" size={20} />
-                                                <a href={`mailto:${ loc.email } `} className="hover:text-primary-600 transition-colors">
+                                                <a href={'mailto:' + loc.email} className="hover:text-primary-600 transition-colors">
                                                     {loc.email}
                                                 </a>
                                             </div>
@@ -63,8 +63,8 @@ export default async function ContactPage() {
 
                     {/* Map & Form */}
                     <div className="lg:col-span-2 space-y-8">
-                         {/* Map */}
-                         <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 h-[400px] overflow-hidden">
+                        {/* Map */}
+                        <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 h-[400px] overflow-hidden">
                             {primaryMap ? (
                                 <div dangerouslySetInnerHTML={{ __html: primaryMap }} className="w-full h-full [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:rounded-lg" />
                             ) : (
@@ -114,4 +114,4 @@ export default async function ContactPage() {
         </div>
     );
 }
-```
+

@@ -1,10 +1,7 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 import ConditionalLayout from '@/components/layout/ConditionalLayout';
 import { getSettings } from '@/app/admin/settings/actions';
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: 'Aquachems - İnsana ve Doğaya Saygılı Üretim',
@@ -20,7 +17,7 @@ export default async function RootLayout({
 
   return (
     <html lang="tr">
-      <body className={inter.className}>
+      <body className="font-sans antialiased text-slate-600">
         <ConditionalLayout settings={settings}>{children}</ConditionalLayout>
       </body>
     </html>
