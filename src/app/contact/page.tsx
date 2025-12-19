@@ -1,87 +1,117 @@
+```
 import React from 'react';
-import { MapPin, Phone, Mail, Building2, Factory } from 'lucide-react';
+import { getContactLocations } from '@/app/admin/contact/actions';
+import { Mail, Phone, MapPin, MessageSquare, Send } from 'lucide-react';
 
-export default function ContactPage() {
+export default async function ContactPage() {
+    const locations = await getContactLocations();
+    const primaryMap = locations.find(l => l.mapEmbedCode)?.mapEmbedCode;
+
     return (
-        <div className="bg-slate-50 min-h-screen pb-20">
-            <div className="bg-primary-900 text-white pt-48 pb-16">
-                <div className="container-custom">
-                    <h1 className="text-4xl font-bold mb-4 text-white">İletişim</h1>
-                    <p className="text-primary-200">Bize ulaşın, sorularınızı cevaplayalım.</p>
+        <div className="bg-slate-50 min-h-screen">
+            {/* Header */}
+            <div className="bg-primary-900 text-white py-20">
+                <div className="container mx-auto px-4 text-center">
+                    <h1 className="text-4xl font-bold mb-4">İletişim</h1>
+                    <p className="text-primary-200 text-lg max-w-2xl mx-auto">
+                        Sorularınız, önerileriniz veya işbirliği talepleriniz için bize ulaşın.
+                    </p>
                 </div>
             </div>
 
-            <div className="container-custom py-12">
-                {/* Adres Kartları */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-
-                    {/* İç Anadolu Bölge Müdürlüğü */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 hover:shadow-lg transition-shadow">
-                        <div className="flex items-center gap-4 mb-6">
-                            <div className="w-14 h-14 bg-primary-100 text-primary-600 rounded-xl flex items-center justify-center">
-                                <Building2 size={28} />
+            <div className="container mx-auto px-4 -mt-10 mb-20">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Locations List */}
+                    <div className="lg:col-span-1 space-y-6">
+                        {locations.length > 0 ? (
+                            locations.map(loc => (
+                                <div key={loc.id} className="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                                    <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                        <div className="w-2 h-8 bg-primary-500 rounded-full" />
+                                        {loc.title}
+                                    </h3>
+                                    <div className="space-y-4 text-slate-600">
+                                        <div className="flex items-start gap-3">
+                                            <MapPin className="text-primary-500 shrink-0 mt-1" size={20} />
+                                            <p className="text-sm">{loc.address}</p>
+                                        </div>
+                                        {loc.phone && (
+                                            <div className="flex items-center gap-3">
+                                                <Phone className="text-primary-500 shrink-0" size={20} />
+                                                <a href={`tel:${ loc.phone } `} className="hover:text-primary-600 transition-colors">
+                                                    {loc.phone}
+                                                </a>
+                                            </div>
+                                        )}
+                                        {loc.email && (
+                                            <div className="flex items-center gap-3">
+                                                <Mail className="text-primary-500 shrink-0" size={20} />
+                                                <a href={`mailto:${ loc.email } `} className="hover:text-primary-600 transition-colors">
+                                                    {loc.email}
+                                                </a>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="bg-white p-6 rounded-xl shadow-sm">
+                                <p className="text-slate-500">İletişim bilgisi bulunamadı.</p>
                             </div>
-                            <div>
-                                <h2 className="text-xl font-bold text-slate-800">İç Anadolu Bölge Müdürlüğü</h2>
-                                <span className="text-sm text-primary-500 font-medium">Satış & Pazarlama</span>
-                            </div>
-                        </div>
-                        <div className="space-y-4 text-slate-600">
-                            <div className="flex items-start gap-3">
-                                <MapPin size={20} className="text-primary-500 shrink-0 mt-1" />
-                                <p>
-                                    (Bölge Müdürlüğü adresi buraya yazılacak)
-                                    <br />Konya, Türkiye
-                                </p>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <Phone size={20} className="text-primary-500 shrink-0" />
-                                <a href="tel:05336838563" className="hover:text-primary-600 font-medium">0533 683 85 63</a>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <Mail size={20} className="text-primary-500 shrink-0" />
-                                <a href="mailto:anadolu@aquachems.com" className="hover:text-primary-600">anadolu@aquachems.com</a>
-                            </div>
-                        </div>
+                        )}
                     </div>
 
-                    {/* Fabrika Adresi */}
-                    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 hover:shadow-lg transition-shadow">
-                        <div className="flex items-center gap-4 mb-6">
-                            <div className="w-14 h-14 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center">
-                                <Factory size={28} />
-                            </div>
-                            <div>
-                                <h2 className="text-xl font-bold text-slate-800">Fabrika / Üretim Tesisi</h2>
-                                <span className="text-sm text-amber-500 font-medium">Üretim & Ar-Ge</span>
-                            </div>
+                    {/* Map & Form */}
+                    <div className="lg:col-span-2 space-y-8">
+                         {/* Map */}
+                         <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 h-[400px] overflow-hidden">
+                            {primaryMap ? (
+                                <div dangerouslySetInnerHTML={{ __html: primaryMap }} className="w-full h-full [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:rounded-lg" />
+                            ) : (
+                                <div className="w-full h-full bg-slate-100 rounded-lg flex items-center justify-center text-slate-400">
+                                    <MapPin size={48} className="opacity-20" />
+                                    <span className="ml-2">Harita bulunamadı</span>
+                                </div>
+                            )}
                         </div>
-                        <div className="space-y-4 text-slate-600">
-                            <div className="flex items-start gap-3">
-                                <MapPin size={20} className="text-amber-500 shrink-0 mt-1" />
-                                <p>
-                                    İkitelli OSB Mah. Giyim Sanatkarları 3. Ada C Blok No:57
-                                    <br />Başakşehir / İstanbul
-                                </p>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <Phone size={20} className="text-amber-500 shrink-0" />
-                                <a href="tel:02128765432" className="hover:text-amber-600 font-medium">0212 876 54 32</a>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <Mail size={20} className="text-amber-500 shrink-0" />
-                                <a href="mailto:fabrika@aquachems.com" className="hover:text-amber-600">fabrika@aquachems.com</a>
-                            </div>
+
+                        {/* Contact Form */}
+                        <div className="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
+                            <h3 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                                <MessageSquare className="text-primary-500" />
+                                İletişim Formu
+                            </h3>
+                            <form className="space-y-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Adınız Soyadınız</label>
+                                        <input type="text" className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">E-posta Adresiniz</label>
+                                        <input type="email" className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Konu</label>
+                                    <input type="text" className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Mesajınız</label>
+                                    <textarea rows={4} className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+                                </div>
+                                <div className="flex justify-end">
+                                    <button type="submit" className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 transition-colors">
+                                        <Send size={18} />
+                                        Gönder
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </div>
-
-                {/* Map Placeholder */}
-                <div className="bg-slate-200 rounded-2xl overflow-hidden h-[400px] flex items-center justify-center">
-                    <span className="text-slate-500 font-bold">Google Maps Alanı</span>
-                    {/* <iframe src="..." className="w-full h-full" ... /> */}
                 </div>
             </div>
         </div>
     );
 }
+```

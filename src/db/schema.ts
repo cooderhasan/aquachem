@@ -65,6 +65,29 @@ export const settings = pgTable('settings', {
   contactPhone: text('contact_phone'),
   address: text('address'),
   socialMedia: jsonb('social_media').default('{}'), // Store social links as JSON
+  aboutUs: text('about_us'),
+  mission: text('mission'),
+  vision: text('vision'),
+  humanPolicy: text('human_policy'),
+  aboutImage: text('about_image'),
+});
+
+export const contactLocations = pgTable('contact_locations', {
+  id: serial('id').primaryKey(),
+  title: text('title').notNull(),
+  address: text('address').notNull(),
+  phone: text('phone'),
+  email: text('email'),
+  type: text('type').default('office'), // office, factory, etc.
+  mapEmbedCode: text('map_embed_code'),
+  order: integer('order').default(0),
+});
+
+export const activityItems = pgTable('activity_items', {
+  id: serial('id').primaryKey(),
+  title: text('title').notNull(),
+  order: integer('order').default(0),
+  isActive: boolean('is_active').default(true),
 });
 
 export const heroSlides = pgTable('hero_slides', {

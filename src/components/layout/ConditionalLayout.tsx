@@ -1,22 +1,26 @@
 "use client";
 
+import React from 'react';
 import { usePathname } from 'next/navigation';
 import Header from './Header';
 import Footer from './Footer';
 
-export default function ConditionalLayout({ children }: { children: React.ReactNode }) {
-    const pathname = usePathname();
-    const isAdminRoute = pathname?.startsWith('/admin');
+interface ConditionalLayoutProps {
+    children: React.ReactNode;
+    settings?: any; // Define a proper type if possible, or use 'any' for now to match current state
+}
 
-    if (isAdminRoute) {
-        return <>{children}</>;
-    }
+const ConditionalLayout = ({ children, settings }: ConditionalLayoutProps) => {
+    const pathname = usePathname();
+    const isAuthPage = pathname?.startsWith('/admin') || pathname?.startsWith('/login');
 
     return (
-        <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-        </div>
+        <>
+            {!isAuthPage && <Header settings={settings} />}
+            {children}
+            {!isAuthPage && <Footer settings={settings} />}
+        </>
     );
-}
+};
+
+export default ConditionalLayout;

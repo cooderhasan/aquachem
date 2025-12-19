@@ -4,20 +4,20 @@ import React from 'react';
 import Link from 'next/link';
 import { CheckCircle2, FileDown, Newspaper } from 'lucide-react';
 
-const activities = [
-    "Teknik bakım kimyasalları",
-    "Temizleyici ve koruyucu ürünler",
-    "Kaplama ürünleri",
-    "Genel temizlik ve hijyen ürünleri",
-    "Cilt temizleme ürünleri",
-    "Kremler ve Hijyen yıkama ürünleri",
-    "Oda spreyi ve Şampuanlar",
-    "Dezenfektanlar",
-    "Tekstil kimyasalları",
-    "Kapalı ve açık devre su kimyasal ürünleri"
-];
+interface Activity {
+    id: number;
+    title: string;
+    isActive: boolean | null;
+}
 
-const ActivitiesSection = () => {
+interface ActivitiesSectionProps {
+    activities: Activity[];
+}
+
+const ActivitiesSection = ({ activities }: ActivitiesSectionProps) => {
+    // Filter active items if needed, or assume server returns all and we filter here
+    const activeActivities = activities.filter(a => a.isActive !== false);
+
     return (
         <section className="py-20 bg-slate-50">
             <div className="container-custom">
@@ -27,12 +27,16 @@ const ActivitiesSection = () => {
                     <div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-8 border border-slate-200">
                         <h3 className="text-2xl font-bold text-slate-800 mb-6 border-b pb-4">Faaliyet Alanlarımız</h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {activities.map((item, index) => (
-                                <div key={index} className="flex items-start gap-2">
-                                    <CheckCircle2 size={20} className="text-primary-500 shrink-0 mt-0.5" />
-                                    <span className="text-slate-600 text-sm">{item}</span>
-                                </div>
-                            ))}
+                            {activeActivities.length > 0 ? (
+                                activeActivities.map((item) => (
+                                    <div key={item.id} className="flex items-start gap-2">
+                                        <CheckCircle2 size={20} className="text-primary-500 shrink-0 mt-0.5" />
+                                        <span className="text-slate-600 text-sm">{item.title}</span>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="text-slate-500 text-sm">Faaliyet alanı bulunamadı.</p>
+                            )}
                         </div>
                     </div>
 

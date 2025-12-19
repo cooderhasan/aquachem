@@ -1,73 +1,103 @@
+```
 import React from 'react';
-import { Target, Heart, Leaf } from 'lucide-react';
+import { getSettings } from '@/app/admin/settings/actions';
+import { Building2, Target, Eye, Users, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
 
-export default function CorporatePage() {
+export default async function CorporatePage() {
+    const settings = await getSettings();
+
     return (
-        <div className="bg-white min-h-screen pb-20">
-            {/* Header Banner */}
-            <div className="bg-primary-900 text-white pt-48 pb-16">
-                <div className="container-custom">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">Kurumsal</h1>
-                    <p className="text-primary-200 text-lg max-w-2xl">
-                        Kalite, güven ve sürdürülebilirlik üzerine kurulu bir gelecek.
+        <div className="bg-white">
+            {/* Hero Section */}
+            <div className="relative bg-slate-900 text-white py-24 md:py-32 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/90 to-transparent z-10" />
+                <div className="absolute inset-0">
+                    <Image
+                         src="/images/corporate-hero.jpg" // You might want to make this dynamic too later
+                         alt="Corporate Hero"
+                         fill
+                         className="object-cover opacity-50"
+                    />
+                </div>
+                <div className="container mx-auto px-4 relative z-20">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-6">Kurumsal</h1>
+                    <p className="text-xl text-slate-300 max-w-2xl">
+                        {settings?.description || 'Aquachems olarak endüstriyel çözümlerimizle değer katıyoruz.'}
                     </p>
                 </div>
             </div>
 
-            <div className="container-custom py-16">
-                {/* Hakkımızda */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
-                    <div>
-                        <h2 className="text-3xl font-bold text-slate-900 mb-6">Hakkımızda</h2>
-                        <div className="space-y-4 text-slate-600 text-lg leading-relaxed">
-                            <p>
-                                Aquachem olarak, endüstriyel hijyen ve kimyasal çözümler sektöründe yıllardır süregelen tecrübemizle hizmet veriyoruz.
-                            </p>
-                            <p>
-                                Kurulduğumuz günden bu yana amacımız; en son teknolojiyi kullanarak çevreye duyarlı, insan sağlığına zararsız ve yüksek performanslı ürünler geliştirmektir.
-                                Sektördeki yenilikleri yakından takip eden uzman kadromuzla, müşterilerimizin ihtiyaçlarına özel çözümler sunuyoruz.
-                            </p>
-                            <p>
-                                Yerli üretim gücümüzü uluslararası kalite standartlarıyla birleştirerek, hem iç pazarda hem de ihracatta ülkemizi gururla temsil ediyoruz.
+            {/* About Us */}
+            <div className="py-20">
+                <div className="container mx-auto px-4">
+                    <div className="flex flex-col lg:flex-row gap-16 items-center">
+                        <div className="flex-1 space-y-6">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold">
+                                <Building2 size={18} />
+                                Hakkımızda
+                            </div>
+                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+                                {settings?.siteTitle || 'Aquachems'}
+                            </h2>
+                            <p className="text-lg text-slate-600 leading-relaxed whitespace-pre-wrap">
+                                {settings?.aboutUs || 'Hakkımızda yazısı henüz eklenmedi.'}
                             </p>
                         </div>
-                    </div>
-                    <div className="bg-slate-100 rounded-2xl h-[400px] flex items-center justify-center">
-                        {/* Image Placeholder */}
-                        <span className="text-slate-400 font-bold">Kurumsal Görsel</span>
+                        <div className="flex-1 relative">
+                             <div className="relative h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl">
+                                <Image
+                                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80"
+                                    alt="About Us"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            {/* Stats or Decorative elements could go here */}
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                {/* Misyon & Vizyon */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="bg-slate-50 p-8 rounded-xl border border-slate-200">
-                        <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-6">
-                            <Target size={24} />
+            {/* Mission & Vision */}
+            <div className="py-20 bg-slate-50">
+                <div className="container mx-auto px-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
+                        {/* Mission */}
+                        <div className="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                            <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                                <Target size={32} />
+                            </div>
+                            <h3 className="text-2xl font-bold text-slate-900 mb-4">Misyonumuz</h3>
+                            <p className="text-slate-600 leading-relaxed whitespace-pre-wrap">
+                                {settings?.mission || 'Misyon yazısı henüz eklenmedi.'}
+                            </p>
                         </div>
-                        <h3 className="text-xl font-bold text-slate-800 mb-4">Misyonumuz</h3>
-                        <p className="text-slate-600">
-                            Müşterilerimize en kaliteli ve doğru kimyasal çözümleri sunarken, doğayı korumak ve topluma değer katmak.
-                        </p>
+
+                        {/* Vision */}
+                        <div className="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                            <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-6">
+                                <Eye size={32} />
+                            </div>
+                            <h3 className="text-2xl font-bold text-slate-900 mb-4">Vizyonumuz</h3>
+                            <p className="text-slate-600 leading-relaxed whitespace-pre-wrap">
+                                {settings?.vision || 'Vizyon yazısı henüz eklenmedi.'}
+                            </p>
+                        </div>
                     </div>
+                </div>
+            </div>
 
-                    <div className="bg-slate-50 p-8 rounded-xl border border-slate-200">
-                        <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-6">
-                            <Leaf size={24} />
+             {/* Human Policy */}
+             <div className="py-20">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center mx-auto mb-6">
+                            <Users size={32} />
                         </div>
-                        <h3 className="text-xl font-bold text-slate-800 mb-4">Değerlerimiz</h3>
-                        <p className="text-slate-600">
-                            Sürdürülebilirlik, şeffaflık, inovasyon ve insan odaklılık, tüm iş süreçlerimizin temelini oluşturur.
-                        </p>
-                    </div>
-
-                    <div className="bg-slate-50 p-8 rounded-xl border border-slate-200">
-                        <div className="w-12 h-12 bg-rose-100 text-rose-600 rounded-lg flex items-center justify-center mb-6">
-                            <Heart size={24} />
-                        </div>
-                        <h3 className="text-xl font-bold text-slate-800 mb-4">İnsan Politikamız</h3>
-                        <p className="text-slate-600">
-                            Çalışanlarımızın güvenliği, gelişimi ve mutluluğu bizim için en büyük önceliktir.
+                        <h2 className="text-3xl font-bold text-slate-900 mb-6">İnsan Kaynakları Politikamız</h2>
+                        <p className="text-lg text-slate-600 leading-relaxed whitespace-pre-wrap">
+                             {settings?.humanPolicy || 'İnsan kaynakları politikası henüz eklenmedi.'}
                         </p>
                     </div>
                 </div>
@@ -75,3 +105,4 @@ export default function CorporatePage() {
         </div>
     );
 }
+```

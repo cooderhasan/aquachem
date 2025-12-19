@@ -2,16 +2,30 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Users, Package, Award } from 'lucide-react';
+import { Calendar, Users, Package, Award, LucideIcon, Target } from 'lucide-react';
 
-const stats = [
-    { id: 1, icon: Calendar, value: '15+', label: 'Yıllık Deneyim', gradient: 'from-blue-600 to-blue-400' },
-    { id: 2, icon: Users, value: '500+', label: 'Mutlu Müşteri', gradient: 'from-emerald-600 to-emerald-400' },
-    { id: 3, icon: Package, value: '150+', label: 'Ürün Çeşidi', gradient: 'from-amber-500 to-amber-300' },
-    { id: 4, icon: Award, value: '10+', label: 'Kalite Belgesi', gradient: 'from-purple-600 to-purple-400' },
-];
+interface Stat {
+    id: number;
+    label: string;
+    value: string;
+    icon: string;
+}
 
-const StatsSection = () => {
+interface StatsSectionProps {
+    stats: Stat[];
+}
+
+const StatsSection = ({ stats }: StatsSectionProps) => {
+    // Helper to get icon by name (fallback to Target)
+    const getIcon = (name: string): LucideIcon => {
+        const icons: { [key: string]: LucideIcon } = {
+            Calendar, Users, Package, Award, Target
+        };
+        return icons[name] || Target;
+    };
+
+    const displayStats = stats.length > 0 ? stats : [];
+
     return (
         <section className="py-16 bg-slate-900 relative overflow-hidden">
             {/* Background Effects */}
@@ -53,33 +67,45 @@ const StatsSection = () => {
 
                 {/* Stats Grid */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                    {stats.map((stat, index) => (
-                        <motion.div
-                            key={stat.id}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.4, delay: index * 0.1 }}
-                            whileHover={{ y: -10 }}
-                            className="relative group"
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl blur-sm transform group-hover:scale-105 transition-transform duration-500" />
+                    {displayStats.map((stat, index) => {
+                        const Icon = getIcon(stat.icon);
+                        // Cycle gradients for variety
+                        const gradients = [
+                            'from-blue-600 to-blue-400',
+                            'from-emerald-600 to-emerald-400',
+                            'from-amber-500 to-amber-300',
+                            'from-purple-600 to-purple-400'
+                        ];
+                        const gradient = gradients[index % gradients.length];
 
-                            <div className="relative bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-2xl h-full flex flex-col items-center justify-center text-center hover:border-white/20 transition-colors">
-                                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center mb-6 shadow-lg shadow-black/20 group-hover:scale-110 transition-transform duration-500`}>
-                                    <stat.icon size={32} className="text-white" />
-                                </div>
+                        return (
+                            <motion.div
+                                key={stat.id}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.4, delay: index * 0.1 }}
+                                whileHover={{ y: -10 }}
+                                className="relative group"
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl blur-sm transform group-hover:scale-105 transition-transform duration-500" />
 
-                                <div className="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
-                                    {stat.value}
-                                </div>
+                                <div className="relative bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-2xl h-full flex flex-col items-center justify-center text-center hover:border-white/20 transition-colors">
+                                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center mb-6 shadow-lg shadow-black/20 group-hover:scale-110 transition-transform duration-500`}>
+                                        <Icon size={32} className="text-white" />
+                                    </div>
 
-                                <div className="text-sm font-semibold text-slate-400 uppercase tracking-wider group-hover:text-white transition-colors">
-                                    {stat.label}
+                                    <div className="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
+                                        {stat.value}
+                                    </div>
+
+                                    <div className="text-sm font-semibold text-slate-400 uppercase tracking-wider group-hover:text-white transition-colors">
+                                        {stat.label}
+                                    </div>
                                 </div>
-                            </div>
-                        </motion.div>
-                    ))}
+                            </motion.div>
+                        );
+                    })}
                 </div>
             </div>
         </section>

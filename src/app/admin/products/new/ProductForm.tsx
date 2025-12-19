@@ -13,7 +13,7 @@ interface Category {
 interface Product {
     id: number;
     title: string;
-    categoryId: number;
+    categoryId: number | null;
     description: string | null;
     usage: string | null;
     slug: string;
@@ -77,7 +77,7 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
                             <label className="block text-sm font-medium text-slate-700 mb-2">Kategori</label>
                             <select
                                 name="categoryId"
-                                defaultValue={product?.categoryId}
+                                defaultValue={product?.categoryId || ''}
                                 className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none bg-white"
                             >
                                 {categories.map((cat) => (

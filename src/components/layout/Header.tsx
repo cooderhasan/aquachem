@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, Phone, Droplets, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Header = () => {
+const Header = ({ settings }: { settings?: any }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const pathname = usePathname();
@@ -49,10 +49,10 @@ const Header = () => {
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
-                        <a href="#" className="hover:text-white transition-colors"><Linkedin size={14} /></a>
-                        <a href="#" className="hover:text-white transition-colors"><Instagram size={14} /></a>
-                        <a href="#" className="hover:text-white transition-colors"><Twitter size={14} /></a>
-                        <a href="#" className="hover:text-white transition-colors"><Facebook size={14} /></a>
+                        {settings?.socialMedia?.linkedin && <a href={settings.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Linkedin size={14} /></a>}
+                        {settings?.socialMedia?.instagram && <a href={settings.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Instagram size={14} /></a>}
+                        {settings?.socialMedia?.twitter && <a href={settings.socialMedia.twitter} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Twitter size={14} /></a>}
+                        {settings?.socialMedia?.facebook && <a href={settings.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Facebook size={14} /></a>}
                     </div>
                 </div>
             </div>
@@ -60,16 +60,16 @@ const Header = () => {
             {/* Main Header */}
             <header
                 className={`transition-all duration-300 w-full ${scrolled
-                        ? 'bg-white/95 backdrop-blur-md shadow-md py-3'
-                        : 'bg-white py-5 border-b border-slate-100'
+                    ? 'bg-white/95 backdrop-blur-md shadow-md py-3'
+                    : 'bg-white py-5 border-b border-slate-100'
                     }`}
             >
                 <div className="container-custom flex justify-between items-center">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
                         <div className={`p-2.5 rounded-xl transition-all duration-300 shadow-lg ${scrolled
-                                ? 'bg-primary-600 text-white shadow-primary-600/20'
-                                : 'bg-gradient-to-br from-primary-600 to-primary-800 text-white shadow-primary-900/20'
+                            ? 'bg-primary-600 text-white shadow-primary-600/20'
+                            : 'bg-gradient-to-br from-primary-600 to-primary-800 text-white shadow-primary-900/20'
                             }`}>
                             <Droplets size={scrolled ? 24 : 28} className="transform group-hover:rotate-12 transition-transform duration-500" />
                         </div>

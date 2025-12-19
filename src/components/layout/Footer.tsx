@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Droplets, MapPin, Phone, Mail, Instagram, Linkedin, Facebook, Globe } from 'lucide-react';
 
-const Footer = () => {
+const Footer = ({ settings }: { settings?: any }) => {
     return (
         <footer className="bg-slate-900 text-slate-300 pt-20 pb-10 mt-auto">
             <div className="container-custom">
@@ -21,19 +21,24 @@ const Footer = () => {
                             </div>
                         </Link>
                         <p className="text-slate-400 leading-relaxed text-sm">
-                            Endüstriyel temizlik ve hijyen çözümlerinde yenilikçi yaklaşımlarımızla,
-                            işletmenizin verimliliğini artırıyor ve sürdürülebilir bir gelecek için çalışıyoruz.
+                            {settings?.description || 'Endüstriyel temizlik ve hijyen çözümlerinde yenilikçi yaklaşımlarımızla, işletmenizin verimliliğini artırıyor ve sürdürülebilir bir gelecek için çalışıyoruz.'}
                         </p>
                         <div className="flex gap-4 pt-2">
-                            <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
-                                <Instagram size={18} />
-                            </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
-                                <Linkedin size={18} />
-                            </a>
-                            <a href="#" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
-                                <Facebook size={18} />
-                            </a>
+                            {settings?.socialMedia?.instagram && (
+                                <a href={settings.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
+                                    <Instagram size={18} />
+                                </a>
+                            )}
+                            {settings?.socialMedia?.linkedin && (
+                                <a href={settings.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
+                                    <Linkedin size={18} />
+                                </a>
+                            )}
+                            {settings?.socialMedia?.facebook && (
+                                <a href={settings.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
+                                    <Facebook size={18} />
+                                </a>
+                            )}
                         </div>
                     </div>
 
