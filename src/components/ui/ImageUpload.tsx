@@ -8,9 +8,11 @@ interface ImageUploadProps {
     value?: string | null;
     onChange: (url: string) => void;
     onRemove: () => void;
+    label?: string;
+    description?: string;
 }
 
-export default function ImageUpload({ value, onChange, onRemove }: ImageUploadProps) {
+export default function ImageUpload({ value, onChange, onRemove, label, description }: ImageUploadProps) {
     const [isLoading, setIsLoading] = useState(false);
 
     const onUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,8 +77,8 @@ export default function ImageUpload({ value, onChange, onRemove }: ImageUploadPr
                 {isLoading ? <Loader2 className="animate-spin" size={24} /> : <Upload size={24} />}
             </div>
             <div className="text-center">
-                <p className="font-medium text-slate-700">Görsel Yükle</p>
-                <p className="text-sm text-slate-500 mt-1">PNG, JPG, GIF (Max 4MB)</p>
+                <p className="font-medium text-slate-700">{label || 'Görsel Yükle'}</p>
+                <p className="text-sm text-slate-500 mt-1">{description || 'PNG, JPG, GIF (Max 4MB)'}</p>
             </div>
         </div>
     );
