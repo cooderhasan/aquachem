@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Plus, Edit, Trash2, CheckCircle2, XCircle } from 'lucide-react';
 import { getActivities, deleteActivity } from './actions';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ActivitiesPage() {
     const activities = await getActivities();
 

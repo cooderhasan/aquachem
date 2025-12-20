@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Plus, Edit, Trash2 } from 'lucide-react';
 import { getStats, deleteStat } from './actions';
 
+export const dynamic = 'force-dynamic';
+
 export default async function StatsPage() {
     const stats = await getStats();
 
