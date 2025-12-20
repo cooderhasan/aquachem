@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
-import { categories, settings, contactLocations, activityItems, innovationItems, stats } from '@/db/schema';
-import { categories as mockCategories } from '@/data/mockData';
+import { categories, settings, contactLocations, activityItems, innovationItems, stats, products } from '@/db/schema';
+import { categories as mockCategories, products as mockProducts } from '@/data/mockData';
 import { eq } from 'drizzle-orm';
 import * as dotenv from 'dotenv';
 import path from 'path';
@@ -32,6 +32,23 @@ async function main() {
                 image: cat.image,
                 description: `${cat.title} ürünleri`,
                 order: cat.id
+            });
+        }
+    }
+
+    // 1.5. Products
+    console.log('Seeding products...');
+    for (const prod of mockProducts) {
+        const existing = await db.select().from(products).where(eq(products.slug, prod.slug)).limit(1);
+        if (existing.length === 0) {
+            await db.insert(products).values({
+                title: prod.title,
+                slug: prod.slug,
+                categoryId: prod.categoryId,
+                description: prod.description,
+                image: prod.image,
+                usage: prod.usageArea || 'Genel Kullanım',
+                isNew: false
             });
         }
     }
