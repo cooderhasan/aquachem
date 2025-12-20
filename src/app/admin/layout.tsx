@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, ShoppingBag, FolderTree, FileText, Image as ImageIcon, LogOut, Settings } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, FolderTree, FileText, Image as ImageIcon, Settings, GalleryHorizontal, MapPin, Mail, Briefcase, FileCheck, LogOut } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -20,7 +20,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { name: 'Kategoriler', href: '/admin/categories', icon: FolderTree },
         { name: 'Haberler & Yazılar', href: '/admin/posts', icon: FileText },
         { name: 'Referanslar', href: '/admin/references', icon: ImageIcon },
-        { name: 'Belgeler', href: '/admin/certificates', icon: Settings },
+        { name: 'Belgeler', href: '/admin/certificates', icon: FileCheck },
+        { name: 'Hero Slider', href: '/admin/hero', icon: GalleryHorizontal },
+        { name: 'İletişim Bilgileri', href: '/admin/contact', icon: MapPin },
+        { name: 'Gelen Kutusu', href: '/admin/messages', icon: Mail },
+        { name: 'İş Başvuruları', href: '/admin/applications', icon: Briefcase },
+        { name: 'Genel Ayarlar', href: '/admin/settings', icon: Settings },
     ];
 
     const handleLogout = async () => {
@@ -45,8 +50,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                                 key={item.href}
                                 href={item.href}
                                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
-                                        ? 'bg-primary-600 text-white'
-                                        : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                                    ? 'bg-primary-600 text-white'
+                                    : 'text-slate-400 hover:bg-slate-800 hover:text-white'
                                     }`}
                             >
                                 <item.icon size={20} />

@@ -5,42 +5,18 @@ import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const slides = [
-    {
-        id: 1,
-        image: '/images/hero-1.png', // Generated image
-        title: "İnsana ve Doğaya Saygılıyız",
-        description: "Aquachem olarak; ürünlerimizde çevre bilinci ve insan sağlığını her zaman ön planda tuttuk.",
-        buttonText: "Ürünlerimizi İnceleyin",
-        link: "/products"
-    },
-    {
-        id: 2,
-        image: '/images/hero-1.png', // Temporary placeholder until more images are generated
-        title: "Gelecek Nesiller İçin",
-        description: "Sürdürülebilir üretim ve yenilenebilir kaynaklarla doğaya zarar vermeyen çözümler üretiyoruz.",
-        buttonText: "Kurumsal",
-        link: "/corporate"
-    },
-    {
-        id: 3,
-        image: '/images/hero-1.png', // Temporary placeholder
-        title: "İnovasyon ve Gelişim",
-        description: "AR-GE laboratuvarlarımızda her gün daha iyisi için çalışıyoruz.",
-        buttonText: "İletişim",
-        link: "/contact"
-    }
-];
-
-const HeroSlider = () => {
+const HeroSlider = ({ slides }: { slides: any[] }) => {
     const [current, setCurrent] = useState(0);
+
+    // If no slides, show nothing or a default placeholder
+    if (!slides || slides.length === 0) return null;
 
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
         }, 5000);
         return () => clearInterval(timer);
-    }, []);
+    }, [slides.length]);
 
     const nextSlide = () => {
         setCurrent(current === slides.length - 1 ? 0 : current + 1);

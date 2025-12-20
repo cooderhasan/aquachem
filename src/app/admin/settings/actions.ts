@@ -36,10 +36,13 @@ export async function updateSettings(formData: FormData) {
             youtube: formData.get('youtube') as string,
         };
 
+        const logo = formData.get('logo') as string;
+
         if (currentSettings) {
             await db.update(settings).set({
                 siteTitle: title,
                 description,
+                logo: logo || currentSettings.logo,
                 aboutUs,
                 mission,
                 vision,

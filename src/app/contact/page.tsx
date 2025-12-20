@@ -2,6 +2,7 @@
 import React from 'react';
 import { getContactLocations } from '@/app/admin/contact/actions';
 import { Mail, Phone, MapPin, MessageSquare, Send } from 'lucide-react';
+import ContactForm from './ContactForm';
 
 export default async function ContactPage() {
     const locations = await getContactLocations();
@@ -76,38 +77,7 @@ export default async function ContactPage() {
                         </div>
 
                         {/* Contact Form */}
-                        <div className="bg-white p-8 rounded-xl shadow-sm border border-slate-100">
-                            <h3 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                                <MessageSquare className="text-primary-500" />
-                                İletişim Formu
-                            </h3>
-                            <form className="space-y-4">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-1">Adınız Soyadınız</label>
-                                        <input type="text" className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-1">E-posta Adresiniz</label>
-                                        <input type="email" className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Konu</label>
-                                    <input type="text" className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Mesajınız</label>
-                                    <textarea rows={4} className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
-                                </div>
-                                <div className="flex justify-end">
-                                    <button type="submit" className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 transition-colors">
-                                        <Send size={18} />
-                                        Gönder
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                        <ContactForm />
                     </div>
                 </div>
             </div>

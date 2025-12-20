@@ -66,19 +66,32 @@ const Header = ({ settings }: { settings?: any }) => {
             >
                 <div className="container-custom flex justify-between items-center">
                     {/* Logo */}
+                    {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
-                        <div className={`p-2.5 rounded-xl transition-all duration-300 shadow-lg ${scrolled
-                            ? 'bg-primary-600 text-white shadow-primary-600/20'
-                            : 'bg-gradient-to-br from-primary-600 to-primary-800 text-white shadow-primary-900/20'
-                            }`}>
-                            <Droplets size={scrolled ? 24 : 28} className="transform group-hover:rotate-12 transition-transform duration-500" />
-                        </div>
-                        <div className="flex flex-col">
-                            <span className={`font-bold text-slate-900 leading-none tracking-tight transition-all ${scrolled ? 'text-xl' : 'text-2xl'}`}>
-                                AQUACHEMS
-                            </span>
-                            <span className="text-[10px] text-slate-500 font-bold tracking-[0.2em] uppercase mt-0.5">Kimya & İnovasyon</span>
-                        </div>
+                        {settings?.logo ? (
+                            <div className="relative h-12 w-auto min-w-[120px]">
+                                <img
+                                    src={settings.logo}
+                                    alt={settings.siteTitle || 'Logo'}
+                                    className="h-full w-auto object-contain"
+                                />
+                            </div>
+                        ) : (
+                            <>
+                                <div className={`p-2.5 rounded-xl transition-all duration-300 shadow-lg ${scrolled
+                                    ? 'bg-primary-600 text-white shadow-primary-600/20'
+                                    : 'bg-gradient-to-br from-primary-600 to-primary-800 text-white shadow-primary-900/20'
+                                    }`}>
+                                    <Droplets size={scrolled ? 24 : 28} className="transform group-hover:rotate-12 transition-transform duration-500" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className={`font-bold text-slate-900 leading-none tracking-tight transition-all ${scrolled ? 'text-xl' : 'text-2xl'}`}>
+                                        {settings?.siteTitle || 'AQUACHEMS'}
+                                    </span>
+                                    <span className="text-[10px] text-slate-500 font-bold tracking-[0.2em] uppercase mt-0.5">Kimya & İnovasyon</span>
+                                </div>
+                            </>
+                        )}
                     </Link>
 
                     {/* Desktop Navigation */}

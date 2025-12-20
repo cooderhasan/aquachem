@@ -1,5 +1,27 @@
 import { pgTable, serial, text, integer, boolean, jsonb, timestamp } from 'drizzle-orm/pg-core';
 
+// --- User Interaction Tables ---
+
+export const messages = pgTable('messages', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull(),
+  subject: text('subject'),
+  message: text('message').notNull(),
+  isRead: boolean('is_read').default(false),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+export const applications = pgTable('applications', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull(),
+  phone: text('phone'),
+  position: text('position'),
+  cvUrl: text('cv_url').notNull(),
+  status: text('status').default('new'), // new, reviewed, interviewed, rejected
+  createdAt: timestamp('created_at').defaultNow(),
+});
 export const admins = pgTable('admins', {
   id: serial('id').primaryKey(),
   username: text('username').notNull().unique(),
