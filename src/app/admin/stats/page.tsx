@@ -3,13 +3,16 @@ import Link from 'next/link';
 import { Plus, Edit, Trash2 } from 'lucide-react';
 import { db } from '@/lib/db';
 import { stats as statsTable } from '@/db/schema';
-import { asc } from 'drizzle-orm';
+import { asc, InferSelectModel } from 'drizzle-orm';
+import { deleteStat } from './actions';
+
+type Stat = InferSelectModel<typeof statsTable>;
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function StatsPage() {
-    let stats = [];
+    let stats: Stat[] = [];
     try {
         stats = await db.select().from(statsTable).orderBy(asc(statsTable.order));
     } catch (e) {

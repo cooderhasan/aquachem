@@ -6,8 +6,9 @@ import { notFound } from 'next/navigation';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export default async function EditStatsPage({ params }: { params: { id: string } }) {
-    const stat = await getStat(parseInt(params.id));
+export default async function EditStatsPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const stat = await getStat(parseInt(id));
 
     if (!stat) {
         notFound();
@@ -15,3 +16,4 @@ export default async function EditStatsPage({ params }: { params: { id: string }
 
     return <StatsForm initialData={stat} isEdit />;
 }
+

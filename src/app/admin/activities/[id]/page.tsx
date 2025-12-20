@@ -6,8 +6,9 @@ import { notFound } from 'next/navigation';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export default async function EditActivityPage({ params }: { params: { id: string } }) {
-    const activity = await getActivity(parseInt(params.id));
+export default async function EditActivityPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const activity = await getActivity(parseInt(id));
 
     if (!activity) {
         notFound();
@@ -15,3 +16,4 @@ export default async function EditActivityPage({ params }: { params: { id: strin
 
     return <ActivityForm initialData={activity} isEdit />;
 }
+

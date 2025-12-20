@@ -3,13 +3,16 @@ import Link from 'next/link';
 import { Plus, Edit, Trash2, CheckCircle2, XCircle } from 'lucide-react';
 import { db } from '@/lib/db';
 import { activityItems } from '@/db/schema';
-import { asc } from 'drizzle-orm';
+import { asc, InferSelectModel } from 'drizzle-orm';
+import { deleteActivity } from './actions';
+
+type Activity = InferSelectModel<typeof activityItems>;
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function ActivitiesPage() {
-    let activities = [];
+    let activities: Activity[] = [];
     try {
         activities = await db.select().from(activityItems).orderBy(asc(activityItems.order));
     } catch (e) {
