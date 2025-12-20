@@ -4,6 +4,7 @@ import { Plus, Edit, Trash2 } from 'lucide-react';
 import { getStats, deleteStat } from './actions';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function StatsPage() {
     const stats = await getStats();

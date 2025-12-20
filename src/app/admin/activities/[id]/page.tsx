@@ -4,6 +4,7 @@ import { getActivity } from '../actions';
 import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function EditActivityPage({ params }: { params: { id: string } }) {
     const activity = await getActivity(parseInt(params.id));

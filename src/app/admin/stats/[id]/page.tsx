@@ -4,6 +4,7 @@ import { getStat } from '../actions';
 import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function EditStatsPage({ params }: { params: { id: string } }) {
     const stat = await getStat(parseInt(params.id));
