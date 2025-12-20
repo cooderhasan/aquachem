@@ -13,9 +13,7 @@ export async function createProduct(formData: FormData) {
         const categoryId = parseInt(formData.get('categoryId') as string);
         const description = formData.get('description') as string;
         const usage = formData.get('usage') as string;
-        // For now, image handling is omitted or simplified as strict upload logic is separate
-        // Assuming handling image upload returns a URL or we just placeholder it if not implemented fully yet
-        // In a real scenario, we'd handle the file upload here or receive a compiled URL
+        const image = formData.get('image') as string;
 
         // Generating a simple slug from title
         const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
@@ -26,7 +24,7 @@ export async function createProduct(formData: FormData) {
             categoryId,
             description,
             usage,
-            image: 'https://placehold.co/600x400', // Placeholder or handle actual upload
+            image,
         });
 
         revalidatePath('/admin/products');
@@ -119,6 +117,7 @@ export async function updateProduct(formData: FormData) {
         const categoryId = parseInt(formData.get('categoryId') as string);
         const description = formData.get('description') as string;
         const usage = formData.get('usage') as string;
+        const image = formData.get('image') as string;
         const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
 
         await db.update(products)
@@ -128,6 +127,7 @@ export async function updateProduct(formData: FormData) {
                 categoryId,
                 description,
                 usage,
+                image,
             })
             .where(eq(products.id, id));
 

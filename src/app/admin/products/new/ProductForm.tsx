@@ -25,8 +25,11 @@ interface ProductFormProps {
     product?: Product;
 }
 
+import ImageUpload from '@/components/ui/ImageUpload';
+
 export default function ProductForm({ categories, product }: ProductFormProps) {
     const [loading, setLoading] = useState(false);
+    const [image, setImage] = useState(product?.image || '');
     const isEditing = !!product;
 
     async function clientAction(formData: FormData) {
@@ -91,14 +94,12 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
 
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">Ürün Görseli</label>
-                        <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 hover:bg-slate-50 transition-colors cursor-pointer text-center">
-                            {product?.image && (
-                                <img src={product.image} alt="Current" className="mx-auto h-32 object-cover mb-4 rounded-lg" />
-                            )}
-                            <Upload className="mx-auto text-slate-400 mb-2" size={32} />
-                            <p className="text-slate-500 text-sm">Görsel seçmek için tıklayın veya sürükleyin</p>
-                            <input type="file" className="hidden" accept="image/*" />
-                        </div>
+                        <ImageUpload
+                            value={image}
+                            onChange={(url) => setImage(url)}
+                            onRemove={() => setImage('')}
+                        />
+                        <input type="hidden" name="image" value={image} />
                     </div>
 
                     <div>
