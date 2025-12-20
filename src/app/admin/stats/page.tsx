@@ -1,13 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import { Plus, Edit, Trash2 } from 'lucide-react';
-import { getStats, deleteStat } from './actions';
+import { db } from '@/lib/db';
+import { stats as statsTable } from '@/db/schema';
+import { asc } from 'drizzle-orm';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function StatsPage() {
-    const stats = await getStats();
+    let stats = [];
+    try {
+        stats = await db.select().from(statsTable).orderBy(asc(statsTable.order));
+    } catch (e) {
+        console.error('Stats fetch error:', e);
+    }
 
     return (
         <div className="space-y-6">

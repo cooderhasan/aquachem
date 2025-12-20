@@ -1,13 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import { Plus, Edit, Trash2, CheckCircle2, XCircle } from 'lucide-react';
-import { getActivities, deleteActivity } from './actions';
+import { db } from '@/lib/db';
+import { activityItems } from '@/db/schema';
+import { asc } from 'drizzle-orm';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function ActivitiesPage() {
-    const activities = await getActivities();
+    let activities = [];
+    try {
+        activities = await db.select().from(activityItems).orderBy(asc(activityItems.order));
+    } catch (e) {
+        console.error('Activities fetch error:', e);
+    }
 
     return (
         <div className="space-y-6">
