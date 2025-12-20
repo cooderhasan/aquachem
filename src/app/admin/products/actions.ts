@@ -95,7 +95,9 @@ export async function getProducts() {
                 };
             }),
             isMock: true,
-            error: error instanceof Error ? error.message : 'Unknown error'
+            error: error instanceof Error
+                ? `${error.message}${(error as any).cause ? ` (Cause: ${(error as any).cause.message})` : ''}`
+                : 'Unknown error'
         };
     }
 }
