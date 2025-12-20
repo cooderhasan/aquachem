@@ -5,7 +5,7 @@ import { Plus, Pencil, Trash2, Search } from 'lucide-react';
 import { getProducts } from './actions';
 
 export default async function ProductsPage() {
-    const { products, isMock } = await getProducts();
+    const { products, isMock, error } = await getProducts();
 
     return (
         <div>
@@ -25,8 +25,12 @@ export default async function ProductsPage() {
                                 <p>
                                     Veritabanı bağlantısı sağlanamadığı için şu anda demo verileri görüntüleniyor.
                                     Bu modda yapılan değişiklikler kaydedilmeyecektir.
-                                    Lütfen veritabanı bağlantı ayarlarını kontrol edin.
                                 </p>
+                                {error && (
+                                    <p className="mt-2 font-mono text-xs bg-amber-100 p-2 rounded">
+                                        Hata Detayı: {error}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     </div>

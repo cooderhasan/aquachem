@@ -94,7 +94,8 @@ export async function getProducts() {
                     image: p.image,
                 };
             }),
-            isMock: true
+            isMock: true,
+            error: error instanceof Error ? error.message : 'Unknown error'
         };
     }
 }
