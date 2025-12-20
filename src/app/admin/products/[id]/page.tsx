@@ -2,8 +2,9 @@ import React from 'react';
 import { getCategories, getProduct } from '../actions';
 import ProductForm from '../new/ProductForm';
 
-export default async function EditProductPage({ params }: { params: { id: string } }) {
-    const id = parseInt(params.id);
+export default async function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id: paramId } = await params;
+    const id = parseInt(paramId);
     const [categories, product] = await Promise.all([
         getCategories(),
         getProduct(id)
