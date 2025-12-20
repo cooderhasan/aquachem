@@ -1,26 +1,70 @@
 "use client";
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { Upload, CheckCircle2, Send, User, Mail, Phone, Briefcase, FileText } from 'lucide-react';
+import { Upload, CheckCircle2, Send, User, Mail, Phone, Briefcase, FileText, Loader2 } from 'lucide-react';
+import { submitApplication } from './actions';
 
 export default function HumanResourcesPage() {
     const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [fileName, setFileName] = useState<string>('');
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             setFileName(e.target.files[0].name);
+            setSelectedFile(e.target.files[0]);
         }
     };
 
-    const handleSubmit = async (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setFormStatus('submitting');
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        const formData = new FormData(e.currentTarget);
 
-        setFormStatus('success');
+        try {
+            let cvUrl = '';
+
+            // 1. Upload CV if selected
+            if (selectedFile) {
+                const uploadFormData = new FormData();
+                uploadFormData.append('file', selectedFile);
+
+                const uploadRes = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: uploadFormData
+                });
+
+                if (!uploadRes.ok) throw new Error('CV yüklenemedi');
+
+                const uploadData = await uploadRes.json();
+                cvUrl = uploadData.url;
+            } else {
+                setFormStatus('error');
+                alert('Lütfen bir CV yükleyiniz.');
+                setFormStatus('idle');
+                return;
+            }
+
+            // 2. Submit Application
+            formData.append('cvUrl', cvUrl);
+
+            // Remove file object from formData as we are sending url now within the server action logic (although server action accepts FormData, we prepared it manually or just append)
+            // Correction: server action takes full FormData. We can just append cvUrl. The 'file' input is in the DOM so it's in the formData, but we read 'cvUrl' in the action.
+
+            const result = await submitApplication(formData);
+
+            if (result.success) {
+                setFormStatus('success');
+            } else {
+                throw new Error(result.error || 'Başvuru başarısız');
+            }
+
+        } catch (error) {
+            console.error(error);
+            setFormStatus('error');
+            alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+        }
     };
 
     return (
@@ -91,6 +135,12 @@ export default function HumanResourcesPage() {
                                     CV'niz başarıyla sistemimize yüklendi. İnsan kaynakları departmanımız başvurunuzu
                                     inceleyip en kısa sürede sizinle iletişime geçecektir.
                                 </p>
+                                <button
+                                    onClick={() => { setFormStatus('idle'); setFileName(''); setSelectedFile(null); }}
+                                    className="mt-6 text-primary-600 font-medium hover:underline"
+                                >
+                                    Yeni Başvuru Yap
+                                </button>
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-6">
@@ -101,13 +151,25 @@ export default function HumanResourcesPage() {
                                         <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
                                             <User size={16} /> Ad Soyad
                                         </label>
-                                        <input type="text" required className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all" placeholder="Adınız Soyadınız" />
+                                        <input
+                                            name="name"
+                                            type="text"
+                                            required
+                                            className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                                            placeholder="Adınız Soyadınız"
+                                        />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
                                             <Phone size={16} /> Telefon
                                         </label>
-                                        <input type="tel" required className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all" placeholder="05XX XXX XX XX" />
+                                        <input
+                                            name="phone"
+                                            type="tel"
+                                            required
+                                            className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                                            placeholder="05XX XXX XX XX"
+                                        />
                                     </div>
                                 </div>
 
@@ -115,20 +177,26 @@ export default function HumanResourcesPage() {
                                     <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
                                         <Mail size={16} /> E-posta Adresi
                                     </label>
-                                    <input type="email" required className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all" placeholder="ornek@email.com" />
+                                    <input
+                                        name="email"
+                                        type="email"
+                                        required
+                                        className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                                        placeholder="ornek@email.com"
+                                    />
                                 </div>
 
                                 <div className="space-y-2">
                                     <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
                                         <Briefcase size={16} /> Başvurulan Pozisyon / Alan
                                     </label>
-                                    <select className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all bg-white">
+                                    <select name="position" className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all bg-white">
                                         <option value="">Seçiniz...</option>
-                                        <option value="genel">Genel Başvuru</option>
-                                        <option value="satis">Satış ve Pazarlama</option>
-                                        <option value="uretim">Üretim / İmalat</option>
-                                        <option value="arge">Ar-Ge / Laboratuvar</option>
-                                        <option value="muhasebe">Muhasebe / Finans</option>
+                                        <option value="Genel Başvuru">Genel Başvuru</option>
+                                        <option value="Satış ve Pazarlama">Satış ve Pazarlama</option>
+                                        <option value="Üretim / İmalat">Üretim / İmalat</option>
+                                        <option value="Ar-Ge / Laboratuvar">Ar-Ge / Laboratuvar</option>
+                                        <option value="Muhasebe / Finans">Muhasebe / Finans</option>
                                     </select>
                                 </div>
 
@@ -165,7 +233,10 @@ export default function HumanResourcesPage() {
                                     className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-primary-600/20"
                                 >
                                     {formStatus === 'submitting' ? (
-                                        <>Gönderiliyor...</>
+                                        <>
+                                            <Loader2 className="animate-spin" size={18} />
+                                            Gönderiliyor...
+                                        </>
                                     ) : (
                                         <>
                                             Başvuruyu Tamamla <Send size={18} />
