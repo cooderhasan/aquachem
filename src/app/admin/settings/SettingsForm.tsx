@@ -74,6 +74,73 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
             </div>
 
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">E-Katalog</h2>
+                <div className="mb-6">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">PDF Katalog</label>
+                    <div className="flex items-center gap-4">
+                        <input
+                            type="text"
+                            name="catalogUrl"
+                            defaultValue={initialSettings?.catalogUrl || ''}
+                            className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50"
+                            placeholder="Katalog URL'si (veya dosya yükleyiniz)"
+                            readOnly
+                        />
+                        <div className="relative">
+                            <input
+                                type="file"
+                                id="catalog-upload"
+                                accept=".pdf"
+                                className="hidden"
+                                onChange={async (e) => {
+                                    const file = e.target.files?.[0];
+                                    if (!file) return;
+
+                                    const formData = new FormData();
+                                    formData.append('file', file);
+
+                                    setIsLoading(true);
+                                    try {
+                                        const res = await fetch('/api/upload', {
+                                            method: 'POST',
+                                            body: formData,
+                                        });
+
+                                        if (!res.ok) throw new Error('Upload failed');
+
+                                        const data = await res.json();
+                                        const input = document.querySelector('input[name="catalogUrl"]') as HTMLInputElement;
+                                        if (input) input.value = data.url;
+                                    } catch (error) {
+                                        console.error('Catalog upload error:', error);
+                                        alert('Katalog yüklenemedi!');
+                                    } finally {
+                                        setIsLoading(false);
+                                    }
+                                }}
+                            />
+                            <label
+                                htmlFor="catalog-upload"
+                                className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                            >
+                                Katalog Yükle
+                            </label>
+                        </div>
+                    </div>
+                    {initialSettings?.catalogUrl && (
+                        <a
+                            href={initialSettings.catalogUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary-600 text-sm mt-2 inline-block hover:underline"
+                        >
+                            Mevcut Kataloğu Görüntüle
+                        </a>
+                    )}
+                </div>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                 <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">Sosyal Medya</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>

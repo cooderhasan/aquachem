@@ -12,9 +12,10 @@ interface Activity {
 
 interface ActivitiesSectionProps {
     activities: Activity[];
+    catalogUrl?: string | null;
 }
 
-const ActivitiesSection = ({ activities }: ActivitiesSectionProps) => {
+const ActivitiesSection = ({ activities, catalogUrl }: ActivitiesSectionProps) => {
     // Filter active items if needed, or assume server returns all and we filter here
     const activeActivities = activities.filter(a => a.isActive !== false);
 
@@ -75,9 +76,20 @@ const ActivitiesSection = ({ activities }: ActivitiesSectionProps) => {
                         <p className="text-primary-100 mb-8 text-sm">
                             Güncel ürün kataloğumuzu PDF formatında cihazınıza indirebilirsiniz.
                         </p>
-                        <button className="bg-white text-primary-600 px-6 py-3 rounded-full font-bold hover:bg-primary-50 transition-colors w-full">
-                            Kataloğu İndir
-                        </button>
+                        {catalogUrl ? (
+                            <a
+                                href={catalogUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-white text-primary-600 px-6 py-3 rounded-full font-bold hover:bg-primary-50 transition-colors w-full inline-block"
+                            >
+                                Kataloğu İndir
+                            </a>
+                        ) : (
+                            <button className="bg-white/50 text-white/50 px-6 py-3 rounded-full font-bold cursor-not-allowed w-full">
+                                Katalog Bulunamadı
+                            </button>
+                        )}
                     </div>
 
                 </div>

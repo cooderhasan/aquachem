@@ -92,6 +92,7 @@ export const settings = pgTable('settings', {
   vision: text('vision'),
   humanPolicy: text('human_policy'),
   aboutImage: text('about_image'),
+  catalogUrl: text('catalog_url'),
 });
 
 export const contactLocations = pgTable('contact_locations', {

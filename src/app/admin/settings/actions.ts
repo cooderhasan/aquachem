@@ -37,12 +37,14 @@ export async function updateSettings(formData: FormData) {
         };
 
         const logo = formData.get('logo') as string;
+        const catalogUrl = formData.get('catalogUrl') as string;
 
         if (currentSettings) {
             await db.update(settings).set({
                 siteTitle: title,
                 description,
                 logo: logo || currentSettings.logo,
+                catalogUrl: catalogUrl || currentSettings.catalogUrl,
                 aboutUs,
                 mission,
                 vision,
@@ -57,6 +59,7 @@ export async function updateSettings(formData: FormData) {
                 mission,
                 vision,
                 humanPolicy,
+                catalogUrl,
                 socialMedia,
             });
         }
