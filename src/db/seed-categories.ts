@@ -1,11 +1,25 @@
-
 import { db } from '@/lib/db';
 import { categories, settings, contactLocations, activityItems, innovationItems, stats } from '@/db/schema';
 import { categories as mockCategories } from '@/data/mockData';
 import { eq } from 'drizzle-orm';
+import * as dotenv from 'dotenv';
+import path from 'path';
+
+// Load .env.production explicitly if available, then default .env
+dotenv.config({ path: path.resolve(process.cwd(), '.env.production') });
+dotenv.config();
 
 async function main() {
-    console.log('Seeding database...');
+    const dbUrl = process.env.DATABASE_URL;
+    if (!dbUrl) {
+        console.error('❌ Error: DATABASE_URL is not defined.');
+        process.exit(1);
+    }
+
+    // Mask password for logging
+    const maskedUrl = dbUrl.replace(/:([^@]+)@/, ':****@');
+    console.log(`🔌 Connecting to database at: ${maskedUrl}`);
+    console.log('🌱 Seeding database...');
 
     // 1. Categories
     console.log('Seeding categories...');
