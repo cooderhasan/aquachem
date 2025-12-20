@@ -2,51 +2,70 @@
 
 import { db } from '@/lib/db';
 import { stats } from '@/db/schema';
-import { eq, asc } from 'drizzle-orm';
+import { eq, desc, asc } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 
 export async function getStats() {
     try {
-        const result = await db.select().from(stats).orderBy(asc(stats.order));
-        return result;
+        const items = await db.select().from(stats).orderBy(asc(stats.order));
+        return items;
     } catch (error) {
         console.error('Failed to fetch stats:', error);
         return [];
     }
 }
 
-export async function addStat(formData: FormData) {
+export async function getStat(id: number) {
     try {
-        const label = formData.get('label') as string;
-        const value = formData.get('value') as string;
-        const icon = formData.get('icon') as string;
+        const item = await db.select().from(stats).where(eq(stats.id, id)).limit(1);
+        return item[0];
+    } catch (error) {
+        console.error('Failed to fetch stat:', error);
+        return null;
+    }
+}
 
+export async function createStat(formData: FormData) {
+    return addStat(formData);
+}
+
+export async function addStat(formData: FormData) {
+    const label = formData.get('label') as string;
+    const value = formData.get('value') as string;
+    const icon = formData.get('icon') as string;
+    const order = parseInt(formData.get('order') as string) || 0;
+
+    try {
         await db.insert(stats).values({
             label,
             value,
-            icon: icon || 'Target', // Default icon
+            icon,
+            order
         });
-
         revalidatePath('/admin/stats');
         revalidatePath('/');
         return { success: true };
     } catch (error) {
-        console.error('Failed to add stat:', error);
-        return { success: false, error: 'Failed to add stat' };
+        console.error('Failed to create stat:', error);
+        return { success: false, error: 'Failed to create stat' };
     }
 }
 
 export async function updateStat(id: number, formData: FormData) {
+    const label = formData.get('label') as string;
+    const value = formData.get('value') as string;
+    const icon = formData.get('icon') as string;
+    const order = parseInt(formData.get('order') as string) || 0;
+
     try {
-        const label = formData.get('label') as string;
-        const value = formData.get('value') as string;
-        // icon update logic if needed
-
-        await db.update(stats).set({
-            label,
-            value,
-        }).where(eq(stats.id, id));
-
+        await db.update(stats)
+            .set({
+                label,
+                value,
+                icon,
+                order
+            })
+            .where(eq(stats.id, id));
         revalidatePath('/admin/stats');
         revalidatePath('/');
         return { success: true };

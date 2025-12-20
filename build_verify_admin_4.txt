@@ -1,0 +1,919 @@
+
+> aquachems@0.1.0 build
+> next build
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\MOTOVITRIN1\package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\package-lock.json
+
+   ▲ Next.js 16.0.10 (Turbopack)
+   - Environments: .env.production, .env
+
+ ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 2.5s
+   Running TypeScript ...
+   Collecting page data using 23 workers ...
+   Generating static pages using 23 workers (0/34) ...
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch activities: Error: Failed query: select "id", "title", "order", "is_active" from "activity_items" order by "activity_items"."order" asc
+params: 
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_adf6d437._.js:1:181)
+    at async o (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_adf6d437._.js:1:3144) {
+  query: 'select "id", "title", "order", "is_active" from "activity_items" order by "activity_items"."order" asc',
+  params: [],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_adf6d437._.js:1:181)
+      at async o (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_adf6d437._.js:1:3144) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch stats: Error: Failed query: select "id", "label", "value", "icon", "order" from "stats" order by "stats"."order" asc
+params: 
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_4f8ff403._.js:1:181)
+    at async m (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_4f8ff403._.js:1:2574) {
+  query: 'select "id", "label", "value", "icon", "order" from "stats" order by "stats"."order" asc',
+  params: [],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_4f8ff403._.js:1:181)
+      at async m (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_4f8ff403._.js:1:2574) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+   Generating static pages using 23 workers (8/34) 
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch contact locations: Error: Failed query: select "id", "title", "address", "phone", "email", "type", "map_embed_code", "order" from "contact_locations" order by "contact_locations"."order" asc
+params: 
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_249c46ca._.js:1:181)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__141919ce._.js:1:3549) {
+  query: 'select "id", "title", "address", "phone", "email", "type", "map_embed_code", "order" from "contact_locations" order by "contact_locations"."order" asc',
+  params: [],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_249c46ca._.js:1:181)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__141919ce._.js:1:3549) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch contact locations: Error: Failed query: select "id", "title", "address", "phone", "email", "type", "map_embed_code", "order" from "contact_locations" order by "contact_locations"."order" asc
+params: 
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_d9b9034b._.js:1:181)
+    at async j (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_d9b9034b._.js:1:3421) {
+  query: 'select "id", "title", "address", "phone", "email", "type", "map_embed_code", "order" from "contact_locations" order by "contact_locations"."order" asc',
+  params: [],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_d9b9034b._.js:1:181)
+      at async j (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_d9b9034b._.js:1:3421) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+   Generating static pages using 23 workers (16/34) 
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+getCategories called
+Attempting DB select...
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch innovation items: Error: Failed query: select "id", "title", "description", "image", "watermark_text", "order" from "innovation_items" order by "innovation_items"."order" asc
+params: 
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_2cbdbf0a._.js:1:181)
+    at async j (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_2cbdbf0a._.js:1:3282) {
+  query: 'select "id", "title", "description", "image", "watermark_text", "order" from "innovation_items" order by "innovation_items"."order" asc',
+  params: [],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_2cbdbf0a._.js:1:181)
+      at async j (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_2cbdbf0a._.js:1:3282) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_cf756d02._.js:3:1146) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_cf756d02._.js:3:1146) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch hero slides: Error: Failed query: select "id", "title", "description", "image", "link", "button_text", "order", "is_active" from "hero_slides" order by "hero_slides"."order" desc, "hero_slides"."id" desc
+params: 
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async m (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_d00d02c0._.js:1:9868)
+    at async q (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__e0de267b._.js:1:8527) {
+  query: 'select "id", "title", "description", "image", "link", "button_text", "order", "is_active" from "hero_slides" order by "hero_slides"."order" desc, "hero_slides"."id" desc',
+  params: [],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async m (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_d00d02c0._.js:1:9868)
+      at async q (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__e0de267b._.js:1:8527) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+   Generating static pages using 23 workers (25/34) 
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Database connection failed in getCategories: Error: Failed query: select "id", "title", "slug", "description", "image", "order" from "categories" order by "categories"."order"
+params: 
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async n (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_c9c688c5._.js:1:16421)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__1eb3b705._.js:1:1590) {
+  query: 'select "id", "title", "slug", "description", "image", "order" from "categories" order by "categories"."order"',
+  params: [],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async n (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_c9c688c5._.js:1:16421)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__1eb3b705._.js:1:1590) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch activities: Error: Failed query: select "id", "title", "order", "is_active" from "activity_items" order by "activity_items"."order" asc
+params: 
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_0cb379f1._.js:1:2401)
+    at async q (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__e0de267b._.js:1:8557) {
+  query: 'select "id", "title", "order", "is_active" from "activity_items" order by "activity_items"."order" asc',
+  params: [],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_0cb379f1._.js:1:2401)
+      at async q (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__e0de267b._.js:1:8557) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch references: Error: Failed query: select "id", "title", "image", "order" from "references" order by "references"."id" desc
+params: 
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async o (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__1d0b3d15._.js:1:1191)
+    at async j (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__1d0b3d15._.js:1:3930) {
+  query: 'select "id", "title", "image", "order" from "references" order by "references"."id" desc',
+  params: [],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async o (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__1d0b3d15._.js:1:1191)
+      at async j (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__1d0b3d15._.js:1:3930) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch innovation items: Error: Failed query: select "id", "title", "description", "image", "watermark_text", "order" from "innovation_items" order by "innovation_items"."order" asc
+params: 
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_0cb379f1._.js:1:4746)
+    at async q (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__e0de267b._.js:1:8587) {
+  query: 'select "id", "title", "description", "image", "watermark_text", "order" from "innovation_items" order by "innovation_items"."order" asc',
+  params: [],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_0cb379f1._.js:1:4746)
+      at async q (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__e0de267b._.js:1:8587) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async j (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_3cc0bcfb._.js:1:1292) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async j (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_3cc0bcfb._.js:1:1292) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch stats: Error: Failed query: select "id", "label", "value", "icon", "order" from "stats" order by "stats"."order" asc
+params: 
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_4f8ff403._.js:1:181)
+    at async q (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__e0de267b._.js:1:8622) {
+  query: 'select "id", "label", "value", "icon", "order" from "stats" order by "stats"."order" asc',
+  params: [],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async l (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_4f8ff403._.js:1:181)
+      at async q (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__e0de267b._.js:1:8622) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+Failed to fetch settings: Error: Failed query: select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1
+params: 1
+    at o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41512)
+    at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+    at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+    at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+  query: 'select "id", "site_title", "description", "logo", "contact_email", "contact_phone", "address", "social_media", "about_us", "mission", "vision", "human_policy", "about_image" from "settings" limit $1',
+  params: [Array],
+  [cause]: Error: getaddrinfo ENOTFOUND m0og4scg4csocgok8g0o8ww0
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45283)
+      at async o.queryWithCache (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:41487)
+      at async (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\[root-of-the-server]__8391e5f7._.js:8:45068)
+      at async k (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:167)
+      at async h (C:\Users\MOTOVITRIN1\Desktop\Yetki Belgeleri\aquachems\.next\server\chunks\ssr\Desktop_Yetki Belgeleri_aquachems_src_0b682eef._.js:1:2687) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'm0og4scg4csocgok8g0o8ww0'
+  }
+}
+ ✓ Generating static pages using 23 workers (34/34) in 12.5s
+   Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/activities
+├ ƒ /admin/activities/[id]
+├ ○ /admin/activities/new
+├ ƒ /admin/applications
+├ ○ /admin/categories
+├ ○ /admin/certificates
+├ ○ /admin/contact
+├ ƒ /admin/hero
+├ ƒ /admin/hero/[id]
+├ ○ /admin/hero/new
+├ ○ /admin/innovation
+├ ○ /admin/login
+├ ƒ /admin/messages
+├ ○ /admin/posts
+├ ○ /admin/posts/new
+├ ƒ /admin/products
+├ ƒ /admin/products/[id]
+├ ○ /admin/products/new
+├ ○ /admin/references
+├ ○ /admin/settings
+├ ○ /admin/stats
+├ ƒ /admin/stats/[id]
+├ ○ /admin/stats/new
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/upload
+├ ○ /career
+├ ○ /certificates
+├ ○ /contact
+├ ○ /cookies
+├ ○ /corporate
+├ ○ /corporate/innovation
+├ ○ /human-resources
+├ ○ /privacy
+├ ○ /products
+├ ƒ /products/[...slug]
+├ ƒ /products/[category]
+├ ƒ /products/[category]/[slug]
+├ ○ /references
+└ ○ /terms
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
