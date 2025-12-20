@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { Plus, Pencil, Trash2, Search } from 'lucide-react';
 import { getProducts } from './actions';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProductsPage() {
     const { products, isMock, error } = await getProducts();
 
