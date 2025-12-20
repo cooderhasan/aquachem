@@ -81,18 +81,21 @@ export async function getProducts() {
             .leftJoin(categories, eq(products.categoryId, categories.id))
             .orderBy(products.createdAt);
 
-        return result;
+        return { products: result, isMock: false };
     } catch (error) {
         console.error('Database connection failed, using mock products:', error);
-        return mockProducts.map(p => {
-            const cat = mockCategories.find(c => c.id === p.categoryId);
-            return {
-                id: p.id,
-                title: p.title,
-                categoryTitle: cat ? cat.title : 'Unknown',
-                image: p.image,
-            };
-        });
+        return {
+            products: mockProducts.map(p => {
+                const cat = mockCategories.find(c => c.id === p.categoryId);
+                return {
+                    id: p.id,
+                    title: p.title,
+                    categoryTitle: cat ? cat.title : 'Unknown',
+                    image: p.image,
+                };
+            }),
+            isMock: true
+        };
     }
 }
 
