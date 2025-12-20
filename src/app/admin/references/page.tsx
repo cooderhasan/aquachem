@@ -1,5 +1,3 @@
-'use server';
-
 import React from 'react';
 import { db } from '@/lib/db';
 import { references as referencesTable } from '@/db/schema';
