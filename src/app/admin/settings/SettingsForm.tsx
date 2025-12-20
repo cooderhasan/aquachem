@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Loader2, Save } from 'lucide-react';
 import { updateSettings } from './actions';
 import { useRouter } from 'next/navigation';
+import ImageUpload from '@/components/ui/ImageUpload';
 
 
 interface SettingsFormProps {
@@ -13,6 +14,7 @@ interface SettingsFormProps {
 export default function SettingsForm({ initialSettings }: SettingsFormProps) {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+    const [logo, setLogo] = useState(initialSettings?.logo || '');
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -34,6 +36,21 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
         <form onSubmit={handleSubmit} className="space-y-6">
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                 <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">Genel Ayarlar</h2>
+                <input type="hidden" name="logo" value={logo} />
+
+                <div className="mb-6">
+                    <label className="block text-sm font-medium text-slate-700 mb-2">Site Logosu</label>
+                    <div className="max-w-md">
+                        <ImageUpload
+                            value={logo}
+                            onChange={(url) => setLogo(url)}
+                            onRemove={() => setLogo('')}
+                            label="Logo Yükle"
+                            description="Şeffaf arka planlı PNG veya SVG önerilir (Max 2MB)"
+                        />
+                    </div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-1">Site Başlığı</label>
