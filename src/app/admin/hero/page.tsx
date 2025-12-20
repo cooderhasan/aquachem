@@ -1,11 +1,20 @@
 import Link from 'next/link';
 import { Plus, Pencil, Trash2, Eye, EyeOff } from 'lucide-react';
-import { getHeroSlides, deleteHeroSlide } from './actions';
+import { db } from '@/lib/db';
+import { heroSlides } from '@/db/schema';
+import { desc, asc } from 'drizzle-orm';
+import { deleteHeroSlide } from './actions';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function HeroPage() {
-    const slides = await getHeroSlides();
+    let slides = [];
+    try {
+        slides = await db.select().from(heroSlides).orderBy(desc(heroSlides.order), desc(heroSlides.id));
+    } catch (error) {
+        console.error('Failed to fetch hero slides:', error);
+    }
 
     return (
         <div>

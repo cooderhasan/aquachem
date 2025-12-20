@@ -2,12 +2,33 @@
 import React from 'react';
 import Link from 'next/link';
 import { Plus, Pencil, Trash2, Search } from 'lucide-react';
-import { getProducts } from './actions';
+import { db } from '@/lib/db';
+import { products as productsTable, categories as categoriesTable } from '@/db/schema';
+import { desc, eq } from 'drizzle-orm';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function ProductsPage() {
-    const { products, isMock, error } = await getProducts();
+    let products = [];
+    let isMock = false;
+    let error = null;
+
+    try {
+        products = await db.select({
+            id: productsTable.id,
+            title: productsTable.title,
+            image: productsTable.image,
+            categoryTitle: categoriesTable.title,
+        })
+            .from(productsTable)
+            .leftJoin(categoriesTable, eq(productsTable.categoryId, categoriesTable.id))
+            .orderBy(desc(productsTable.id));
+    } catch (e: any) {
+        console.error('Failed to fetch products:', e);
+        error = e.message;
+        isMock = true; // Fallback handled by UI if needed, or empty list
+    }
 
     return (
         <div>
