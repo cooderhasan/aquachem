@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { createProduct } from '../actions';
@@ -50,7 +50,9 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
 
     return (
         <div className="max-w-4xl mx-auto">
-            <ToastParams />
+            <Suspense fallback={null}>
+                <ToastParams />
+            </Suspense>
             <div className="mb-6">
                 <Link href="/admin/products" className="text-slate-500 hover:text-slate-800 flex items-center gap-2 mb-2 font-medium">
                     <ArrowLeft size={18} />
