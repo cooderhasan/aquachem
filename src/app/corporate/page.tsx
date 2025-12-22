@@ -47,7 +47,7 @@ export default async function CorporatePage() {
                         <div className="flex-1 relative">
                             <div className="relative h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl">
                                 <Image
-                                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80"
+                                    src={settings?.aboutImage || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80"}
                                     alt="About Us"
                                     fill
                                     className="object-cover"

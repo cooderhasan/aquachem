@@ -38,6 +38,7 @@ export async function updateSettings(formData: FormData) {
 
         const logo = formData.get('logo') as string;
         const favicon = formData.get('favicon') as string;
+        const aboutImage = formData.get('aboutImage') as string;
         const catalogUrl = formData.get('catalogUrl') as string;
 
         if (currentSettings) {
@@ -46,6 +47,7 @@ export async function updateSettings(formData: FormData) {
                 description,
                 logo: logo || currentSettings.logo,
                 favicon: favicon || currentSettings.favicon,
+                aboutImage: aboutImage || currentSettings.aboutImage,
                 catalogUrl: catalogUrl || currentSettings.catalogUrl,
                 aboutUs,
                 mission,
@@ -58,6 +60,7 @@ export async function updateSettings(formData: FormData) {
                 siteTitle: title,
                 description,
                 favicon,
+                aboutImage,
                 aboutUs,
                 mission,
                 vision,

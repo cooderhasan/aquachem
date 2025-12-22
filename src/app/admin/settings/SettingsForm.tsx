@@ -16,6 +16,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [logo, setLogo] = useState(initialSettings?.logo || '');
     const [favicon, setFavicon] = useState(initialSettings?.favicon || '');
+    const [aboutImage, setAboutImage] = useState(initialSettings?.aboutImage || '');
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -212,6 +213,19 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                 <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">Kurumsal İçerik</h2>
 
                 <div className="space-y-6">
+                    <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Hakkımızda Görseli</label>
+                        <div className="max-w-md">
+                            <ImageUpload
+                                value={aboutImage}
+                                onChange={(url) => setAboutImage(url)}
+                                onRemove={() => setAboutImage('')}
+                                label="Görsel Yükle"
+                                description="Kurumsal sayfada görünecek (önerilen: 800x600px)"
+                            />
+                        </div>
+                        <input type="hidden" name="aboutImage" value={aboutImage} />
+                    </div>
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-1">Hakkımızda</label>
                         <textarea
