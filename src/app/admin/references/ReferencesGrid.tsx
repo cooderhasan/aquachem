@@ -63,11 +63,11 @@ export default function ReferencesGrid({ initialReferences, categories }: Refere
             if (result.success) {
                 router.refresh();
             } else {
-                alert('Yükleme başarısız');
+                alert(result.error || 'Yükleme başarısız');
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            alert('Hata oluştu');
+            alert(error.message || 'Hata oluştu');
         } finally {
             setIsUploading(false);
             if (fileInputRef.current) fileInputRef.current.value = '';

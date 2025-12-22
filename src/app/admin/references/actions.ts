@@ -23,23 +23,36 @@ export async function addReference(formData: FormData) {
         const file = formData.get('file') as File;
 
         if (!file) {
-            throw new Error('No file uploaded');
+            throw new Error('Dosya yüklenmedi');
         }
 
         const buffer = Buffer.from(await file.arrayBuffer());
         const fileName = `${uuidv4()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-        const uploadDir = path.join(process.cwd(), 'public/uploads');
+
+        // Use /app/public/uploads for Docker (matches Coolify volume mount) or fallback to public/uploads for local dev
+        const uploadDir = process.env.NODE_ENV === 'production'
+            ? '/app/public/uploads'
+            : path.join(process.cwd(), 'public/uploads');
 
         if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
+            try {
+                fs.mkdirSync(uploadDir, { recursive: true });
+            } catch (err) {
+                console.error('Directory creation failed:', err);
+                throw new Error('Yükleme dizini oluşturulamadı');
+            }
         }
 
         const filePath = path.join(uploadDir, fileName);
         fs.writeFileSync(filePath, buffer);
 
-        const imageUrl = `/uploads/${fileName}`;
+        // Correct URL path for serving via API
+        const imageUrl = `/api/files/${fileName}`;
         const title = (formData.get('title') as string) || 'Referans';
-        const categoryId = formData.get('categoryId') ? parseInt(formData.get('categoryId') as string) : null;
+
+        const rawCategoryId = formData.get('categoryId') as string;
+        const parsedCategoryId = rawCategoryId ? parseInt(rawCategoryId) : null;
+        const categoryId = isNaN(parsedCategoryId as number) ? null : parsedCategoryId;
 
         await db.insert(references).values({
             title,
@@ -49,9 +62,9 @@ export async function addReference(formData: FormData) {
 
         revalidatePath('/admin/references');
         return { success: true };
-    } catch (error) {
+    } catch (error: any) {
         console.error('Failed to add reference:', error);
-        return { success: false, error: 'Failed to add reference' };
+        return { success: false, error: error.message || 'Failed to add reference' };
     }
 }
 

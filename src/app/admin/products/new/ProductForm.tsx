@@ -2,10 +2,12 @@
 
 import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { createProduct } from '../actions';
 import ImageUpload from '@/components/ui/ImageUpload';
 import ToastParams from '@/components/admin/ToastParams';
+import { toast } from 'sonner';
 
 interface Category {
     id: number;
@@ -32,19 +34,32 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
     const [image, setImage] = useState(product?.image || '');
     const isEditing = !!product;
 
+    const router = useRouter(); // Import useRouter at top level
+
     async function clientAction(formData: FormData) {
         setLoading(true);
         try {
+            let result;
             if (isEditing && product) {
                 formData.append('id', product.id.toString());
                 const { updateProduct } = await import('../actions');
-                await updateProduct(formData);
+                result = await updateProduct(formData);
             } else {
-                await createProduct(formData);
+                result = await createProduct(formData);
+            }
+
+            if (result.success) {
+                toast.success(result.message);
+                router.push('/admin/products');
+                router.refresh();
+            } else {
+                toast.error(result.message);
+                setLoading(false);
             }
         } catch (error) {
             setLoading(false);
             console.error(error);
+            toast.error('Beklenmedik bir hata oluştu');
         }
     }
 

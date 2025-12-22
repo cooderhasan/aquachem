@@ -32,10 +32,10 @@ export async function createProduct(formData: FormData) {
 
         revalidatePath('/admin/products');
         revalidatePath('/products');
-        redirect('/admin/products?success=Ürün başarıyla eklendi');
+        return { success: true, message: 'Ürün başarıyla eklendi' };
     } catch (error) {
         console.error('Failed to create product:', error);
-        throw error;
+        return { success: false, message: 'Ürün eklenirken bir hata oluştu' };
     }
 }
 
@@ -105,10 +105,10 @@ export async function updateProduct(formData: FormData) {
 
         revalidatePath('/admin/products');
         revalidatePath('/products');
-        redirect('/admin/products?success=Ürün başarıyla güncellendi');
+        return { success: true, message: 'Ürün başarıyla güncellendi' };
     } catch (error) {
         console.error('Failed to update product:', error);
-        throw error;
+        return { success: false, message: 'Ürün güncellenirken bir hata oluştu' };
     }
 }
 
