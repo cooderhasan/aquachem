@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
     const { username, password } = body;
 
     // HARDCODED ADMIN FOR NOW (Move to DB later if needed)
-    if (username === 'admin' && password === 'admin123') {
+    if (username === 'admin' && password === 'Aqua@Chems2024!') {
         const session = await encrypt({ user: 'admin', expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
 
         const response = NextResponse.json({ success: true });

@@ -112,9 +112,7 @@ export default function AdminLoginPage() {
                     </button>
                 </form>
 
-                <div className="mt-8 text-center text-xs text-slate-400 bg-slate-50 py-3 px-4 rounded-xl">
-                    <p className="font-medium">Varsayılan Giriş: <span className="text-slate-600 font-bold">admin</span> / <span className="text-slate-600 font-bold">admin123</span></p>
-                </div>
+
             </div>
         </div>
     );
