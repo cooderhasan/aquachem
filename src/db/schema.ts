@@ -66,6 +66,7 @@ export const posts = pgTable('posts', {
 export const references = pgTable('references', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
+  categoryId: integer('category_id').references(() => categories.id, { onDelete: 'set null' }),
   image: text('image').notNull(),
   order: integer('order').default(0),
 });

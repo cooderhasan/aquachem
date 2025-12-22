@@ -39,10 +39,12 @@ export async function addReference(formData: FormData) {
 
         const imageUrl = `/uploads/${fileName}`;
         const title = (formData.get('title') as string) || 'Referans';
+        const categoryId = formData.get('categoryId') ? parseInt(formData.get('categoryId') as string) : null;
 
         await db.insert(references).values({
             title,
             image: imageUrl,
+            categoryId,
         });
 
         revalidatePath('/admin/references');
