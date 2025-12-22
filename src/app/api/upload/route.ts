@@ -14,15 +14,30 @@ export async function POST(request: NextRequest) {
 
         const buffer = Buffer.from(await file.arrayBuffer());
         const fileName = `${uuidv4()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-        const uploadDir = path.join(process.cwd(), 'public/uploads');
+
+        // Use /app/uploads for Docker or fallback to public/uploads for local dev
+        const uploadDir = process.env.NODE_ENV === 'production'
+            ? '/app/uploads'
+            : path.join(process.cwd(), 'public/uploads');
 
         // Ensure directory exists
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
+        try {
+            if (!fs.existsSync(uploadDir)) {
+                fs.mkdirSync(uploadDir, { recursive: true });
+            }
+        } catch (dirError) {
+            console.error('Failed to create upload directory:', dirError);
+            return NextResponse.json({ error: 'Upload directory creation failed' }, { status: 500 });
         }
 
         const filePath = path.join(uploadDir, fileName);
-        fs.writeFileSync(filePath, buffer);
+
+        try {
+            fs.writeFileSync(filePath, buffer);
+        } catch (writeError) {
+            console.error('Failed to write file:', writeError);
+            return NextResponse.json({ error: 'File write failed' }, { status: 500 });
+        }
 
         return NextResponse.json({
             success: true,

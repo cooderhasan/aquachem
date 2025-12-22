@@ -8,15 +8,21 @@ export async function GET(
 ) {
     try {
         const { path: pathSegments } = await params;
-        const filePath = path.join(process.cwd(), 'public/uploads', ...pathSegments);
+
+        // Use /app/uploads for Docker or fallback to public/uploads for local dev
+        const uploadsDir = process.env.NODE_ENV === 'production'
+            ? '/app/uploads'
+            : path.join(process.cwd(), 'public/uploads');
+
+        const filePath = path.join(uploadsDir, ...pathSegments);
 
         // Security: prevent directory traversal
-        const uploadsDir = path.join(process.cwd(), 'public/uploads');
         if (!filePath.startsWith(uploadsDir)) {
             return NextResponse.json({ error: 'Invalid path' }, { status: 400 });
         }
 
         if (!fs.existsSync(filePath)) {
+            console.error('File not found:', filePath);
             return NextResponse.json({ error: 'File not found' }, { status: 404 });
         }
 
