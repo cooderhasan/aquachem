@@ -83,6 +83,7 @@ export const settings = pgTable('settings', {
   siteTitle: text('site_title').notNull().default('Aquachems'),
   description: text('description'),
   logo: text('logo'),
+  favicon: text('favicon'),
   contactEmail: text('contact_email'),
   contactPhone: text('contact_phone'),
   address: text('address'),

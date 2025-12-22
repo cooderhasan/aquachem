@@ -17,9 +17,15 @@ export default async function RootLayout({
 
   return (
     <html lang="tr">
+      <head>
+        {settings?.favicon && (
+          <link rel="icon" href={settings.favicon} />
+        )}
+      </head>
       <body className="font-sans antialiased text-slate-600">
         <ConditionalLayout settings={settings}>{children}</ConditionalLayout>
       </body>
     </html>
   );
 }
+

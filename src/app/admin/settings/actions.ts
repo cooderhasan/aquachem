@@ -37,6 +37,7 @@ export async function updateSettings(formData: FormData) {
         };
 
         const logo = formData.get('logo') as string;
+        const favicon = formData.get('favicon') as string;
         const catalogUrl = formData.get('catalogUrl') as string;
 
         if (currentSettings) {
@@ -44,6 +45,7 @@ export async function updateSettings(formData: FormData) {
                 siteTitle: title,
                 description,
                 logo: logo || currentSettings.logo,
+                favicon: favicon || currentSettings.favicon,
                 catalogUrl: catalogUrl || currentSettings.catalogUrl,
                 aboutUs,
                 mission,
@@ -55,6 +57,7 @@ export async function updateSettings(formData: FormData) {
             await db.insert(settings).values({
                 siteTitle: title,
                 description,
+                favicon,
                 aboutUs,
                 mission,
                 vision,

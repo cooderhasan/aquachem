@@ -15,6 +15,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [logo, setLogo] = useState(initialSettings?.logo || '');
+    const [favicon, setFavicon] = useState(initialSettings?.favicon || '');
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -37,16 +38,27 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                 <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">Genel Ayarlar</h2>
                 <input type="hidden" name="logo" value={logo} />
+                <input type="hidden" name="favicon" value={favicon} />
 
-                <div className="mb-6">
-                    <label className="block text-sm font-medium text-slate-700 mb-2">Site Logosu</label>
-                    <div className="max-w-md">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Site Logosu</label>
                         <ImageUpload
                             value={logo}
                             onChange={(url) => setLogo(url)}
                             onRemove={() => setLogo('')}
                             label="Logo Yükle"
                             description="Şeffaf arka planlı PNG veya SVG önerilir (Max 2MB)"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Favicon (Site İkonu)</label>
+                        <ImageUpload
+                            value={favicon}
+                            onChange={(url) => setFavicon(url)}
+                            onRemove={() => setFavicon('')}
+                            label="Favicon Yükle"
+                            description="32x32 veya 64x64 px, PNG/ICO önerilir"
                         />
                     </div>
                 </div>
