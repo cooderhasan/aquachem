@@ -9,9 +9,9 @@ export async function GET(
     try {
         const { path: pathSegments } = await params;
 
-        // Use /app/uploads for Docker or fallback to public/uploads for local dev
+        // Use /app/public/uploads for Docker (matches Coolify volume mount) or fallback to public/uploads for local dev
         const uploadsDir = process.env.NODE_ENV === 'production'
-            ? '/app/uploads'
+            ? '/app/public/uploads'
             : path.join(process.cwd(), 'public/uploads');
 
         const filePath = path.join(uploadsDir, ...pathSegments);

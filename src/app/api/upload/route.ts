@@ -15,9 +15,9 @@ export async function POST(request: NextRequest) {
         const buffer = Buffer.from(await file.arrayBuffer());
         const fileName = `${uuidv4()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
 
-        // Use /app/uploads for Docker or fallback to public/uploads for local dev
+        // Use /app/public/uploads for Docker (matches Coolify volume mount) or fallback to public/uploads for local dev
         const uploadDir = process.env.NODE_ENV === 'production'
-            ? '/app/uploads'
+            ? '/app/public/uploads'
             : path.join(process.cwd(), 'public/uploads');
 
         // Ensure directory exists
