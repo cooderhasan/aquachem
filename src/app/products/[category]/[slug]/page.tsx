@@ -1,17 +1,77 @@
-"use client";
-
-import React, { useState, use } from 'react';
+import React from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ChevronRight, CheckCircle2, Info, MapPin } from 'lucide-react';
-import { categories, products } from '@/data/mockData';
+import { ChevronRight } from 'lucide-react';
+import { db } from '@/lib/db';
+import { products, categories } from '@/db/schema';
+import { eq } from 'drizzle-orm';
+import ProductTabs from './ProductTabs';
 
-export default function ProductDetailPage({ params }: { params: Promise<{ category: string; slug: string }> }) {
-    const { category: categorySlug, slug: productSlug } = use(params);
-    const [activeTab, setActiveTab] = useState<'desc' | 'usage'>('desc');
+interface PageProps {
+    params: Promise<{ category: string; slug: string }>;
+}
 
-    const product = products.find(p => p.slug === productSlug);
-    const category = categories.find(c => c.slug === categorySlug);
+// Ürün verilerini çek
+async function getProduct(slug: string) {
+    try {
+        const result = await db.select().from(products).where(eq(products.slug, slug)).limit(1);
+        return result[0] || null;
+    } catch (error) {
+        console.error('Failed to fetch product:', error);
+        return null;
+    }
+}
+
+// Kategori verilerini çek
+async function getCategory(slug: string) {
+    try {
+        const result = await db.select().from(categories).where(eq(categories.slug, slug)).limit(1);
+        return result[0] || null;
+    } catch (error) {
+        console.error('Failed to fetch category:', error);
+        return null;
+    }
+}
+
+// Dinamik SEO metadata
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const product = await getProduct(slug);
+
+    if (!product) {
+        return {
+            title: 'Ürün Bulunamadı',
+        };
+    }
+
+    const description = product.shortDescription || product.description?.substring(0, 160) || `${product.title} - Aquachems ürünü`;
+
+    return {
+        title: product.title,
+        description,
+        openGraph: {
+            title: `${product.title} | Aquachems`,
+            description,
+            images: product.image ? [{ url: product.image }] : [],
+            type: 'website',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: product.title,
+            description,
+            images: product.image ? [product.image] : [],
+        },
+    };
+}
+
+export default async function ProductDetailPage({ params }: PageProps) {
+    const { category: categorySlug, slug: productSlug } = await params;
+
+    const [product, category] = await Promise.all([
+        getProduct(productSlug),
+        getCategory(categorySlug)
+    ]);
 
     if (!product || !category) {
         notFound();
@@ -37,61 +97,25 @@ export default function ProductDetailPage({ params }: { params: Promise<{ catego
                     {/* Product Image */}
                     <div className="bg-slate-50 rounded-2xl border border-slate-100 p-8 flex items-center justify-center">
                         <div className="relative w-full aspect-square max-w-md bg-white rounded-xl shadow-sm p-4">
-                            <img src={product.image} alt={product.title} className="w-full h-full object-cover rounded-lg" />
+                            {product.image ? (
+                                <img src={product.image} alt={product.title} className="w-full h-full object-cover rounded-lg" />
+                            ) : (
+                                <div className="w-full h-full bg-slate-100 rounded-lg flex items-center justify-center text-slate-400">
+                                    Görsel Yok
+                                </div>
+                            )}
                         </div>
                     </div>
 
                     {/* Product Info */}
                     <div>
                         <h1 className="text-4xl font-bold text-slate-900 mb-2">{product.title}</h1>
-                        <p className="text-xl text-slate-500 mb-8">{product.subtitle || product.description}</p>
+                        <p className="text-xl text-slate-500 mb-8">{product.shortDescription || ''}</p>
 
-                        {/* Tabs */}
-                        <div className="flex border-b border-slate-200 mb-8">
-                            <button
-                                onClick={() => setActiveTab('desc')}
-                                className={`flex items-center gap-2 px-6 py-3 font-medium border-b-2 transition-colors ${activeTab === 'desc' ? 'border-primary-600 text-primary-600' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
-                            >
-                                <Info size={18} />
-                                Ürün Açıklaması
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('usage')}
-                                className={`flex items-center gap-2 px-6 py-3 font-medium border-b-2 transition-colors ${activeTab === 'usage' ? 'border-primary-600 text-primary-600' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
-                            >
-                                <MapPin size={18} />
-                                Kullanım Alanları
-                            </button>
-                        </div>
-
-                        {/* Tab Content */}
-                        <div className="prose prose-slate max-w-none mb-10 h-[300px] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-slate-200">
-                            {activeTab === 'desc' && (
-                                <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                                    <p className="whitespace-pre-line leading-relaxed text-slate-600">
-                                        {product.description}
-                                    </p>
-                                    {product.features && (
-                                        <ul className="mt-6 space-y-3 list-none p-0">
-                                            {product.features.map((feature, idx) => (
-                                                <li key={idx} className="flex items-center gap-3 text-slate-700">
-                                                    <CheckCircle2 className="text-green-500 shrink-0" size={20} />
-                                                    {feature}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-                                </div>
-                            )}
-
-                            {activeTab === 'usage' && (
-                                <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                                    <p className="whitespace-pre-line leading-relaxed text-slate-600 bg-slate-50 p-6 rounded-xl border border-slate-100">
-                                        {product.usageArea || "Bu ürün için kullanım alanı bilgisi bulunmamaktadır."}
-                                    </p>
-                                </div>
-                            )}
-                        </div>
+                        <ProductTabs
+                            description={product.description || 'Ürün açıklaması henüz eklenmemiş.'}
+                            usageArea={product.usage || undefined}
+                        />
 
                         <div className="flex gap-4">
                             <Link

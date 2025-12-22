@@ -1,24 +1,73 @@
-"use client";
-
-import React, { use } from 'react';
+import React from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, Package } from 'lucide-react';
-import { categories, products as allProducts } from '@/data/mockData';
+import { db } from '@/lib/db';
+import { products as productsTable, categories as categoriesTable } from '@/db/schema';
+import { eq } from 'drizzle-orm';
 
-export default function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
-    const { category: categorySlug } = use(params);
+interface PageProps {
+    params: Promise<{ category: string }>;
+}
 
-    const category = categories.find(c => c.slug === categorySlug);
-    // Filter products by category ID (since products map to categoryId mock relation)
-    // In a real app with slug-based relations, this might be direct.
-    // Here we find the category first, then filter products by its ID.
+// Kategori verilerini çek
+async function getCategory(slug: string) {
+    try {
+        const result = await db.select().from(categoriesTable).where(eq(categoriesTable.slug, slug)).limit(1);
+        return result[0] || null;
+    } catch (error) {
+        console.error('Failed to fetch category:', error);
+        return null;
+    }
+}
+
+// Kategoriye ait ürünleri çek
+async function getProductsByCategory(categoryId: number) {
+    try {
+        const result = await db.select().from(productsTable).where(eq(productsTable.categoryId, categoryId));
+        return result;
+    } catch (error) {
+        console.error('Failed to fetch products:', error);
+        return [];
+    }
+}
+
+// Dinamik SEO metadata
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { category: categorySlug } = await params;
+    const category = await getCategory(categorySlug);
+
+    if (!category) {
+        return {
+            title: 'Kategori Bulunamadı',
+        };
+    }
+
+    const description = category.description || `${category.title} kategorisindeki tüm Aquachems ürünlerini inceleyin.`;
+
+    return {
+        title: category.title,
+        description,
+        openGraph: {
+            title: `${category.title} | Aquachems Ürünleri`,
+            description,
+            images: category.image ? [{ url: category.image }] : [],
+            type: 'website',
+        },
+    };
+}
+
+export default async function CategoryPage({ params }: PageProps) {
+    const { category: categorySlug } = await params;
+
+    const category = await getCategory(categorySlug);
 
     if (!category) {
         notFound();
     }
 
-    const products = allProducts.filter(p => p.categoryId === category.id);
+    const products = await getProductsByCategory(category.id);
 
     return (
         <div className="bg-slate-50 min-h-screen pb-20 pt-28">
@@ -26,11 +75,15 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
             <div className="relative h-[300px] flex items-center justify-center overflow-hidden">
                 {/* Background Image */}
                 <div className="absolute inset-0">
-                    <img
-                        src={category.image}
-                        alt={category.title}
-                        className="w-full h-full object-cover"
-                    />
+                    {category.image ? (
+                        <img
+                            src={category.image}
+                            alt={category.title}
+                            className="w-full h-full object-cover"
+                        />
+                    ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-primary-600 to-primary-800" />
+                    )}
                     {/* Dark Overlay with Gradient */}
                     <div className="absolute inset-0 bg-slate-900/70 bg-gradient-to-t from-slate-900/90 to-transparent"></div>
                 </div>
@@ -42,8 +95,8 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
                     </Link>
 
                     <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 ${category.color} rounded-xl flex items-center justify-center text-white shadow-lg`}>
-                            <category.icon size={24} />
+                        <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                            <Package size={24} />
                         </div>
                         <div>
                             <h1 className="text-3xl md:text-5xl font-bold text-white shadow-sm">{category.title}</h1>
@@ -60,15 +113,21 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
                             <Link href={`/products/${category.slug}/${product.slug}`} key={product.id} className="group">
                                 <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col">
                                     <div className="aspect-square relative bg-slate-100 overflow-hidden">
-                                        <img
-                                            src={product.image}
-                                            alt={product.title}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        />
+                                        {product.image ? (
+                                            <img
+                                                src={product.image}
+                                                alt={product.title}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center text-slate-400">
+                                                <Package size={48} />
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="p-6 flex-1 flex flex-col">
                                         <h3 className="text-lg font-bold text-slate-800 mb-2 group-hover:text-primary-600 transition-colors">{product.title}</h3>
-                                        <p className="text-sm text-slate-500 mb-4 flex-1 line-clamp-2">{product.description}</p>
+                                        <p className="text-sm text-slate-500 mb-4 flex-1 line-clamp-2">{product.shortDescription || product.description || ''}</p>
                                         <div className="bg-slate-50 text-slate-600 text-sm py-2 px-4 rounded-lg font-medium text-center group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors">
                                             Detaylı İncele
                                         </div>
@@ -82,7 +141,6 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
                         <Package size={48} className="mx-auto text-slate-300 mb-4" />
                         <h3 className="text-lg font-bold text-slate-700">Ürün Bulunamadı</h3>
                         <p className="text-slate-500 mt-2">Bu kategoriye ait henüz bir ürün eklenmemiş.</p>
-                        <p className="text-xs text-slate-400 mt-4">(Örnek ürünler için "Likit Cilt Temizleme" kategorisine bakınız)</p>
                     </div>
                 )}
             </div>
