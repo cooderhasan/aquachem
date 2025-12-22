@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Plus, Trash2, Image as ImageIcon, Pencil } from 'lucide-react';
 import { createCategory, updateCategory, deleteCategory } from './actions';
 import { useRouter } from 'next/navigation';
+import ImageUpload from '@/components/ui/ImageUpload';
 
 interface Category {
     id: number;
@@ -166,8 +167,8 @@ export default function CategoriesClient({ initialCategories }: CategoriesClient
 
             {/* Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-xl p-6 w-full max-w-md">
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+                    <div className="bg-white rounded-xl p-6 w-full max-w-lg my-8">
                         <h2 className="text-xl font-bold mb-4">
                             {editingCategory ? 'Kategori Düzenle' : 'Yeni Kategori Ekle'}
                         </h2>
@@ -184,13 +185,13 @@ export default function CategoriesClient({ initialCategories }: CategoriesClient
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium mb-1">Görsel URL (Opsiyonel)</label>
-                                <input
-                                    type="text"
+                                <label className="block text-sm font-medium mb-2">Kategori Görseli</label>
+                                <ImageUpload
                                     value={formData.image}
-                                    onChange={e => setFormData({ ...formData, image: e.target.value })}
-                                    className="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                                    placeholder="https://..."
+                                    onChange={(url) => setFormData({ ...formData, image: url })}
+                                    onRemove={() => setFormData({ ...formData, image: '' })}
+                                    label="Görsel Yükle"
+                                    description="PNG, JPG, WEBP (Max 4MB)"
                                 />
                             </div>
                             <div>
