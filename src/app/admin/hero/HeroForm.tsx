@@ -24,7 +24,11 @@ export default function HeroForm({ slide }: HeroFormProps) {
             } else {
                 await createHeroSlide(formData);
             }
-        } catch (error) {
+        } catch (error: any) {
+            // Next.js redirect() throws an error with digest containing 'NEXT_REDIRECT'
+            if (error?.digest?.includes('NEXT_REDIRECT')) {
+                throw error; // Re-throw to allow redirect to happen
+            }
             console.error(error);
             alert('İşlem başarısız oldu.');
         } finally {
