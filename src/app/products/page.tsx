@@ -52,7 +52,8 @@ export default async function ProductsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {categories.length > 0 ? categories.map((cat, index) => {
                         // Dynamic icon handling if icon name was stored, else default
-                        const Icon = LucideIcons[cat.icon as keyof typeof LucideIcons] || Package;
+                        const IconComponent = LucideIcons[cat.icon as keyof typeof LucideIcons] || Package;
+                        const Icon = IconComponent as any;
                         const colorClass = colors[index % colors.length];
 
                         return (

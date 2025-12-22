@@ -2,8 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Upload, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 import { createProduct } from '../actions';
+import ImageUpload from '@/components/ui/ImageUpload';
+import ToastParams from '@/components/admin/ToastParams';
 
 interface Category {
     id: number;
@@ -25,8 +27,6 @@ interface ProductFormProps {
     product?: Product;
 }
 
-import ImageUpload from '@/components/ui/ImageUpload';
-
 export default function ProductForm({ categories, product }: ProductFormProps) {
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState(product?.image || '');
@@ -34,24 +34,23 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
 
     async function clientAction(formData: FormData) {
         setLoading(true);
-        if (isEditing && product) {
-            // Append ID for update
-            formData.append('id', product.id.toString());
-            // We need to import updateProduct. Since it's a server action, 
-            // we should probably pass it as a prop or import it.
-            // For now, let's assume we import it or handle it here.
-            // Ideally, we'd have separate logic, but let's dynamically import or use a conditional.
-            // Since we can't easily dynamically swap actions in the form attribute without client JS,
-            // we'll handle the call ourselves.
-            const { updateProduct } = await import('../actions');
-            await updateProduct(formData);
-        } else {
-            await createProduct(formData);
+        try {
+            if (isEditing && product) {
+                formData.append('id', product.id.toString());
+                const { updateProduct } = await import('../actions');
+                await updateProduct(formData);
+            } else {
+                await createProduct(formData);
+            }
+        } catch (error) {
+            setLoading(false);
+            console.error(error);
         }
     }
 
     return (
         <div className="max-w-4xl mx-auto">
+            <ToastParams />
             <div className="mb-6">
                 <Link href="/admin/products" className="text-slate-500 hover:text-slate-800 flex items-center gap-2 mb-2 font-medium">
                     <ArrowLeft size={18} />

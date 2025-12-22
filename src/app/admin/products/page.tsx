@@ -5,6 +5,8 @@ import { Plus, Pencil, Trash2, Search } from 'lucide-react';
 import { db } from '@/lib/db';
 import { products as productsTable, categories as categoriesTable } from '@/db/schema';
 import { desc, eq } from 'drizzle-orm';
+import ToastParams from '@/components/admin/ToastParams';
+import DeleteProductButton from './DeleteProductButton';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -32,6 +34,7 @@ export default async function ProductsPage() {
 
     return (
         <div>
+            <ToastParams />
             {isMock && (
                 <div className="bg-amber-50 border-l-4 border-amber-500 p-4 mb-6 rounded-r-lg">
                     <div className="flex items-center">
@@ -130,9 +133,7 @@ export default async function ProductsPage() {
                                             <Link href={`/admin/products/${product.id}`} className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
                                                 <Pencil size={18} />
                                             </Link>
-                                            <button className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                                                <Trash2 size={18} />
-                                            </button>
+                                            <DeleteProductButton id={product.id} />
                                         </div>
                                     </td>
                                 </tr>
