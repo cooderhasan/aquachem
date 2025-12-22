@@ -97,7 +97,7 @@ const Footer = ({ settings }: { settings?: any }) => {
                 </div>
 
                 <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-                    <p>&copy; {new Date().getFullYear()} Aquachems Kimya. Tüm hakları saklıdır.</p>
+                    <p>&copy; {new Date().getFullYear()} Aquachems Kimya. Tüm hakları saklıdır. | Coded by <a href="https://www.hasandurmus.com" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-300 transition-colors">Hasan Durmuş</a></p>
                     <div className="flex gap-6">
                         <a href="/terms" className="hover:text-slate-300 transition-colors">Kullanım Şartları</a>
                         <a href="/privacy" className="hover:text-slate-300 transition-colors">Gizlilik Politikası</a>
