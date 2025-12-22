@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({
             success: true,
-            url: `/uploads/${fileName}`
+            url: `/api/files/${fileName}`
         });
     } catch (error) {
         console.error('Upload error:', error);

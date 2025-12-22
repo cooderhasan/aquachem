@@ -5,6 +5,12 @@ import { decrypt } from '@/lib/auth';
 export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
 
+    // Redirect /uploads/* to /api/files/* for file serving in standalone mode
+    if (path.startsWith('/uploads/')) {
+        const fileName = path.replace('/uploads/', '');
+        return NextResponse.redirect(new URL(`/api/files/${fileName}`, request.url));
+    }
+
     // Protect /admin routes
     if (path.startsWith('/admin') && !path.startsWith('/admin/login')) {
         const session = request.cookies.get('session')?.value;
@@ -26,5 +32,6 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/admin/:path*'],
+    matcher: ['/admin/:path*', '/uploads/:path*'],
 };
+
