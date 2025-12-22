@@ -115,6 +115,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                         <ProductTabs
                             description={product.description || 'Ürün açıklaması henüz eklenmemiş.'}
                             usageArea={product.usage || undefined}
+                            features={product.features as string[]}
                         />
 
                         <div className="flex gap-4">

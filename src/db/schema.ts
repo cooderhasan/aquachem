@@ -48,6 +48,7 @@ export const products = pgTable('products', {
   usage: text('usage'),
   image: text('image'),
   images: text('images'), // Kept as text for simple JSON string storage if jsonb is overkill or for compatibility
+  features: jsonb('features'), // Array of strings for product features
   isNew: boolean('is_new').default(false),
   createdAt: timestamp('created_at').defaultNow(),
 });
