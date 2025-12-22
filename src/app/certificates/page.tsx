@@ -1,5 +1,15 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { Award, FileText } from 'lucide-react';
+
+export const metadata: Metadata = {
+    title: 'Belgelerimiz',
+    description: 'Aquachems kalite belgeleri - ISO 9001, ISO 14001, OHSAS 18001, TSE ve diğer sertifikalarımız.',
+    openGraph: {
+        title: 'Belgelerimiz | Aquachems',
+        description: 'Aquachems kalite belgeleri - ISO 9001, ISO 14001, OHSAS 18001, TSE ve diğer sertifikalarımız.',
+    },
+};
 
 const certificates = [
     { id: 1, title: 'ISO 9001 - 2000', description: 'Kalite Yönetim Sistemi' },

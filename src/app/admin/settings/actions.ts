@@ -41,6 +41,12 @@ export async function updateSettings(formData: FormData) {
         const aboutImage = formData.get('aboutImage') as string;
         const catalogUrl = formData.get('catalogUrl') as string;
 
+        // SEO fields
+        const metaTitle = formData.get('metaTitle') as string;
+        const metaDescription = formData.get('metaDescription') as string;
+        const metaKeywords = formData.get('metaKeywords') as string;
+        const ogImage = formData.get('ogImage') as string;
+
         if (currentSettings) {
             await db.update(settings).set({
                 siteTitle: title,
@@ -54,6 +60,11 @@ export async function updateSettings(formData: FormData) {
                 vision,
                 humanPolicy,
                 socialMedia,
+                // SEO fields
+                metaTitle: metaTitle || currentSettings.metaTitle,
+                metaDescription: metaDescription || currentSettings.metaDescription,
+                metaKeywords: metaKeywords || currentSettings.metaKeywords,
+                ogImage: ogImage || currentSettings.ogImage,
             }).where(eq(settings.id, currentSettings.id));
         } else {
             await db.insert(settings).values({
@@ -67,6 +78,11 @@ export async function updateSettings(formData: FormData) {
                 humanPolicy,
                 catalogUrl,
                 socialMedia,
+                // SEO fields
+                metaTitle,
+                metaDescription,
+                metaKeywords,
+                ogImage,
             });
         }
 

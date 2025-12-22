@@ -1,8 +1,18 @@
 
 import React from 'react';
+import { Metadata } from 'next';
 import { getSettings } from '@/app/admin/settings/actions';
 import { Building2, Target, Eye, Users, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
+
+export const metadata: Metadata = {
+    title: 'Kurumsal',
+    description: 'Aquachems hakkında bilgi edinin. Misyonumuz, vizyonumuz ve insan kaynakları politikamız.',
+    openGraph: {
+        title: 'Kurumsal | Aquachems',
+        description: 'Aquachems hakkında bilgi edinin. Misyonumuz, vizyonumuz ve insan kaynakları politikamız.',
+    },
+};
 
 export default async function CorporatePage() {
     const settings = await getSettings();

@@ -18,6 +18,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
     const [logo, setLogo] = useState(initialSettings?.logo || '');
     const [favicon, setFavicon] = useState(initialSettings?.favicon || '');
     const [aboutImage, setAboutImage] = useState(initialSettings?.aboutImage || '');
+    const [ogImage, setOgImage] = useState(initialSettings?.ogImage || '');
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -49,8 +50,8 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
             {/* Bildirim Toast */}
             {notification && (
                 <div className={`fixed top-4 right-4 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg animate-in slide-in-from-top-2 ${notification.type === 'success'
-                        ? 'bg-green-500 text-white'
-                        : 'bg-red-500 text-white'
+                    ? 'bg-green-500 text-white'
+                    : 'bg-red-500 text-white'
                     }`}>
                     {notification.type === 'success' ? (
                         <CheckCircle size={24} />
@@ -114,6 +115,63 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                 defaultValue={initialSettings?.description || ''}
                                 className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                             />
+                        </div>
+                    </div>
+                </div>
+
+                {/* SEO Ayarları */}
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">🔍 SEO Ayarları</h2>
+                    <input type="hidden" name="ogImage" value={ogImage} />
+
+                    <div className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-1">Meta Başlık (Title Tag)</label>
+                            <input
+                                type="text"
+                                name="metaTitle"
+                                defaultValue={initialSettings?.metaTitle || ''}
+                                placeholder="Aquachems - İnsana ve Doğaya Saygılı Üretim"
+                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                            />
+                            <p className="text-xs text-slate-500 mt-1">Google arama sonuçlarında görünecek başlık (50-60 karakter önerilir)</p>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-1">Meta Açıklama (Description)</label>
+                            <textarea
+                                name="metaDescription"
+                                rows={3}
+                                defaultValue={initialSettings?.metaDescription || ''}
+                                placeholder="Aquachems, çevre bilinci ve insan sağlığını ön planda tutan kimyasal üretim çözümleri sunar."
+                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                            />
+                            <p className="text-xs text-slate-500 mt-1">Google arama sonuçlarında görünecek açıklama (150-160 karakter önerilir)</p>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-1">Anahtar Kelimeler (Keywords)</label>
+                            <input
+                                type="text"
+                                name="metaKeywords"
+                                defaultValue={initialSettings?.metaKeywords || ''}
+                                placeholder="aquachems, kimyasal, temizlik, dezenfektan, hijyen"
+                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                            />
+                            <p className="text-xs text-slate-500 mt-1">Virgülle ayırarak anahtar kelimeleri girin</p>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Sosyal Medya Paylaşım Görseli (OG Image)</label>
+                            <div className="max-w-md">
+                                <ImageUpload
+                                    value={ogImage}
+                                    onChange={(url) => setOgImage(url)}
+                                    onRemove={() => setOgImage('')}
+                                    label="OG Image Yükle"
+                                    description="1200x630 px önerilir - Facebook, Twitter paylaşımlarında görünür"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

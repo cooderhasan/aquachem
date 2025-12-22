@@ -1,8 +1,18 @@
 
 import React from 'react';
+import { Metadata } from 'next';
 import { getContactLocations } from '@/app/admin/contact/actions';
 import { Mail, Phone, MapPin, MessageSquare, Send } from 'lucide-react';
 import ContactForm from './ContactForm';
+
+export const metadata: Metadata = {
+    title: 'İletişim',
+    description: 'Aquachems ile iletişime geçin. Sorularınız, önerileriniz veya işbirliği talepleriniz için bize ulaşın.',
+    openGraph: {
+        title: 'İletişim | Aquachems',
+        description: 'Aquachems ile iletişime geçin. Sorularınız, önerileriniz veya işbirliği talepleriniz için bize ulaşın.',
+    },
+};
 
 export default async function ContactPage() {
     const locations = await getContactLocations();

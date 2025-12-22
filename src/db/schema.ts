@@ -94,6 +94,11 @@ export const settings = pgTable('settings', {
   humanPolicy: text('human_policy'),
   aboutImage: text('about_image'),
   catalogUrl: text('catalog_url'),
+  // SEO Fields
+  metaTitle: text('meta_title'),
+  metaDescription: text('meta_description'),
+  metaKeywords: text('meta_keywords'),
+  ogImage: text('og_image'),
 });
 
 export const contactLocations = pgTable('contact_locations', {
