@@ -1,7 +1,14 @@
 import type { Metadata } from 'next';
+import { Playfair_Display } from 'next/font/google';
 import './globals.css';
 import ConditionalLayout from '@/components/layout/ConditionalLayout';
 import { getSettings } from '@/app/admin/settings/actions';
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-playfair',
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -85,7 +92,7 @@ export default async function RootLayout({
           <link rel="icon" href={settings.favicon} />
         )}
       </head>
-      <body className="font-sans antialiased text-slate-600">
+      <body className={`${playfair.variable} font-sans antialiased text-slate-600`}>
         <ConditionalLayout settings={settings}>{children}</ConditionalLayout>
       </body>
     </html>
