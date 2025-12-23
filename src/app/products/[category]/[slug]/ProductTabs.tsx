@@ -21,14 +21,14 @@ export default function ProductTabs({ description, usageArea, features }: Produc
                     className={`flex items-center gap-2 px-6 py-3 font-medium border-b-2 transition-colors ${activeTab === 'desc' ? 'border-primary-600 text-primary-600' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
                 >
                     <Info size={18} />
-                    Ürün Açıklaması
+                    Kullanıldığı Yerler
                 </button>
                 <button
                     onClick={() => setActiveTab('usage')}
                     className={`flex items-center gap-2 px-6 py-3 font-medium border-b-2 transition-colors ${activeTab === 'usage' ? 'border-primary-600 text-primary-600' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
                 >
                     <MapPin size={18} />
-                    Kullanım Alanları
+                    Kullanım Şekli
                 </button>
             </div>
 
