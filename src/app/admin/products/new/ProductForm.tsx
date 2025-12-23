@@ -50,8 +50,11 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
 
             if (result.success) {
                 toast.success(result.message);
-                router.push('/admin/products');
-                router.refresh();
+                // Toast mesajının görünmesi için kısa bir gecikme
+                setTimeout(() => {
+                    router.push('/admin/products');
+                    router.refresh();
+                }, 1500);
             } else {
                 toast.error(result.message);
                 setLoading(false);
