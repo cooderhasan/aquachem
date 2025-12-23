@@ -36,7 +36,7 @@ export async function addReference(formData: FormData) {
 
         if (!fs.existsSync(uploadDir)) {
             try {
-                fs.mkdirSync(uploadDir, { recursive: true });
+                fs.mkdirSync(uploadDir, { recursive: true, mode: 0o777 });
             } catch (err) {
                 console.error('Directory creation failed:', err);
                 throw new Error('Yükleme dizini oluşturulamadı');
@@ -44,7 +44,15 @@ export async function addReference(formData: FormData) {
         }
 
         const filePath = path.join(uploadDir, fileName);
-        fs.writeFileSync(filePath, buffer);
+
+        try {
+            fs.writeFileSync(filePath, buffer, { mode: 0o666 });
+        } catch (writeError: any) {
+            console.error('File write failed:', writeError);
+            console.error('Upload dir:', uploadDir);
+            console.error('File path:', filePath);
+            throw new Error(`Dosya yazılamadı: ${writeError.message}`);
+        }
 
         // Correct URL path for serving via API
         const imageUrl = `/api/files/${fileName}`;

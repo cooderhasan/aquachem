@@ -57,9 +57,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Create uploads directory and set permissions for persistence
-RUN mkdir -p /app/public/uploads
-RUN chown -R nextjs:nodejs /app/public/uploads
-RUN chmod -R 755 /app/public/uploads
+# Using 777 to ensure volume mounts work correctly with any user
+RUN mkdir -p /app/public/uploads && \
+    chown -R nextjs:nodejs /app/public && \
+    chmod -R 777 /app/public/uploads
 
 USER nextjs
 
