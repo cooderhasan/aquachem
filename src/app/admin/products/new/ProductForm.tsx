@@ -122,7 +122,7 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Ürün Açıklaması</label>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Kullanıldığı Yerler</label>
                         <textarea
                             name="description"
                             defaultValue={product?.description || ''}
@@ -132,7 +132,7 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Kullanım Alanları</label>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Kullanım Şekli</label>
                         <textarea
                             name="usage"
                             defaultValue={product?.usage || ''}
