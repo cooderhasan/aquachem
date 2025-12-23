@@ -34,12 +34,12 @@ const Header = ({ settings }: { settings?: any }) => {
             {/* Top Bar - Hidden on scroll for cleanliness, visible at top */}
             <div className={`bg-slate-900 text-slate-300 text-xs py-2 transition-all duration-300 overflow-hidden ${scrolled ? 'h-0 opacity-0' : 'h-10 opacity-100'}`}>
                 <div className="container-custom flex justify-between items-center h-full">
-                    <div className="flex items-center gap-6">
-                        <a href="mailto:info@aquachems.com" className="flex items-center gap-2 hover:text-white transition-colors">
+                    <div className="flex items-center gap-4 md:gap-6">
+                        <a href="mailto:info@aquachems.com" className="hidden sm:flex items-center gap-2 hover:text-white transition-colors">
                             <Mail size={14} />
                             <span>info@aquachems.com</span>
                         </a>
-                        <a href="tel:05336838563" className="flex items-center gap-2 hover:text-white transition-colors">
+                        <a href="tel:05336838563" className="flex items-center gap-2 hover:text-white transition-colors whitespace-nowrap">
                             <Phone size={14} />
                             <span>0533 683 85 63</span>
                         </a>
