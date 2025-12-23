@@ -6,7 +6,7 @@ import { eq, desc } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import fs from 'fs';
 import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
+import crypto from 'crypto';
 
 export async function getReferences() {
     try {
@@ -27,7 +27,7 @@ export async function addReference(formData: FormData) {
         }
 
         const buffer = Buffer.from(await file.arrayBuffer());
-        const fileName = `${uuidv4()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
+        const fileName = `${crypto.randomUUID()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
 
         // Use /app/public/uploads for Docker (matches Coolify volume mount) or fallback to public/uploads for local dev
         const uploadDir = process.env.NODE_ENV === 'production'
