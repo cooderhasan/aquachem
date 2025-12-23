@@ -109,7 +109,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
                     {/* Product Info */}
                     <div>
-                        <h1 className="text-4xl font-bold text-slate-900 mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>{product.title}</h1>
+                        <h1 className="text-4xl font-bold text-slate-900 mb-2" style={{ fontFamily: 'var(--font-ubuntu)' }}>{product.title}</h1>
                         <p className="text-xl text-slate-500 mb-8">{product.shortDescription || ''}</p>
 
                         <ProductTabs

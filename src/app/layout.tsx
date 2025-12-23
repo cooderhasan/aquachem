@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
-import { Playfair_Display } from 'next/font/google';
+import { Ubuntu } from 'next/font/google';
 import './globals.css';
 import ConditionalLayout from '@/components/layout/ConditionalLayout';
 import { getSettings } from '@/app/admin/settings/actions';
 
-const playfair = Playfair_Display({
+const ubuntu = Ubuntu({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-playfair',
+  weight: ['300', '400', '500', '700'],
+  variable: '--font-ubuntu',
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -92,7 +92,7 @@ export default async function RootLayout({
           <link rel="icon" href={settings.favicon} />
         )}
       </head>
-      <body className={`${playfair.variable} font-sans antialiased text-slate-600`}>
+      <body className={`${ubuntu.variable} font-sans antialiased text-slate-600`}>
         <ConditionalLayout settings={settings}>{children}</ConditionalLayout>
       </body>
     </html>
