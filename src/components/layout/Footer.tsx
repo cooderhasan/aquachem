@@ -20,13 +20,23 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
                     {/* Brand Info */}
                     <div className="space-y-6">
                         <Link href="/" className="flex items-center gap-3 group">
-                            <div className="bg-primary-600 text-white p-2.5 rounded-xl group-hover:bg-primary-500 transition-colors">
-                                <Droplets size={28} />
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-2xl font-bold text-white leading-none tracking-tight">AQUACHEMS</span>
-                                <span className="text-[10px] text-primary-400 font-bold tracking-widest uppercase">Kimya & İnovasyon</span>
-                            </div>
+                            {settings?.footerLogo ? (
+                                <img
+                                    src={settings.footerLogo}
+                                    alt="Aquachems Logo"
+                                    className="h-12 w-auto object-contain"
+                                />
+                            ) : (
+                                <>
+                                    <div className="bg-primary-600 text-white p-2.5 rounded-xl group-hover:bg-primary-500 transition-colors">
+                                        <Droplets size={28} />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-2xl font-bold text-white leading-none tracking-tight">AQUACHEMS</span>
+                                        <span className="text-[10px] text-primary-400 font-bold tracking-widest uppercase">Kimya & İnovasyon</span>
+                                    </div>
+                                </>
+                            )}
                         </Link>
                         <p className="text-slate-400 leading-relaxed text-sm">
                             {settings?.description || 'Endüstriyel temizlik ve hijyen çözümlerinde yenilikçi yaklaşımlarımızla, işletmenizin verimliliğini artırıyor ve sürdürülebilir bir gelecek için çalışıyoruz.'}

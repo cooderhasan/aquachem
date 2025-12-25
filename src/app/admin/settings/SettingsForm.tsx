@@ -19,6 +19,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
     const [favicon, setFavicon] = useState(initialSettings?.favicon || '');
     const [aboutImage, setAboutImage] = useState(initialSettings?.aboutImage || '');
     const [ogImage, setOgImage] = useState(initialSettings?.ogImage || '');
+    const [footerLogo, setFooterLogo] = useState(initialSettings?.footerLogo || '');
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -73,6 +74,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                     <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">Genel Ayarlar</h2>
                     <input type="hidden" name="logo" value={logo} />
                     <input type="hidden" name="favicon" value={favicon} />
+                    <input type="hidden" name="footerLogo" value={footerLogo} />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
@@ -93,6 +95,16 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                 onRemove={() => setFavicon('')}
                                 label="Favicon Yükle"
                                 description="32x32 veya 64x64 px, PNG/ICO önerilir"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Footer Logosu</label>
+                            <ImageUpload
+                                value={footerLogo}
+                                onChange={(url) => setFooterLogo(url)}
+                                onRemove={() => setFooterLogo('')}
+                                label="Footer Logo Yükle"
+                                description="Sitenin alt kısmında görünecek logo (Şeffaf PNG önerilir)"
                             />
                         </div>
                     </div>
