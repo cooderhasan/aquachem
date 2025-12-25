@@ -1,7 +1,15 @@
 import React from 'react';
 import { FileText, Calendar } from 'lucide-react';
+import { getContactLocations } from '@/app/admin/contact/actions';
 
-export default function TermsPage() {
+export default async function TermsPage() {
+    // İç Anadolu lokasyonunu çek
+    const locations = await getContactLocations();
+    const icAnadoluLocation = locations.find(loc =>
+        loc.title.toLowerCase().includes('iç anadolu') ||
+        loc.title.toLowerCase().includes('ic anadolu')
+    ) || locations[0] || null;
+
     return (
         <div className="bg-white min-h-screen pb-20 pt-28">
             <div className="bg-primary-900 text-white py-16">
@@ -68,9 +76,9 @@ export default function TermsPage() {
                             Kullanım şartları ile ilgili sorularınız için bizimle iletişime geçebilirsiniz:
                         </p>
                         <ul>
-                            <li>E-posta: info@aquachems.com</li>
-                            <li>Telefon: 0533 683 85 63</li>
-                            <li>Adres: İkitelli OSB Mah. Giyim Sanatkarları 3. Ada C Blok No:57 Başakşehir / İstanbul</li>
+                            {icAnadoluLocation?.email && <li>E-posta: {icAnadoluLocation.email}</li>}
+                            {icAnadoluLocation?.phone && <li>Telefon: {icAnadoluLocation.phone}</li>}
+                            {icAnadoluLocation?.address && <li>Adres: {icAnadoluLocation.address}</li>}
                         </ul>
                     </div>
                 </div>
