@@ -101,6 +101,7 @@ export const settings = pgTable('settings', {
   metaDescription: text('meta_description'),
   metaKeywords: text('meta_keywords'),
   ogImage: text('og_image'),
+  whatsappNumber: text('whatsapp_number'),
 });
 
 export const contactLocations = pgTable('contact_locations', {

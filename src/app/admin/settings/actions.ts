@@ -46,6 +46,7 @@ export async function updateSettings(formData: FormData) {
         const metaDescription = formData.get('metaDescription') as string;
         const metaKeywords = formData.get('metaKeywords') as string;
         const ogImage = formData.get('ogImage') as string;
+        const whatsappNumber = formData.get('whatsappNumber') as string;
 
         if (currentSettings) {
             await db.update(settings).set({
@@ -65,6 +66,7 @@ export async function updateSettings(formData: FormData) {
                 metaDescription: metaDescription || currentSettings.metaDescription,
                 metaKeywords: metaKeywords || currentSettings.metaKeywords,
                 ogImage: ogImage || currentSettings.ogImage,
+                whatsappNumber: whatsappNumber || currentSettings.whatsappNumber,
             }).where(eq(settings.id, currentSettings.id));
         } else {
             await db.insert(settings).values({
@@ -83,6 +85,7 @@ export async function updateSettings(formData: FormData) {
                 metaDescription,
                 metaKeywords,
                 ogImage,
+                whatsappNumber,
             });
         }
 

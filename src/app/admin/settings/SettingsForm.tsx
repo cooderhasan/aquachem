@@ -296,6 +296,21 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                 className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                             />
                         </div>
+                        <div className="md:col-span-2">
+                            <label className="block text-sm font-medium text-slate-700 mb-1">
+                                📱 WhatsApp Numarası
+                            </label>
+                            <input
+                                type="text"
+                                name="whatsappNumber"
+                                defaultValue={initialSettings?.whatsappNumber || ''}
+                                placeholder="905551234567 (Ülke kodu ile, başında + olmadan)"
+                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                            />
+                            <p className="text-xs text-slate-500 mt-1">
+                                Sağ altta görünen WhatsApp destek butonunda kullanılacak numara. Örnek: 905551234567
+                            </p>
+                        </div>
                     </div>
                 </div>
 
