@@ -4,6 +4,7 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 import Header from './Header';
 import Footer from './Footer';
+import WhatsAppButton from './WhatsAppButton';
 
 interface ContactLocation {
     id: number;
@@ -23,11 +24,15 @@ const ConditionalLayout = ({ children, settings, contactLocation }: ConditionalL
     const pathname = usePathname();
     const isAuthPage = pathname?.startsWith('/admin') || pathname?.startsWith('/login');
 
+    // WhatsApp telefon numarasını settings'ten al veya varsayılan kullan
+    const whatsappNumber = settings?.whatsappNumber || contactLocation?.phone?.replace(/\D/g, '') || "905551234567";
+
     return (
         <>
             {!isAuthPage && <Header settings={settings} />}
             {children}
             {!isAuthPage && <Footer settings={settings} contactLocation={contactLocation} />}
+            {!isAuthPage && <WhatsAppButton phoneNumber={whatsappNumber} />}
         </>
     );
 };
