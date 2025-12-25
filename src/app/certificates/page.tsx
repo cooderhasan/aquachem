@@ -1,6 +1,10 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { Award, FileText } from 'lucide-react';
+import Image from 'next/image';
+import { db } from '@/lib/db';
+import { certificates } from '@/db/schema';
+import { desc } from 'drizzle-orm';
 
 export const metadata: Metadata = {
     title: 'Belgelerimiz',
@@ -11,16 +15,18 @@ export const metadata: Metadata = {
     },
 };
 
-const certificates = [
-    { id: 1, title: 'ISO 9001 - 2000', description: 'Kalite Yönetim Sistemi' },
-    { id: 2, title: 'ISO 14001', description: 'Çevre Yönetim Sistemi' },
-    { id: 3, title: 'OHSAS 18001', description: 'İşçi Sağlığı ve Güvenliği' },
-    { id: 4, title: 'IQ SCC-HYB', description: 'Hizmet Yeterlilik Belgesi' },
-    { id: 5, title: 'TSE', description: 'Türk Standartlarına Uygunluk' },
-    { id: 6, title: 'Yerli Malı Belgesi', description: 'Yerli Üretim Sertifikası' }
-];
+async function getCertificates() {
+    try {
+        const items = await db.select().from(certificates).orderBy(desc(certificates.id));
+        return items;
+    } catch (error) {
+        console.error("Failed to fetch certificates:", error);
+        return [];
+    }
+}
 
-export default function CertificatesPage() {
+export default async function CertificatesPage() {
+    const certificateList = await getCertificates();
     return (
         <div className="bg-white min-h-screen pb-20">
             {/* Header Banner */}
@@ -45,17 +51,31 @@ export default function CertificatesPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {certificates.map((cert) => (
-                        <div key={cert.id} className="bg-slate-50 border border-slate-200 rounded-xl p-8 hover:shadow-lg transition-shadow group">
-                            <div className="w-20 h-20 bg-white rounded-full shadow-sm flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform border border-slate-100">
-                                <FileText className="text-primary-600" size={36} />
+                    {certificateList.length > 0 ? (
+                        certificateList.map((cert) => (
+                            <div key={cert.id} className="bg-slate-50 border border-slate-200 rounded-xl p-8 hover:shadow-lg transition-shadow group">
+                                <div className="w-full h-48 relative mb-6 rounded-lg overflow-hidden bg-white border border-slate-100">
+                                    <Image
+                                        src={cert.image}
+                                        alt={cert.title}
+                                        fill
+                                        className="object-contain p-4 group-hover:scale-105 transition-transform"
+                                    />
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-800 text-center mb-3 group-hover:text-primary-700 transition-colors">
+                                    {cert.title}
+                                </h3>
+                                {cert.description && (
+                                    <p className="text-slate-500 text-center font-medium">{cert.description}</p>
+                                )}
                             </div>
-                            <h3 className="text-xl font-bold text-slate-800 text-center mb-3 group-hover:text-primary-700 transition-colors">
-                                {cert.title}
-                            </h3>
-                            <p className="text-slate-500 text-center font-medium">{cert.description}</p>
+                        ))
+                    ) : (
+                        <div className="col-span-full text-center py-12">
+                            <FileText className="mx-auto text-slate-300 mb-4" size={48} />
+                            <p className="text-slate-500">Henüz belge eklenmemiş.</p>
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
         </div>

@@ -42,7 +42,7 @@ export async function createCertificate(formData: FormData) {
             image,
         });
         revalidatePath("/admin/certificates");
-        revalidatePath("/belgelerimiz"); // Assuming public page
+        revalidatePath("/certificates");
     } catch (error) {
         console.error("Failed to create certificate:", error);
         throw new Error("Failed to create certificate");
@@ -70,7 +70,7 @@ export async function updateCertificate(id: number, formData: FormData) {
             .where(eq(certificates.id, id));
 
         revalidatePath("/admin/certificates");
-        revalidatePath("/belgelerimiz");
+        revalidatePath("/certificates");
     } catch (error) {
         console.error("Failed to update certificate:", error);
         throw new Error("Failed to update certificate");
@@ -83,7 +83,7 @@ export async function deleteCertificate(id: number) {
     try {
         await db.delete(certificates).where(eq(certificates.id, id));
         revalidatePath("/admin/certificates");
-        revalidatePath("/belgelerimiz");
+        revalidatePath("/certificates");
     } catch (error) {
         console.error("Failed to delete certificate:", error);
         throw new Error("Failed to delete certificate");
