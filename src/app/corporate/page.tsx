@@ -42,7 +42,7 @@ export default async function CorporatePage() {
             <div className="py-20">
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col lg:flex-row gap-16 items-center">
-                        <div className="flex-1 space-y-6">
+                        <div className="w-full lg:flex-1 space-y-6">
                             <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold">
                                 <Building2 size={18} />
                                 Hakkımızda
@@ -54,8 +54,8 @@ export default async function CorporatePage() {
                                 {settings?.aboutUs || 'Hakkımızda yazısı henüz eklenmedi.'}
                             </p>
                         </div>
-                        <div className="flex-1 relative">
-                            <div className="relative h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl">
+                        <div className="w-full lg:flex-1 relative">
+                            <div className="relative h-[300px] md:h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl">
                                 <Image
                                     src={settings?.aboutImage || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80"}
                                     alt="About Us"
