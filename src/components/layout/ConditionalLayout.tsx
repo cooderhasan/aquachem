@@ -5,12 +5,21 @@ import { usePathname } from 'next/navigation';
 import Header from './Header';
 import Footer from './Footer';
 
-interface ConditionalLayoutProps {
-    children: React.ReactNode;
-    settings?: any; // Define a proper type if possible, or use 'any' for now to match current state
+interface ContactLocation {
+    id: number;
+    title: string;
+    address: string;
+    phone: string | null;
+    email: string | null;
 }
 
-const ConditionalLayout = ({ children, settings }: ConditionalLayoutProps) => {
+interface ConditionalLayoutProps {
+    children: React.ReactNode;
+    settings?: any;
+    contactLocation?: ContactLocation | null;
+}
+
+const ConditionalLayout = ({ children, settings, contactLocation }: ConditionalLayoutProps) => {
     const pathname = usePathname();
     const isAuthPage = pathname?.startsWith('/admin') || pathname?.startsWith('/login');
 
@@ -18,9 +27,10 @@ const ConditionalLayout = ({ children, settings }: ConditionalLayoutProps) => {
         <>
             {!isAuthPage && <Header settings={settings} />}
             {children}
-            {!isAuthPage && <Footer settings={settings} />}
+            {!isAuthPage && <Footer settings={settings} contactLocation={contactLocation} />}
         </>
     );
 };
 
 export default ConditionalLayout;
+

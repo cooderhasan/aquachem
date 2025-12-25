@@ -4,7 +4,15 @@ import React from 'react';
 import Link from 'next/link';
 import { Droplets, MapPin, Phone, Mail, Instagram, Linkedin, Facebook, Globe } from 'lucide-react';
 
-const Footer = ({ settings }: { settings?: any }) => {
+interface ContactLocation {
+    id: number;
+    title: string;
+    address: string;
+    phone: string | null;
+    email: string | null;
+}
+
+const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation?: ContactLocation | null }) => {
     return (
         <footer className="bg-slate-900 text-slate-300 pt-20 pb-10 mt-auto">
             <div className="container-custom">
@@ -78,19 +86,19 @@ const Footer = ({ settings }: { settings?: any }) => {
                                 <div className="p-2 bg-slate-800 rounded-lg text-primary-500 shrink-0">
                                     <MapPin size={18} />
                                 </div>
-                                <span className="leading-relaxed">İkitelli OSB Mah. Giyim Sanatkarları 3. Ada C Blok No:57 Başakşehir / İstanbul</span>
+                                <span className="leading-relaxed">{contactLocation?.address || 'İkitelli OSB Mah. Giyim Sanatkarları 3. Ada C Blok No:57 Başakşehir / İstanbul'}</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <div className="p-2 bg-slate-800 rounded-lg text-primary-500 shrink-0">
                                     <Phone size={18} />
                                 </div>
-                                <a href="tel:05336838563" className="hover:text-primary-400 transition-colors">0533 683 85 63</a>
+                                <a href={`tel:${contactLocation?.phone?.replace(/\s/g, '') || '05336838563'}`} className="hover:text-primary-400 transition-colors">{contactLocation?.phone || '0533 683 85 63'}</a>
                             </li>
                             <li className="flex items-center gap-3">
                                 <div className="p-2 bg-slate-800 rounded-lg text-primary-500 shrink-0">
                                     <Mail size={18} />
                                 </div>
-                                <a href="mailto:info@aquachems.com" className="hover:text-primary-400 transition-colors">info@aquachems.com</a>
+                                <a href={`mailto:${contactLocation?.email || 'info@aquachems.com'}`} className="hover:text-primary-400 transition-colors">{contactLocation?.email || 'info@aquachems.com'}</a>
                             </li>
                         </ul>
                     </div>
