@@ -8,6 +8,7 @@ import { products, categories } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import ProductTabs from './ProductTabs';
 import ProductImageGallery from './ProductImageGallery';
+import RelatedProducts from './RelatedProducts';
 
 interface PageProps {
     params: Promise<{ category: string; slug: string }>;
@@ -32,6 +33,23 @@ async function getCategory(slug: string) {
     } catch (error) {
         console.error('Failed to fetch category:', error);
         return null;
+    }
+}
+
+// Aynı kategorideki ürünleri çek
+async function getRelatedProducts(categoryId: number) {
+    try {
+        const result = await db.select({
+            id: products.id,
+            title: products.title,
+            slug: products.slug,
+            image: products.image,
+            shortDescription: products.shortDescription,
+        }).from(products).where(eq(products.categoryId, categoryId));
+        return result;
+    } catch (error) {
+        console.error('Failed to fetch related products:', error);
+        return [];
     }
 }
 
@@ -77,6 +95,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
     if (!product || !category) {
         notFound();
     }
+
+    // Fetch related products from the same category
+    const relatedProducts = await getRelatedProducts(category.id);
 
     // Parse images array from JSON string
     let allImages: string[] = [];
@@ -141,6 +162,14 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
                 </div>
             </div>
+
+            {/* Related Products */}
+            <RelatedProducts
+                products={relatedProducts}
+                categorySlug={category.slug}
+                currentProductId={product.id}
+            />
         </div>
     );
 }
+
