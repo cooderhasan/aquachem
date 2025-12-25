@@ -17,6 +17,7 @@ export async function createProduct(formData: FormData) {
         const description = formData.get('description') as string;
         const usage = formData.get('usage') as string;
         const image = formData.get('image') as string;
+        const images = formData.get('images') as string;
 
         // Use custom slugify
         const slug = slugify(title);
@@ -28,6 +29,7 @@ export async function createProduct(formData: FormData) {
             description,
             usage,
             image,
+            images,
         });
 
         revalidatePath('/admin/products');
@@ -88,6 +90,7 @@ export async function updateProduct(formData: FormData) {
         const description = formData.get('description') as string;
         const usage = formData.get('usage') as string;
         const image = formData.get('image') as string;
+        const images = formData.get('images') as string;
 
         // Use custom slugify
         const slug = slugify(title);
@@ -100,6 +103,7 @@ export async function updateProduct(formData: FormData) {
                 description,
                 usage,
                 image,
+                images,
             })
             .where(eq(products.id, id));
 

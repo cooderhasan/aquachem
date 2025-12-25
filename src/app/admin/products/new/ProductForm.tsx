@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { createProduct } from '../actions';
-import ImageUpload from '@/components/ui/ImageUpload';
+import MultiImageUpload from '@/components/ui/MultiImageUpload';
 import ToastParams from '@/components/admin/ToastParams';
 import { toast } from 'sonner';
 
@@ -22,6 +22,7 @@ interface Product {
     usage: string | null;
     slug: string;
     image: string | null;
+    images: string | null;
 }
 
 interface ProductFormProps {
@@ -31,10 +32,30 @@ interface ProductFormProps {
 
 export default function ProductForm({ categories, product }: ProductFormProps) {
     const [loading, setLoading] = useState(false);
-    const [image, setImage] = useState(product?.image || '');
+
+    // Parse existing images: combine main image and additional images
+    const initialImages = useMemo(() => {
+        const imgs: string[] = [];
+        if (product?.image) {
+            imgs.push(product.image);
+        }
+        if (product?.images) {
+            try {
+                const additionalImages = JSON.parse(product.images);
+                if (Array.isArray(additionalImages)) {
+                    imgs.push(...additionalImages.filter((img: string) => img !== product.image));
+                }
+            } catch {
+                // Invalid JSON, ignore
+            }
+        }
+        return imgs;
+    }, [product]);
+
+    const [images, setImages] = useState<string[]>(initialImages);
     const isEditing = !!product;
 
-    const router = useRouter(); // Import useRouter at top level
+    const router = useRouter();
 
     async function clientAction(formData: FormData) {
         setLoading(true);
@@ -50,7 +71,6 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
 
             if (result.success) {
                 toast.success(result.message);
-                // Toast mesajının görünmesi için kısa bir gecikme
                 setTimeout(() => {
                     router.push('/admin/products');
                     router.refresh();
@@ -112,13 +132,17 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Ürün Görseli</label>
-                        <ImageUpload
-                            value={image}
-                            onChange={(url) => setImage(url)}
-                            onRemove={() => setImage('')}
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Ürün Görselleri</label>
+                        <MultiImageUpload
+                            values={images}
+                            onChange={setImages}
+                            maxImages={6}
+                            label=""
                         />
-                        <input type="hidden" name="image" value={image} />
+                        {/* Main image (first one) */}
+                        <input type="hidden" name="image" value={images[0] || ''} />
+                        {/* All images as JSON array */}
+                        <input type="hidden" name="images" value={JSON.stringify(images)} />
                     </div>
 
                     <div>

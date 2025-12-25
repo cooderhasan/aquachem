@@ -7,6 +7,7 @@ import { db } from '@/lib/db';
 import { products, categories } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import ProductTabs from './ProductTabs';
+import ProductImageGallery from './ProductImageGallery';
 
 interface PageProps {
     params: Promise<{ category: string; slug: string }>;
@@ -77,6 +78,23 @@ export default async function ProductDetailPage({ params }: PageProps) {
         notFound();
     }
 
+    // Parse images array from JSON string
+    let allImages: string[] = [];
+    if (product.image) {
+        allImages.push(product.image);
+    }
+    if (product.images) {
+        try {
+            const parsed = JSON.parse(product.images);
+            if (Array.isArray(parsed)) {
+                // Add images that are not the main image (avoid duplicates)
+                allImages.push(...parsed.filter((img: string) => img && img !== product.image));
+            }
+        } catch {
+            // Invalid JSON, ignore
+        }
+    }
+
     return (
         <div className="bg-white min-h-screen pb-20 pt-28">
 
@@ -94,18 +112,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
             <div className="container-custom py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
-                    {/* Product Image */}
-                    <div className="bg-slate-50 rounded-2xl border border-slate-100 p-8 flex items-center justify-center">
-                        <div className="relative w-full aspect-square max-w-md bg-white rounded-xl shadow-sm p-4">
-                            {product.image ? (
-                                <img src={product.image} alt={product.title} className="w-full h-full object-cover rounded-lg" />
-                            ) : (
-                                <div className="w-full h-full bg-slate-100 rounded-lg flex items-center justify-center text-slate-400">
-                                    Görsel Yok
-                                </div>
-                            )}
-                        </div>
-                    </div>
+                    {/* Product Image Gallery */}
+                    <ProductImageGallery
+                        images={allImages}
+                        productTitle={product.title}
+                    />
 
                     {/* Product Info */}
                     <div>
