@@ -36,8 +36,16 @@ export default function CertificateForm({ initialData }: CertificateFormProps = 
             } else {
                 await createCertificate(formData);
             }
-            // Router refresh and push are handled in server action redirect but just in case
-        } catch (error) {
+            // Router refresh handled in server action redirect
+        } catch (error: unknown) {
+            // Next.js redirect throws a special error that we should ignore
+            if (error && typeof error === 'object' && 'digest' in error) {
+                const digest = (error as { digest?: string }).digest;
+                if (digest?.startsWith('NEXT_REDIRECT')) {
+                    // This is a redirect, not an error - let it propagate
+                    throw error;
+                }
+            }
             console.error('Error saving certificate:', error);
             alert('Bir hata oluştu. Lütfen tekrar deneyin.');
         } finally {
