@@ -59,6 +59,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
     const { page } = await searchParams;
     const currentPage = Math.max(1, parseInt(page || '1', 10));
     const category = await getCategory(categorySlug);
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://aquachem.hasandurmus.com';
 
     if (!category) {
         return {
@@ -71,12 +72,22 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
         : category.title;
     const description = category.description || `${category.title} kategorisindeki tüm Aquachems ürünlerini inceleyin.`;
 
+    // Canonical URL: sayfa 1 için parametresiz, diğerleri için ?page=X
+    const canonicalPath = currentPage > 1
+        ? `/products/${categorySlug}?page=${currentPage}`
+        : `/products/${categorySlug}`;
+    const canonicalUrl = `${siteUrl}${canonicalPath}`;
+
     return {
         title: pageTitle,
         description,
+        alternates: {
+            canonical: canonicalUrl,
+        },
         openGraph: {
             title: `${pageTitle} | Aquachems Ürünleri`,
             description,
+            url: canonicalUrl,
             images: category.image ? [{ url: category.image }] : [],
             type: 'website',
         },
