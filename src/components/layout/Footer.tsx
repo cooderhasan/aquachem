@@ -24,7 +24,7 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
                                 <img
                                     src={settings.footerLogo}
                                     alt="Aquachems Logo"
-                                    className="h-12 w-auto object-contain"
+                                    className="h-16 w-auto object-contain"
                                 />
                             ) : (
                                 <>
