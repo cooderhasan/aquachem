@@ -17,9 +17,10 @@ interface RelatedProductsProps {
 }
 
 export default function RelatedProducts({ products, categorySlug, currentProductId }: RelatedProductsProps) {
-    // Filter out the current product and limit to 4
+    // Filter out the current product, shuffle randomly, and limit to 4
     const relatedProducts = products
         .filter(p => p.id !== currentProductId)
+        .sort(() => Math.random() - 0.5) // Random shuffle
         .slice(0, 4);
 
     if (relatedProducts.length === 0) {
