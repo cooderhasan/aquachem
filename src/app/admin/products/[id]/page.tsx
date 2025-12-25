@@ -31,7 +31,8 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
         description: product.description,
         usage: (product as any).usage || (product as any).usageArea || '',
         slug: product.slug,
-        image: product.image
+        image: product.image,
+        images: (product as any).images || null
     };
 
     return (
