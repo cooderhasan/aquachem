@@ -1,11 +1,24 @@
 "use client";
 
 import React from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { references } from '@/data/mockData';
 
-const ReferencesCarousel = () => {
+interface Reference {
+    id: number;
+    title: string;
+    image: string;
+    categoryId: number | null;
+}
+
+interface ReferencesCarouselProps {
+    references: Reference[];
+}
+
+const ReferencesCarousel = ({ references }: ReferencesCarouselProps) => {
+    // Referans yoksa bileşeni gösterme
+    if (!references || references.length === 0) {
+        return null;
+    }
+
     return (
         <section className="py-12 bg-slate-50 border-t border-slate-100">
             <div className="container-custom mb-12 text-center">
@@ -30,8 +43,8 @@ const ReferencesCarousel = () => {
                             className="w-[180px] h-[80px] flex items-center justify-center grayscale hover:grayscale-0 opacity-50 hover:opacity-100 transition-all duration-500 transform hover:scale-110"
                         >
                             <img
-                                src={ref.logo}
-                                alt={ref.name}
+                                src={ref.image}
+                                alt={ref.title}
                                 className="max-w-full max-h-full object-contain mix-blend-multiply"
                             />
                         </div>
