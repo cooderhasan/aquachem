@@ -6,6 +6,7 @@ import { Save, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import ImageUpload from '@/components/ui/ImageUpload';
 import { createCertificate, updateCertificate } from './actions';
+import { toast } from 'sonner';
 
 interface CertificateFormProps {
     initialData?: {
@@ -33,8 +34,10 @@ export default function CertificateForm({ initialData }: CertificateFormProps = 
         try {
             if (initialData) {
                 await updateCertificate(initialData.id, formData);
+                toast.success('Belge başarıyla güncellendi');
             } else {
                 await createCertificate(formData);
+                toast.success('Belge başarıyla oluşturuldu');
             }
             // Router refresh handled in server action redirect
         } catch (error: unknown) {
@@ -47,7 +50,7 @@ export default function CertificateForm({ initialData }: CertificateFormProps = 
                 }
             }
             console.error('Error saving certificate:', error);
-            alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+            toast.error('Bir hata oluştu. Lütfen tekrar deneyin.');
         } finally {
             setLoading(false);
         }

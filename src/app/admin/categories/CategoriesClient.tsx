@@ -5,6 +5,7 @@ import { Plus, Trash2, Image as ImageIcon, Pencil } from 'lucide-react';
 import { createCategory, updateCategory, deleteCategory } from './actions';
 import { useRouter } from 'next/navigation';
 import ImageUpload from '@/components/ui/ImageUpload';
+import { toast } from 'sonner';
 
 interface Category {
     id: number;
@@ -57,23 +58,25 @@ export default function CategoriesClient({ initialCategories }: CategoriesClient
                 data.append('id', editingCategory.id.toString());
                 const result = await updateCategory(data);
                 if (result.success) {
+                    toast.success('Kategori başarıyla güncellendi');
                     router.refresh();
                     setIsModalOpen(false);
                 } else {
-                    alert(result.error || 'Bir hata oluştu');
+                    toast.error(result.error || 'Bir hata oluştu');
                 }
             } else {
                 const result = await createCategory(data);
                 if (result.success) {
+                    toast.success('Kategori başarıyla oluşturuldu');
                     router.refresh();
                     setIsModalOpen(false);
                 } else {
-                    alert(result.error || 'Bir hata oluştu');
+                    toast.error(result.error || 'Bir hata oluştu');
                 }
             }
         } catch (error) {
             console.error('Form submit error:', error);
-            alert('Bir hata oluştu');
+            toast.error('Bir hata oluştu');
         } finally {
             setIsLoading(false);
         }
@@ -85,13 +88,14 @@ export default function CategoriesClient({ initialCategories }: CategoriesClient
             try {
                 const result = await deleteCategory(id);
                 if (result.success) {
+                    toast.success('Kategori başarıyla silindi');
                     router.refresh();
                 } else {
-                    alert(result.error || 'Bir hata oluştu');
+                    toast.error(result.error || 'Bir hata oluştu');
                 }
             } catch (error) {
                 console.error('Delete error:', error);
-                alert('Bir hata oluştu');
+                toast.error('Bir hata oluştu');
             } finally {
                 setIsLoading(false);
             }

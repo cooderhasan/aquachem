@@ -5,6 +5,7 @@ import { Plus, Trash2, Upload, Loader2, X } from 'lucide-react';
 import { addReference, deleteReference } from './actions';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 interface Reference {
     id: number;
@@ -47,7 +48,7 @@ export default function ReferencesGrid({ initialReferences, categories }: Refere
 
         // If no category selected, warn user
         if (!selectedCategory) {
-            alert('Lütfen önce bir kategori seçiniz.');
+            toast.warning('Lütfen önce bir kategori seçiniz.');
             if (fileInputRef.current) fileInputRef.current.value = '';
             return;
         }
@@ -61,13 +62,14 @@ export default function ReferencesGrid({ initialReferences, categories }: Refere
         try {
             const result = await addReference(formData);
             if (result.success) {
+                toast.success('Referans başarıyla eklendi');
                 router.refresh();
             } else {
-                alert(result.error || 'Yükleme başarısız');
+                toast.error(result.error || 'Yükleme başarısız');
             }
         } catch (error: any) {
             console.error(error);
-            alert(error.message || 'Hata oluştu');
+            toast.error(error.message || 'Hata oluştu');
         } finally {
             setIsUploading(false);
             if (fileInputRef.current) fileInputRef.current.value = '';
@@ -86,10 +88,11 @@ export default function ReferencesGrid({ initialReferences, categories }: Refere
             if (!result.success) {
                 throw new Error(result.error);
             }
+            toast.success('Referans başarıyla silindi');
             router.refresh();
         } catch (error) {
             console.error(error);
-            alert('Silme işlemi başarısız');
+            toast.error('Silme işlemi başarısız');
             setReferences(previousReferences); // Revert
         }
     };
