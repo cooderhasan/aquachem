@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, Package } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
@@ -64,10 +65,12 @@ export default function ProductGroupsClient({ categories }: ProductGroupsClientP
                                         {/* Image Area */}
                                         <div className="relative h-48 overflow-hidden">
                                             {cat.image ? (
-                                                <img
+                                                <Image
                                                     src={cat.image}
                                                     alt={cat.title}
-                                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                                    fill
+                                                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                                                    className="object-cover group-hover:scale-110 transition-transform duration-700"
                                                 />
                                             ) : (
                                                 <div className="w-full h-full bg-slate-200 flex items-center justify-center">
