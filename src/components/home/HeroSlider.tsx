@@ -50,13 +50,14 @@ const HeroSlider = ({ slides }: { slides: any[] }) => {
                     </div>
 
                     {/* Content */}
-                    <div className="container-custom relative h-full flex items-center">
+                    <div className="container-custom relative h-full flex items-center px-12 md:px-4">
                         <div className="max-w-2xl text-white pt-20">
                             <motion.h1
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.3, duration: 0.5 }}
-                                className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
+                                className="text-3xl md:text-6xl font-bold mb-6 leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                                style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.6)' }}
                             >
                                 {slides[current].title}
                             </motion.h1>
@@ -64,7 +65,8 @@ const HeroSlider = ({ slides }: { slides: any[] }) => {
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.5, duration: 0.5 }}
-                                className="text-lg md:text-xl text-slate-200 mb-8 leading-relaxed"
+                                className="text-base md:text-xl text-white mb-8 leading-relaxed drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+                                style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.5)' }}
                             >
                                 {slides[current].description}
                             </motion.p>
@@ -82,18 +84,20 @@ const HeroSlider = ({ slides }: { slides: any[] }) => {
                 </motion.div>
             </AnimatePresence>
 
-            {/* Controls */}
+            {/* Navigation Controls - Only visible on desktop (md and above) */}
             <button
                 onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-sm transition-colors z-10"
+                className="hidden md:block absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/30 hover:bg-black/50 text-white rounded-full backdrop-blur-sm transition-colors z-10"
+                aria-label="Önceki slayt"
             >
-                <ChevronLeft size={32} />
+                <ChevronLeft className="w-8 h-8" />
             </button>
             <button
                 onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-sm transition-colors z-10"
+                className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/30 hover:bg-black/50 text-white rounded-full backdrop-blur-sm transition-colors z-10"
+                aria-label="Sonraki slayt"
             >
-                <ChevronRight size={32} />
+                <ChevronRight className="w-8 h-8" />
             </button>
 
             {/* Dots */}

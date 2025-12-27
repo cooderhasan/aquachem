@@ -40,7 +40,7 @@ const ReferencesCarousel = ({ references }: ReferencesCarouselProps) => {
                     {[...references, ...references, ...references].map((ref, index) => (
                         <div
                             key={`${ref.id}-${index}`}
-                            className="w-[180px] h-[80px] flex items-center justify-center grayscale hover:grayscale-0 opacity-50 hover:opacity-100 transition-all duration-500 transform hover:scale-110"
+                            className="w-[220px] h-[100px] flex items-center justify-center grayscale hover:grayscale-0 opacity-50 hover:opacity-100 transition-all duration-500 transform hover:scale-110"
                         >
                             <img
                                 src={ref.image}

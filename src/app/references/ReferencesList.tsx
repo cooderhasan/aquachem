@@ -84,7 +84,7 @@ export default function ReferencesList({ references, categories }: ReferencesLis
                                     key={ref.id}
                                     className="group relative flex items-center justify-center p-6 rounded-xl border border-slate-100 hover:border-primary-100 hover:shadow-lg transition-all duration-300 bg-slate-50/50"
                                 >
-                                    <div className="relative w-full h-[100px] grayscale group-hover:grayscale-0 opacity-60 group-hover:opacity-100 transition-all duration-300">
+                                    <div className="relative w-full h-[140px] grayscale group-hover:grayscale-0 opacity-60 group-hover:opacity-100 transition-all duration-300">
                                         <img
                                             src={ref.image}
                                             alt={ref.title}
