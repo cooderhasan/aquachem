@@ -56,11 +56,7 @@ const HeroSlider = ({ slides }: { slides: any[] }) => {
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.3, duration: 0.5 }}
-                                className="text-3xl md:text-6xl font-bold mb-6 leading-tight not-italic"
-                                style={{
-                                    textShadow: '2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 2px 0 0 #000, -2px 0 0 #000, 3px 3px 6px rgba(0,0,0,0.8)',
-                                    WebkitTextStroke: '1px rgba(0,0,0,0.3)'
-                                }}
+                                className="text-3xl md:text-6xl font-bold mb-6 leading-tight text-white uppercase"
                             >
                                 {slides[current].title}
                             </motion.h1>
@@ -68,10 +64,7 @@ const HeroSlider = ({ slides }: { slides: any[] }) => {
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.5, duration: 0.5 }}
-                                className="text-base md:text-xl text-white mb-8 leading-relaxed not-italic"
-                                style={{
-                                    textShadow: '1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 2px 2px 4px rgba(0,0,0,0.8)'
-                                }}
+                                className="text-base md:text-xl text-white mb-8 leading-relaxed"
                             >
                                 {slides[current].description}
                             </motion.p>
