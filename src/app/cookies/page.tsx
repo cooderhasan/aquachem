@@ -1,14 +1,10 @@
 import React from 'react';
 import { Cookie, Calendar } from 'lucide-react';
-import { getContactLocations } from '@/app/admin/contact/actions';
+import { getMainContactLocation } from '@/app/admin/contact/actions';
 
 export default async function CookiesPage() {
     // İç Anadolu lokasyonunu çek
-    const locations = await getContactLocations();
-    const icAnadoluLocation = locations.find(loc =>
-        loc.title.toLowerCase().includes('iç anadolu') ||
-        loc.title.toLowerCase().includes('ic anadolu')
-    ) || locations[0] || null;
+    const icAnadoluLocation = await getMainContactLocation();
 
     return (
         <div className="bg-white min-h-screen pb-20 pt-28">

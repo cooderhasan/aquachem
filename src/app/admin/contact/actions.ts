@@ -15,6 +15,27 @@ export async function getContactLocations() {
     }
 }
 
+export async function getMainContactLocation() {
+    try {
+        const locations = await getContactLocations();
+
+        // Öncelikli olarak "İç Anadolu Bölge Müdürlüğü" veya benzer isimleri ara
+        const mainLocation = locations.find(loc => {
+            const title = loc.title.toLowerCase();
+            return title.includes('iç anadolu') ||
+                title.includes('ic anadolu') ||
+                title.includes('merkez') ||
+                title.includes('bölge müdürlüğü');
+        });
+
+        // Bulunamazsa ilk kaydı, o da yoksa null dön
+        return mainLocation || locations[0] || null;
+    } catch (error) {
+        console.error('Failed to fetch main contact location:', error);
+        return null;
+    }
+}
+
 export async function addContactLocation(formData: FormData) {
     try {
         const title = formData.get('title') as string;
@@ -33,8 +54,12 @@ export async function addContactLocation(formData: FormData) {
             mapEmbedCode,
         });
 
+        revalidatePath('/', 'layout'); // Tüm siteyi yenile
         revalidatePath('/admin/contact');
         revalidatePath('/contact');
+        revalidatePath('/privacy');
+        revalidatePath('/terms');
+        revalidatePath('/cookies');
         return { success: true };
     } catch (error) {
         console.error('Failed to add contact location:', error);
@@ -45,8 +70,12 @@ export async function addContactLocation(formData: FormData) {
 export async function deleteContactLocation(id: number) {
     try {
         await db.delete(contactLocations).where(eq(contactLocations.id, id));
+        revalidatePath('/', 'layout');
         revalidatePath('/admin/contact');
         revalidatePath('/contact');
+        revalidatePath('/privacy');
+        revalidatePath('/terms');
+        revalidatePath('/cookies');
         return { success: true };
     } catch (error) {
         console.error('Failed to delete contact location:', error);
@@ -72,8 +101,12 @@ export async function updateContactLocation(id: number, formData: FormData) {
             mapEmbedCode,
         }).where(eq(contactLocations.id, id));
 
+        revalidatePath('/', 'layout');
         revalidatePath('/admin/contact');
         revalidatePath('/contact');
+        revalidatePath('/privacy');
+        revalidatePath('/terms');
+        revalidatePath('/cookies');
         return { success: true };
     } catch (error) {
         console.error('Failed to update contact location:', error);

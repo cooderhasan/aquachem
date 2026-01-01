@@ -3,7 +3,7 @@ import { Ubuntu } from 'next/font/google';
 import './globals.css';
 import ConditionalLayout from '@/components/layout/ConditionalLayout';
 import { getSettings } from '@/app/admin/settings/actions';
-import { getContactLocations } from '@/app/admin/contact/actions';
+import { getMainContactLocation } from '@/app/admin/contact/actions';
 
 const ubuntu = Ubuntu({
   subsets: ['latin'],
@@ -86,12 +86,8 @@ export default async function RootLayout({
 }) {
   const settings = await getSettings();
 
-  // Fetch contact locations and find İç Anadolu
-  const locations = await getContactLocations();
-  const icAnadoluLocation = locations.find(loc =>
-    loc.title.toLowerCase().includes('iç anadolu') ||
-    loc.title.toLowerCase().includes('ic anadolu')
-  ) || locations[0] || null;
+  // Fetch verified main contact location (İç Anadolu or similar)
+  const contactLocation = await getMainContactLocation();
 
   return (
     <html lang="tr">
@@ -101,7 +97,7 @@ export default async function RootLayout({
         )}
       </head>
       <body className={`${ubuntu.variable} font-sans antialiased text-slate-600`}>
-        <ConditionalLayout settings={settings} contactLocation={icAnadoluLocation}>{children}</ConditionalLayout>
+        <ConditionalLayout settings={settings} contactLocation={contactLocation}>{children}</ConditionalLayout>
       </body>
     </html>
   );
