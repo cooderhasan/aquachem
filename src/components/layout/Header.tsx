@@ -45,7 +45,27 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                         </a>
                         <div className="hidden md:flex items-center gap-2 hover:text-white transition-colors cursor-default">
                             <MapPin size={14} />
-                            <span className="truncate max-w-[300px]">{contactLocation?.address || 'İstanbul, Türkiye'}</span>
+                            <span className="truncate max-w-[300px]">
+                                {(() => {
+                                    const addr = contactLocation?.address;
+                                    if (!addr) return 'İstanbul, Türkiye';
+
+                                    const lower = addr.toLowerCase();
+                                    if (lower.includes('konya')) return 'Konya, Türkiye';
+                                    if (lower.includes('izmir')) return 'İzmir, Türkiye';
+                                    if (lower.includes('istanbul') || lower.includes('istanbul')) return 'İstanbul, Türkiye';
+                                    if (lower.includes('ankara')) return 'Ankara, Türkiye';
+
+                                    // Fallback: try to get the last part after a slash (District / City format)
+                                    if (addr.includes('/')) {
+                                        return addr.split('/').pop()?.trim() + ', Türkiye';
+                                    }
+
+                                    // If simplified mode requested but no city found, maybe just show first 2 words or full
+                                    // User said "sadece Konya yazsa yeter", so let's try to be short.
+                                    return 'Türkiye';
+                                })()}
+                            </span>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
