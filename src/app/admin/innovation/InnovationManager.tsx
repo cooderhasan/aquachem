@@ -18,6 +18,8 @@ interface InnovationManagerProps {
     initialItems: InnovationItem[];
 }
 
+import { toast } from 'sonner';
+
 export default function InnovationManager({ initialItems }: InnovationManagerProps) {
     const [items, setItems] = useState<InnovationItem[]>(initialItems);
     const [editingId, setEditingId] = useState<number | null>(null);
@@ -30,8 +32,10 @@ export default function InnovationManager({ initialItems }: InnovationManagerPro
             await deleteInnovationItem(id);
             setItems(prev => prev.filter(i => i.id !== id));
             router.refresh();
+            toast.success('İnovasyon kartı başarıyla silindi');
         } catch (error) {
-            alert('Silme başarısız');
+            console.error(error);
+            toast.error('Silme işlemi başarısız oldu');
         }
     };
 
@@ -42,9 +46,10 @@ export default function InnovationManager({ initialItems }: InnovationManagerPro
             await updateInnovationItem(id, formData);
             setEditingId(null);
             router.refresh();
-            window.location.reload();
+            toast.success('İnovasyon kartı başarıyla güncellendi');
         } catch (error) {
-            alert('Güncelleme başarısız');
+            console.error(error);
+            toast.error('Güncelleme işlemi başarısız oldu');
         }
     };
 
@@ -55,9 +60,10 @@ export default function InnovationManager({ initialItems }: InnovationManagerPro
             await addInnovationItem(formData);
             setIsAdding(false);
             router.refresh();
-            window.location.reload();
+            toast.success('Yeni inovasyon kartı başarıyla eklendi');
         } catch (error) {
-            alert('Ekleme başarısız');
+            console.error(error);
+            toast.error('Ekleme işlemi başarısız oldu');
         }
     };
 
