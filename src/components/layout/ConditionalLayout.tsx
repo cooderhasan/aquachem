@@ -29,7 +29,7 @@ const ConditionalLayout = ({ children, settings, contactLocation }: ConditionalL
 
     return (
         <>
-            {!isAuthPage && <Header settings={settings} />}
+            {!isAuthPage && <Header settings={settings} contactLocation={contactLocation} />}
             {children}
             {!isAuthPage && <Footer settings={settings} contactLocation={contactLocation} />}
             {!isAuthPage && <WhatsAppButton phoneNumber={whatsappNumber} />}

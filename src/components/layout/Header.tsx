@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, Phone, Droplets, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Header = ({ settings }: { settings?: any }) => {
+const Header = ({ settings, contactLocation }: { settings?: any; contactLocation?: any }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const pathname = usePathname();
@@ -35,17 +35,17 @@ const Header = ({ settings }: { settings?: any }) => {
             <div className={`bg-slate-900 text-slate-300 text-xs py-2 transition-all duration-300 overflow-hidden ${scrolled ? 'h-0 opacity-0' : 'h-10 opacity-100'}`}>
                 <div className="container-custom flex justify-between items-center h-full">
                     <div className="flex items-center gap-4 md:gap-6">
-                        <a href="mailto:info@aquachems.com" className="hidden sm:flex items-center gap-2 hover:text-white transition-colors">
+                        <a href={`mailto:${contactLocation?.email || 'info@aquachems.com'}`} className="hidden sm:flex items-center gap-2 hover:text-white transition-colors">
                             <Mail size={14} />
-                            <span>info@aquachems.com</span>
+                            <span>{contactLocation?.email || 'info@aquachems.com'}</span>
                         </a>
-                        <a href="tel:05336838563" className="flex items-center gap-2 hover:text-white transition-colors whitespace-nowrap">
+                        <a href={`tel:${contactLocation?.phone?.replace(/\s/g, '') || '05336838563'}`} className="flex items-center gap-2 hover:text-white transition-colors whitespace-nowrap">
                             <Phone size={14} />
-                            <span>0533 683 85 63</span>
+                            <span>{contactLocation?.phone || '0533 683 85 63'}</span>
                         </a>
                         <div className="hidden md:flex items-center gap-2 hover:text-white transition-colors cursor-default">
                             <MapPin size={14} />
-                            <span>İstanbul, Türkiye</span>
+                            <span className="truncate max-w-[300px]">{contactLocation?.address || 'İstanbul, Türkiye'}</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -171,11 +171,11 @@ const Header = ({ settings }: { settings?: any }) => {
                                 <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col gap-4 text-slate-500 text-sm font-medium">
                                     <div className="flex items-center justify-center gap-2">
                                         <Phone size={16} />
-                                        <a href="tel:05336838563">0533 683 85 63</a>
+                                        <a href={`tel:${contactLocation?.phone?.replace(/\s/g, '') || '05336838563'}`}>{contactLocation?.phone || '0533 683 85 63'}</a>
                                     </div>
                                     <div className="flex items-center justify-center gap-2">
                                         <Mail size={16} />
-                                        <a href="mailto:info@aquachems.com">info@aquachems.com</a>
+                                        <a href={`mailto:${contactLocation?.email || 'info@aquachems.com'}`}>{contactLocation?.email || 'info@aquachems.com'}</a>
                                     </div>
                                 </div>
                             </div>
