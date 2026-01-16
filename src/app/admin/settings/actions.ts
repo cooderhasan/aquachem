@@ -49,6 +49,7 @@ export async function updateSettings(formData: FormData) {
         const whatsappNumber = formData.get('whatsappNumber') as string;
         const footerLogo = formData.get('footerLogo') as string;
         const logoHeight = parseInt(formData.get('logoHeight') as string) || 48;
+        const menuFontSize = parseInt(formData.get('menuFontSize') as string) || 14;
 
         if (currentSettings) {
             await db.update(settings).set({
@@ -71,6 +72,7 @@ export async function updateSettings(formData: FormData) {
                 whatsappNumber: whatsappNumber || currentSettings.whatsappNumber,
                 footerLogo: footerLogo || currentSettings.footerLogo,
                 logoHeight: logoHeight || currentSettings.logoHeight,
+                menuFontSize: menuFontSize || currentSettings.menuFontSize,
             }).where(eq(settings.id, currentSettings.id));
         } else {
             await db.insert(settings).values({
@@ -92,6 +94,7 @@ export async function updateSettings(formData: FormData) {
                 whatsappNumber,
                 footerLogo,
                 logoHeight,
+                menuFontSize,
             });
         }
 

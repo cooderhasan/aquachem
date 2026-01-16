@@ -125,7 +125,8 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className={`text-sm font-bold transition-all relative py-1 hover:text-primary-700 ${isActive ? 'text-primary-700' : 'text-slate-600'
+                                    style={{ fontSize: settings?.menuFontSize ? `${settings.menuFontSize}px` : '14px' }}
+                                    className={`font-bold transition-all relative py-1 hover:text-primary-700 ${isActive ? 'text-primary-700' : 'text-slate-600'
                                         }`}
                                 >
                                     {item.name}

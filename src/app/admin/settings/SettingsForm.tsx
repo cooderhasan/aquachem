@@ -99,6 +99,19 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                     <span className="text-sm text-slate-500 whitespace-nowrap">px</span>
                                 </div>
                             </div>
+                            <div className="mt-3">
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Menü Yazı Boyutu (px)</label>
+                                <div className="flex items-center gap-2">
+                                    <input
+                                        type="number"
+                                        name="menuFontSize"
+                                        defaultValue={initialSettings?.menuFontSize || 14}
+                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                        placeholder="Örn: 14"
+                                    />
+                                    <span className="text-sm text-slate-500 whitespace-nowrap">px</span>
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-2">Favicon (Site İkonu)</label>

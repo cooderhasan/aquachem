@@ -104,6 +104,7 @@ export const settings = pgTable('settings', {
   whatsappNumber: text('whatsapp_number'),
   footerLogo: text('footer_logo'),
   logoHeight: integer('logo_height').default(48), // Logo height in pixels (default 48px approx h-12)
+  menuFontSize: integer('menu_font_size').default(14), // Menu font size in pixels (default 14px text-sm)
 });
 
 export const contactLocations = pgTable('contact_locations', {
