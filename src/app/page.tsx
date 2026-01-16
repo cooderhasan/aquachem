@@ -12,7 +12,7 @@ import { getSettings } from '@/app/admin/settings/actions';
 import { getHeroSlides } from '@/app/admin/hero/actions';
 import { getReferences } from '@/app/admin/references/actions';
 
-import { getPosts } from '@/app/admin/posts/actions';
+import { getPosts } from '@/lib/data';
 
 export default async function Home() {
   const slides = await getHeroSlides();

@@ -6,7 +6,9 @@ import { Plus, Trash2, Edit, FileText } from 'lucide-react';
 
 // Helper component for deleting
 import { DeletePostButton } from './DeletePostButton';
-import { getPosts } from './actions';
+import { getPosts } from '@/lib/data';
+
+export const dynamic = 'force-dynamic';
 
 export default async function PostsPage() {
     const allPosts = await getPosts();

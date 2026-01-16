@@ -1,9 +1,10 @@
-
 import React from 'react';
 import Link from 'next/link';
-import { getPosts } from '@/app/admin/posts/actions';
+import { getPosts } from '@/lib/data';
 import { Calendar, ChevronRight, Newspaper } from 'lucide-react';
 import { Metadata } from 'next';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
     title: 'Haberler & Duyurular | Aquachems',

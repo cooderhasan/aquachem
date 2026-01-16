@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { getPostBySlug } from '@/app/admin/posts/actions';
+import { getPostBySlug } from '@/lib/data';
 import { Calendar, ChevronLeft, User, Clock, Share2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
@@ -47,7 +47,7 @@ export default async function NewsDetailPage({ params }: { params: { slug: strin
                             </span>
                             <span className="flex items-center gap-1">
                                 <Calendar size={14} />
-                                {new Date(post.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                {post.createdAt ? new Date(post.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }) : '-'}
                             </span>
                         </div>
                         <h1 className="text-3xl md:text-5xl font-bold text-slate-900 leading-tight mb-6">
