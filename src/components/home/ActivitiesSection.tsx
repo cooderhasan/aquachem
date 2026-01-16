@@ -52,14 +52,14 @@ const ActivitiesSection = ({ activities, posts = [], catalogUrl }: ActivitiesSec
                             {posts && posts.length > 0 ? (
                                 posts.map((post: any) => (
                                     <React.Fragment key={post.id}>
-                                        <div className="group cursor-pointer">
+                                        <Link href={`/news/${post.slug}`} className="group cursor-pointer block">
                                             <span className="text-xs text-primary-500 font-bold block mb-1">
                                                 {new Date(post.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
                                             </span>
                                             <p className="text-slate-700 font-medium group-hover:text-primary-600 transition-colors line-clamp-3">
                                                 {post.title}
                                             </p>
-                                        </div>
+                                        </Link>
                                         <hr className="border-slate-100 last:hidden" />
                                     </React.Fragment>
                                 ))
