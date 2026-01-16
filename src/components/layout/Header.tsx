@@ -69,10 +69,16 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
-                        {settings?.socialMedia?.linkedin && <a href={settings.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Linkedin size={14} /></a>}
-                        {settings?.socialMedia?.instagram && <a href={settings.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Instagram size={14} /></a>}
-                        {settings?.socialMedia?.twitter && <a href={settings.socialMedia.twitter} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Twitter size={14} /></a>}
-                        {settings?.socialMedia?.facebook && <a href={settings.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Facebook size={14} /></a>}
+                        <div className="flex items-center gap-4">
+                            {settings?.socialMedia?.instagram && <a href={settings.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Instagram size={14} /></a>}
+                            {settings?.socialMedia?.facebook && <a href={settings.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Facebook size={14} /></a>}
+                            {settings?.socialMedia?.twitter && (
+                                <a href={settings.socialMedia.twitter} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                                </a>
+                            )}
+                            {settings?.socialMedia?.linkedin && <a href={settings.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Linkedin size={14} /></a>}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -117,7 +117,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     }
 
     return (
-        <div className="bg-white min-h-screen pb-20 pt-28">
+        <div className="bg-white min-h-screen pb-20 pt-36">
 
             {/* Breadcrumb / Nav */}
             <div className="bg-slate-50 border-b border-slate-200 py-4">

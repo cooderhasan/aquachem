@@ -411,14 +411,19 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Twitter / X</label>
-                                <input
-                                    type="text"
-                                    name="twitter"
-                                    defaultValue={initialSettings?.socialMedia?.twitter || ''}
-                                    placeholder="https://x.com/..."
-                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                />
+                                <label className="block text-sm font-medium text-slate-700 mb-1">X (Twitter)</label>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="twitter"
+                                        defaultValue={initialSettings?.socialMedia?.twitter || ''}
+                                        placeholder="https://x.com/..."
+                                        className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                    />
+                                </div>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1">Instagram</label>

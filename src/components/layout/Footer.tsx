@@ -46,21 +46,28 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
                             {settings?.description || 'Endüstriyel temizlik ve hijyen çözümlerinde yenilikçi yaklaşımlarımızla, işletmenizin verimliliğini artırıyor ve sürdürülebilir bir gelecek için çalışıyoruz.'}
                         </p>
                         <div className="flex gap-4 pt-2">
-                            {settings?.socialMedia?.instagram && (
-                                <a href={settings.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
-                                    <Instagram size={18} />
-                                </a>
-                            )}
-                            {settings?.socialMedia?.linkedin && (
-                                <a href={settings.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
-                                    <Linkedin size={18} />
-                                </a>
-                            )}
-                            {settings?.socialMedia?.facebook && (
-                                <a href={settings.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
-                                    <Facebook size={18} />
-                                </a>
-                            )}
+                            <div className="flex gap-4 pt-2">
+                                {settings?.socialMedia?.instagram && (
+                                    <a href={settings.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
+                                        <Instagram size={18} />
+                                    </a>
+                                )}
+                                {settings?.socialMedia?.facebook && (
+                                    <a href={settings.socialMedia.facebook} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
+                                        <Facebook size={18} />
+                                    </a>
+                                )}
+                                {settings?.socialMedia?.twitter && (
+                                    <a href={settings.socialMedia.twitter} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                                    </a>
+                                )}
+                                {settings?.socialMedia?.linkedin && (
+                                    <a href={settings.socialMedia.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-110">
+                                        <Linkedin size={18} />
+                                    </a>
+                                )}
+                            </div>
                         </div>
                     </div>
 
