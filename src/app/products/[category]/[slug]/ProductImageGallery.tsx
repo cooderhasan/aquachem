@@ -85,14 +85,20 @@ export default function ProductImageGallery({ images, productTitle }: ProductIma
                 {validImages.length > 1 && (
                     <>
                         <button
-                            onClick={goToPrevious}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                goToPrevious();
+                            }}
                             className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
                             aria-label="Önceki görsel"
                         >
                             <ChevronLeft size={24} className="text-slate-700" />
                         </button>
                         <button
-                            onClick={goToNext}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                goToNext();
+                            }}
                             className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
                             aria-label="Sonraki görsel"
                         >
