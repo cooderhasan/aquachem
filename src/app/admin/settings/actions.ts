@@ -50,6 +50,7 @@ export async function updateSettings(formData: FormData) {
         const footerLogo = formData.get('footerLogo') as string;
         const logoHeight = parseInt(formData.get('logoHeight') as string) || 48;
         const menuFontSize = parseInt(formData.get('menuFontSize') as string) || 14;
+        const headerPadding = parseInt(formData.get('headerPadding') as string) || 20;
 
         if (currentSettings) {
             await db.update(settings).set({
@@ -73,6 +74,7 @@ export async function updateSettings(formData: FormData) {
                 footerLogo: footerLogo || currentSettings.footerLogo,
                 logoHeight: logoHeight || currentSettings.logoHeight,
                 menuFontSize: menuFontSize || currentSettings.menuFontSize,
+                headerPadding: headerPadding || currentSettings.headerPadding,
             }).where(eq(settings.id, currentSettings.id));
         } else {
             await db.insert(settings).values({
@@ -95,6 +97,7 @@ export async function updateSettings(formData: FormData) {
                 footerLogo,
                 logoHeight,
                 menuFontSize,
+                headerPadding,
             });
         }
 

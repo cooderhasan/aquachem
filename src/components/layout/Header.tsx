@@ -79,9 +79,10 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
 
             {/* Main Header */}
             <header
+                style={!scrolled && settings?.headerPadding ? { paddingTop: `${settings.headerPadding}px`, paddingBottom: `${settings.headerPadding}px` } : undefined}
                 className={`transition-all duration-300 w-full ${scrolled
                     ? 'bg-white/95 backdrop-blur-md shadow-md py-3'
-                    : 'bg-white py-5 border-b border-slate-100'
+                    : 'bg-white border-b border-slate-100'
                     }`}
             >
                 <div className="container-custom flex justify-between items-center">
