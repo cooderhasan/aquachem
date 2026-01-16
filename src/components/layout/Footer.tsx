@@ -14,7 +14,7 @@ interface ContactLocation {
 
 const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation?: ContactLocation | null }) => {
     return (
-        <footer className="bg-slate-900 text-slate-300 pt-20 pb-10 mt-auto">
+        <footer className="bg-slate-900 text-slate-300 pt-20 pb-10 mt-auto relative z-50 overflow-hidden">
             <div className="container-custom">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                     {/* Brand Info */}
