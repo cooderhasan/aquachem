@@ -20,6 +20,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
     const [aboutImage, setAboutImage] = useState(initialSettings?.aboutImage || '');
     const [ogImage, setOgImage] = useState(initialSettings?.ogImage || '');
     const [footerLogo, setFooterLogo] = useState(initialSettings?.footerLogo || '');
+    const [pdfUrl, setPdfUrl] = useState(initialSettings?.catalogUrl || '');
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -130,67 +131,82 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                         <div className="border-t pt-6">
                             <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">PDF Katalog</h2>
                             <div className="mb-6">
-                                <label className="block text-sm font-medium text-slate-700 mb-2">Dosya Yükle veya URL Gir</label>
-                                <div className="flex items-center gap-4">
-                                    <input
-                                        type="text"
-                                        name="catalogUrl"
-                                        defaultValue={initialSettings?.catalogUrl || ''}
-                                        className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50"
-                                        placeholder="Katalog URL'si (veya dosya yükleyiniz)"
-                                        readOnly
-                                    />
-                                    <div className="relative">
-                                        <input
-                                            type="file"
-                                            id="catalog-upload"
-                                            accept=".pdf"
-                                            className="hidden"
-                                            onChange={async (e) => {
-                                                const file = e.target.files?.[0];
-                                                if (!file) return;
+                                <label className="block text-sm font-medium text-slate-700 mb-2">PDF Katalog Dosyası</label>
+                                <input type="hidden" name="catalogUrl" value={pdfUrl} />
 
-                                                const formData = new FormData();
-                                                formData.append('file', file);
-
-                                                setIsLoading(true);
-                                                try {
-                                                    const res = await fetch('/api/upload', {
-                                                        method: 'POST',
-                                                        body: formData,
-                                                    });
-
-                                                    if (!res.ok) throw new Error('Upload failed');
-
-                                                    const data = await res.json();
-                                                    const input = document.querySelector('input[name="catalogUrl"]') as HTMLInputElement;
-                                                    if (input) input.value = data.url;
-                                                } catch (error) {
-                                                    console.error('Catalog upload error:', error);
-                                                    alert('Katalog yüklenemedi!');
-                                                } finally {
-                                                    setIsLoading(false);
-                                                }
-                                            }}
-                                        />
-                                        <label
-                                            htmlFor="catalog-upload"
-                                            className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                                <div className="flex flex-col gap-3">
+                                    {pdfUrl ? (
+                                        <div className="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
+                                            <div className="flex items-center gap-3">
+                                                <div className="bg-green-100 p-2 rounded-full">
+                                                    <CheckCircle className="text-green-600" size={20} />
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm font-medium text-green-900">Katalog Yüklü</p>
+                                                    <a
+                                                        href={pdfUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-xs text-green-700 hover:underline"
+                                                    >
+                                                        Dosyayı Görüntüle
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() => document.getElementById('catalog-upload')?.click()}
+                                                className="text-sm text-slate-600 hover:text-primary-600 font-medium px-3 py-1.5 border border-slate-300 rounded-md hover:bg-white transition-colors"
+                                            >
+                                                Değiştir
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            onClick={() => document.getElementById('catalog-upload')?.click()}
+                                            className="border-2 border-dashed border-slate-300 rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors group"
                                         >
-                                            Katalog Yükle
-                                        </label>
-                                    </div>
+                                            <div className="bg-primary-50 text-primary-600 p-3 rounded-full mb-3 group-hover:bg-primary-100 transition-colors">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" x2="12" y1="3" y2="15" /></svg>
+                                            </div>
+                                            <p className="text-sm font-medium text-slate-700">PDF Kataloğu Yükle</p>
+                                            <p className="text-xs text-slate-500 mt-1">Bilgisayarınızdan bir dosya seçin</p>
+                                        </div>
+                                    )}
+
+                                    <input
+                                        type="file"
+                                        id="catalog-upload"
+                                        accept=".pdf"
+                                        className="hidden"
+                                        onChange={async (e) => {
+                                            const file = e.target.files?.[0];
+                                            if (!file) return;
+
+                                            const formData = new FormData();
+                                            formData.append('file', file);
+
+                                            setIsLoading(true);
+                                            try {
+                                                const res = await fetch('/api/upload', {
+                                                    method: 'POST',
+                                                    body: formData,
+                                                });
+
+                                                if (!res.ok) throw new Error('Upload failed');
+
+                                                const data = await res.json();
+                                                setPdfUrl(data.url);
+                                                setNotification({ type: 'success', message: 'Katalog başarıyla yüklendi!' });
+                                            } catch (error) {
+                                                console.error('Catalog upload error:', error);
+                                                alert('Katalog yüklenemedi!');
+                                            } finally {
+                                                setIsLoading(false);
+                                            }
+                                        }}
+                                    />
                                 </div>
-                                {initialSettings?.catalogUrl && (
-                                    <a
-                                        href={initialSettings.catalogUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-primary-600 text-sm mt-2 inline-block hover:underline"
-                                    >
-                                        Mevcut Kataloğu Görüntüle
-                                    </a>
-                                )}
                             </div>
                         </div>
                     </div>
