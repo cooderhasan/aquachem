@@ -6,8 +6,9 @@ import { Calendar, ChevronLeft, User, Clock, Share2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    const post = await getPostBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const resolvedParams = await params;
+    const post = await getPostBySlug(resolvedParams.slug);
     if (!post) {
         return {
             title: 'Haber Bulunamadı | Aquachems'
@@ -19,8 +20,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
 }
 
-export default async function NewsDetailPage({ params }: { params: { slug: string } }) {
-    const post = await getPostBySlug(params.slug);
+export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+    const resolvedParams = await params;
+    const post = await getPostBySlug(resolvedParams.slug);
 
     if (!post) {
         notFound();

@@ -7,8 +7,9 @@ import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
-export default async function EditPostPage({ params }: { params: { id: string } }) {
-    const post = await getPost(parseInt(params.id));
+export default async function EditPostPage({ params }: { params: Promise<{ id: string }> }) {
+    const resolvedParams = await params;
+    const post = await getPost(parseInt(resolvedParams.id));
 
     if (!post) {
         notFound();
