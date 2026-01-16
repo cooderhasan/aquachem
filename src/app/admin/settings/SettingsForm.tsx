@@ -46,6 +46,16 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
         }
     }
 
+    const [activeTab, setActiveTab] = useState('general');
+
+    const tabs = [
+        { id: 'general', label: 'Genel Ayarlar', icon: 'Settings' },
+        { id: 'corporate', label: 'Kurumsal', icon: 'Building' },
+        { id: 'design', label: 'Görünüm & Tasarım', icon: 'Palette' },
+        { id: 'social', label: 'İletişim & Medya', icon: 'Share2' },
+        { id: 'seo', label: 'SEO', icon: 'Search' },
+    ];
+
     return (
         <>
             {/* Bildirim Toast */}
@@ -69,103 +79,289 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                 </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                    <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">Genel Ayarlar</h2>
-                    <input type="hidden" name="logo" value={logo} />
-                    <input type="hidden" name="favicon" value={favicon} />
-                    <input type="hidden" name="footerLogo" value={footerLogo} />
+            <div className="flex flex-wrap gap-2 mb-6 bg-white p-2 rounded-xl border border-slate-200 shadow-sm">
+                {tabs.map((tab) => (
+                    <button
+                        type="button"
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab.id
+                            ? 'bg-primary-600 text-white shadow-md'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-primary-600'
+                            }`}
+                    >
+                        {tab.label}
+                    </button>
+                ))}
+            </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">Site Logosu</label>
-                            <ImageUpload
-                                value={logo}
-                                onChange={(url) => setLogo(url)}
-                                onRemove={() => setLogo('')}
-                                label="Logo Yükle"
-                                description="Şeffaf arka planlı PNG veya SVG önerilir (Max 2MB)"
-                            />
-                            <div className="mt-3">
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Logo Yüksekliği (px)</label>
-                                <div className="flex items-center gap-2">
-                                    <input
-                                        type="number"
-                                        name="logoHeight"
-                                        defaultValue={initialSettings?.logoHeight || 48}
-                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                        placeholder="Örn: 80"
-                                    />
-                                    <span className="text-sm text-slate-500 whitespace-nowrap">px</span>
-                                </div>
-                            </div>
-                            <div className="mt-3">
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Menü Yazı Boyutu (px)</label>
-                                <div className="flex items-center gap-2">
-                                    <input
-                                        type="number"
-                                        name="menuFontSize"
-                                        defaultValue={initialSettings?.menuFontSize || 14}
-                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                        placeholder="Örn: 14"
-                                    />
-                                    <span className="text-sm text-slate-500 whitespace-nowrap">px</span>
-                                </div>
-                            </div>
-                            <div className="mt-3">
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Header Dikey Boşluk (Padding)</label>
-                                <div className="flex items-center gap-2">
-                                    <input
-                                        type="number"
-                                        name="headerPadding"
-                                        defaultValue={initialSettings?.headerPadding || 20}
-                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                        placeholder="Örn: 20"
-                                    />
-                                    <span className="text-sm text-slate-500 whitespace-nowrap">px</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">Favicon (Site İkonu)</label>
-                            <ImageUpload
-                                value={favicon}
-                                onChange={(url) => setFavicon(url)}
-                                onRemove={() => setFavicon('')}
-                                label="Favicon Yükle"
-                                description="32x32 veya 64x64 px, PNG/ICO önerilir"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">Footer Logosu</label>
-                            <ImageUpload
-                                value={footerLogo}
-                                onChange={(url) => setFooterLogo(url)}
-                                onRemove={() => setFooterLogo('')}
-                                label="Footer Logo Yükle"
-                                description="Sitenin alt kısmında görünecek logo (Şeffaf PNG önerilir)"
-                            />
-                            <div className="mt-3">
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Footer Logo Üst Boşluk (Padding)</label>
-                                <div className="flex items-center gap-2">
-                                    <input
-                                        type="number"
-                                        name="footerLogoPadding"
-                                        defaultValue={initialSettings?.footerLogoPadding || 0}
-                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                        placeholder="Örn: 10 veya -5"
-                                    />
-                                    <span className="text-sm text-slate-500 whitespace-nowrap">px</span>
-                                </div>
-                                <p className="text-xs text-slate-500 mt-1">Logoyu yukarı/aşağı hizalamak için kullanın. Negatif değer girebilirsiniz.</p>
-                            </div>
-                        </div>
+            <form onSubmit={handleSubmit} className="space-y-6 pb-20">
+                <input type="hidden" name="logo" value={logo} />
+                <input type="hidden" name="favicon" value={favicon} />
+                <input type="hidden" name="footerLogo" value={footerLogo} />
+                <input type="hidden" name="aboutImage" value={aboutImage} />
+                <input type="hidden" name="ogImage" value={ogImage} />
 
-                        {/* Referanslar Ayarları */}
-                        <div className="md:col-span-2 mt-6 border-t pt-6">
-                            <h3 className="text-md font-bold text-slate-800 mb-4">Referanslar (Sayan Logo) Ayarları</h3>
+                {/* --- GENEL AYARLAR --- */}
+                <div className={activeTab === 'general' ? 'block' : 'hidden'}>
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-6">
+                        <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">Genel Site Bilgileri</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Referanslar Kaydırma Süresi (Saniye)</label>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Site Başlığı</label>
+                                <input
+                                    type="text"
+                                    name="siteTitle"
+                                    defaultValue={initialSettings?.siteTitle || ''}
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Site Açıklaması</label>
+                                <input
+                                    type="text"
+                                    name="description"
+                                    defaultValue={initialSettings?.description || ''}
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="border-t pt-6">
+                            <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">PDF Katalog</h2>
+                            <div className="mb-6">
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Dosya Yükle veya URL Gir</label>
+                                <div className="flex items-center gap-4">
+                                    <input
+                                        type="text"
+                                        name="catalogUrl"
+                                        defaultValue={initialSettings?.catalogUrl || ''}
+                                        className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50"
+                                        placeholder="Katalog URL'si (veya dosya yükleyiniz)"
+                                        readOnly
+                                    />
+                                    <div className="relative">
+                                        <input
+                                            type="file"
+                                            id="catalog-upload"
+                                            accept=".pdf"
+                                            className="hidden"
+                                            onChange={async (e) => {
+                                                const file = e.target.files?.[0];
+                                                if (!file) return;
+
+                                                const formData = new FormData();
+                                                formData.append('file', file);
+
+                                                setIsLoading(true);
+                                                try {
+                                                    const res = await fetch('/api/upload', {
+                                                        method: 'POST',
+                                                        body: formData,
+                                                    });
+
+                                                    if (!res.ok) throw new Error('Upload failed');
+
+                                                    const data = await res.json();
+                                                    const input = document.querySelector('input[name="catalogUrl"]') as HTMLInputElement;
+                                                    if (input) input.value = data.url;
+                                                } catch (error) {
+                                                    console.error('Catalog upload error:', error);
+                                                    alert('Katalog yüklenemedi!');
+                                                } finally {
+                                                    setIsLoading(false);
+                                                }
+                                            }}
+                                        />
+                                        <label
+                                            htmlFor="catalog-upload"
+                                            className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                                        >
+                                            Katalog Yükle
+                                        </label>
+                                    </div>
+                                </div>
+                                {initialSettings?.catalogUrl && (
+                                    <a
+                                        href={initialSettings.catalogUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-primary-600 text-sm mt-2 inline-block hover:underline"
+                                    >
+                                        Mevcut Kataloğu Görüntüle
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* --- KURUMSAL --- */}
+                <div className={activeTab === 'corporate' ? 'block' : 'hidden'}>
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">Kurumsal İçerik</h2>
+                        <div className="space-y-6">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Hakkımızda Görseli</label>
+                                <div className="max-w-md">
+                                    <ImageUpload
+                                        value={aboutImage}
+                                        onChange={(url) => setAboutImage(url)}
+                                        onRemove={() => setAboutImage('')}
+                                        label="Görsel Yükle"
+                                        description="Kurumsal sayfada görünecek (önerilen: 800x600px)"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Hakkımızda</label>
+                                <textarea
+                                    name="aboutUs"
+                                    rows={5}
+                                    defaultValue={initialSettings?.aboutUs || ''}
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                ></textarea>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Misyonumuz</label>
+                                    <textarea
+                                        name="mission"
+                                        rows={4}
+                                        defaultValue={initialSettings?.mission || ''}
+                                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Vizyonumuz</label>
+                                    <textarea
+                                        name="vision"
+                                        rows={4}
+                                        defaultValue={initialSettings?.vision || ''}
+                                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                    ></textarea>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">İnsan Politikamız</label>
+                                <textarea
+                                    name="humanPolicy"
+                                    rows={3}
+                                    defaultValue={initialSettings?.humanPolicy || ''}
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* --- GÖRÜNÜM & TASARIM --- */}
+                <div className={activeTab === 'design' ? 'block' : 'hidden'}>
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">Görünüm Ayarları</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Site Logosu</label>
+                                <div className="max-w-xs">
+                                    <ImageUpload
+                                        value={logo}
+                                        onChange={(url) => setLogo(url)}
+                                        onRemove={() => setLogo('')}
+                                        label="Logo Yükle"
+                                        description="Şeffaf arka planlı PNG/SVG"
+                                    />
+                                </div>
+                                <div className="mt-4 p-4 bg-slate-50 rounded-lg space-y-3">
+                                    <h4 className="font-semibold text-sm text-slate-900 border-b pb-1 mb-2">Header (Üst Kısım) Ayarları</h4>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Logo Yüksekliği (px)</label>
+                                        <div className="flex items-center gap-2">
+                                            <input
+                                                type="number"
+                                                name="logoHeight"
+                                                defaultValue={initialSettings?.logoHeight || 48}
+                                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                            />
+                                            <span className="text-sm text-slate-500 whitespace-nowrap">px</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Menü Yazı Boyutu (px)</label>
+                                        <div className="flex items-center gap-2">
+                                            <input
+                                                type="number"
+                                                name="menuFontSize"
+                                                defaultValue={initialSettings?.menuFontSize || 14}
+                                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                            />
+                                            <span className="text-sm text-slate-500 whitespace-nowrap">px</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Dikey Boşluk (Padding)</label>
+                                        <div className="flex items-center gap-2">
+                                            <input
+                                                type="number"
+                                                name="headerPadding"
+                                                defaultValue={initialSettings?.headerPadding || 20}
+                                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                            />
+                                            <span className="text-sm text-slate-500 whitespace-nowrap">px</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className="mb-6">
+                                    <label className="block text-sm font-medium text-slate-700 mb-2">Favicon (Site İkonu)</label>
+                                    <div className="max-w-[150px]">
+                                        <ImageUpload
+                                            value={favicon}
+                                            onChange={(url) => setFavicon(url)}
+                                            onRemove={() => setFavicon('')}
+                                            label="Favicon"
+                                            description="32x32 px"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="p-4 bg-slate-50 rounded-lg space-y-3">
+                                    <h4 className="font-semibold text-sm text-slate-900 border-b pb-1 mb-2">Footer (Alt Kısım) Ayarları</h4>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-2">Footer Logosu</label>
+                                        <ImageUpload
+                                            value={footerLogo}
+                                            onChange={(url) => setFooterLogo(url)}
+                                            onRemove={() => setFooterLogo('')}
+                                            label="Footer Logo"
+                                            description="Şeffaf PNG önerilir"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Logo Üst Boşluk (Padding)</label>
+                                        <div className="flex items-center gap-2">
+                                            <input
+                                                type="number"
+                                                name="footerLogoPadding"
+                                                defaultValue={initialSettings?.footerLogoPadding || 0}
+                                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                                placeholder="Örn: 10 veya -5"
+                                            />
+                                            <span className="text-sm text-slate-500 whitespace-nowrap">px</span>
+                                        </div>
+                                        <p className="text-xs text-slate-500 mt-1">Logoyı + (aşağı) veya - (yukarı) hareket ettirir.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="mt-6 border-t pt-6">
+                            <h3 className="text-md font-bold text-slate-800 mb-4">Referanslar (Sayan Logo)</h3>
+                            <div className="max-w-md">
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Kaydırma Süresi (Saniye)</label>
                                 <div className="flex items-center gap-2">
                                     <input
                                         type="number"
@@ -174,300 +370,153 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                         min="5"
                                         max="300"
                                         className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                        placeholder="Örn: 30"
                                     />
                                     <span className="text-sm text-slate-500 whitespace-nowrap">saniye</span>
                                 </div>
-                                <p className="text-xs text-slate-500 mt-1">Bu süre, logoların bir baştan diğer başa ne kadar sürede kayacağını belirler. <strong>Süre arttıkça hız YAVAŞLAR.</strong></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">Site Başlığı</label>
-                            <input
-                                type="text"
-                                name="siteTitle"
-                                defaultValue={initialSettings?.siteTitle || ''}
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">Site Açıklaması</label>
-                            <input
-                                type="text"
-                                name="description"
-                                defaultValue={initialSettings?.description || ''}
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                {/* SEO Ayarları */}
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                    <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">🔍 SEO Ayarları</h2>
-                    <input type="hidden" name="ogImage" value={ogImage} />
-
-                    <div className="space-y-4">
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">Meta Başlık (Title Tag)</label>
-                            <input
-                                type="text"
-                                name="metaTitle"
-                                defaultValue={initialSettings?.metaTitle || ''}
-                                placeholder="Aquachems - İnsana ve Doğaya Saygılı Üretim"
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            />
-                            <p className="text-xs text-slate-500 mt-1">Google arama sonuçlarında görünecek başlık (50-60 karakter önerilir)</p>
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">Meta Açıklama (Description)</label>
-                            <textarea
-                                name="metaDescription"
-                                rows={3}
-                                defaultValue={initialSettings?.metaDescription || ''}
-                                placeholder="Aquachems, çevre bilinci ve insan sağlığını ön planda tutan kimyasal üretim çözümleri sunar."
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            />
-                            <p className="text-xs text-slate-500 mt-1">Google arama sonuçlarında görünecek açıklama (150-160 karakter önerilir)</p>
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">Anahtar Kelimeler (Keywords)</label>
-                            <input
-                                type="text"
-                                name="metaKeywords"
-                                defaultValue={initialSettings?.metaKeywords || ''}
-                                placeholder="aquachems, kimyasal, temizlik, dezenfektan, hijyen"
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            />
-                            <p className="text-xs text-slate-500 mt-1">Virgülle ayırarak anahtar kelimeleri girin</p>
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">Sosyal Medya Paylaşım Görseli (OG Image)</label>
-                            <div className="max-w-md">
-                                <ImageUpload
-                                    value={ogImage}
-                                    onChange={(url) => setOgImage(url)}
-                                    onRemove={() => setOgImage('')}
-                                    label="OG Image Yükle"
-                                    description="1200x630 px önerilir - Facebook, Twitter paylaşımlarında görünür"
-                                />
+                                <p className="text-xs text-slate-500 mt-1">Süre arttıkça kayma hızı <strong>YAVAŞLAR</strong>.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                    <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">E-Katalog</h2>
-                    <div className="mb-6">
-                        <label className="block text-sm font-medium text-slate-700 mb-2">PDF Katalog</label>
-                        <div className="flex items-center gap-4">
-                            <input
-                                type="text"
-                                name="catalogUrl"
-                                defaultValue={initialSettings?.catalogUrl || ''}
-                                className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50"
-                                placeholder="Katalog URL'si (veya dosya yükleyiniz)"
-                                readOnly
-                            />
-                            <div className="relative">
+                {/* --- İLETİŞİM & MEDYA --- */}
+                <div className={activeTab === 'social' ? 'block' : 'hidden'}>
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">Sosyal Medya & İletişim</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Facebook</label>
                                 <input
-                                    type="file"
-                                    id="catalog-upload"
-                                    accept=".pdf"
-                                    className="hidden"
-                                    onChange={async (e) => {
-                                        const file = e.target.files?.[0];
-                                        if (!file) return;
-
-                                        const formData = new FormData();
-                                        formData.append('file', file);
-
-                                        setIsLoading(true);
-                                        try {
-                                            const res = await fetch('/api/upload', {
-                                                method: 'POST',
-                                                body: formData,
-                                            });
-
-                                            if (!res.ok) throw new Error('Upload failed');
-
-                                            const data = await res.json();
-                                            const input = document.querySelector('input[name="catalogUrl"]') as HTMLInputElement;
-                                            if (input) input.value = data.url;
-                                        } catch (error) {
-                                            console.error('Catalog upload error:', error);
-                                            alert('Katalog yüklenemedi!');
-                                        } finally {
-                                            setIsLoading(false);
-                                        }
-                                    }}
+                                    type="text"
+                                    name="facebook"
+                                    defaultValue={initialSettings?.socialMedia?.facebook || ''}
+                                    placeholder="https://facebook.com/..."
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 />
-                                <label
-                                    htmlFor="catalog-upload"
-                                    className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-                                >
-                                    Katalog Yükle
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Twitter / X</label>
+                                <input
+                                    type="text"
+                                    name="twitter"
+                                    defaultValue={initialSettings?.socialMedia?.twitter || ''}
+                                    placeholder="https://x.com/..."
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Instagram</label>
+                                <input
+                                    type="text"
+                                    name="instagram"
+                                    defaultValue={initialSettings?.socialMedia?.instagram || ''}
+                                    placeholder="https://instagram.com/..."
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">LinkedIn</label>
+                                <input
+                                    type="text"
+                                    name="linkedin"
+                                    defaultValue={initialSettings?.socialMedia?.linkedin || ''}
+                                    placeholder="https://linkedin.com/in/..."
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">YouTube</label>
+                                <input
+                                    type="text"
+                                    name="youtube"
+                                    defaultValue={initialSettings?.socialMedia?.youtube || ''}
+                                    placeholder="https://youtube.com/..."
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                            </div>
+                            <div className="md:col-span-2 mt-4 p-4 bg-green-50 rounded-lg border border-green-100">
+                                <label className="block text-sm font-medium text-green-900 mb-1">
+                                    📱 WhatsApp Numarası
                                 </label>
+                                <input
+                                    type="text"
+                                    name="whatsappNumber"
+                                    defaultValue={initialSettings?.whatsappNumber || ''}
+                                    placeholder="905551234567 (Ülke kodu ile, başında + olmadan)"
+                                    className="w-full px-4 py-2 border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                />
+                                <p className="text-xs text-green-700 mt-1">
+                                    Sağ altta görünen WhatsApp butonunda kullanılacak numara.
+                                </p>
                             </div>
                         </div>
-                        {initialSettings?.catalogUrl && (
-                            <a
-                                href={initialSettings.catalogUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-primary-600 text-sm mt-2 inline-block hover:underline"
-                            >
-                                Mevcut Kataloğu Görüntüle
-                            </a>
-                        )}
                     </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                    <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">Sosyal Medya</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">Facebook</label>
-                            <input
-                                type="text"
-                                name="facebook"
-                                defaultValue={initialSettings?.socialMedia?.facebook || ''}
-                                placeholder="https://facebook.com/..."
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">Twitter / X</label>
-                            <input
-                                type="text"
-                                name="twitter"
-                                defaultValue={initialSettings?.socialMedia?.twitter || ''}
-                                placeholder="https://x.com/..."
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">Instagram</label>
-                            <input
-                                type="text"
-                                name="instagram"
-                                defaultValue={initialSettings?.socialMedia?.instagram || ''}
-                                placeholder="https://instagram.com/..."
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">LinkedIn</label>
-                            <input
-                                type="text"
-                                name="linkedin"
-                                defaultValue={initialSettings?.socialMedia?.linkedin || ''}
-                                placeholder="https://linkedin.com/in/..."
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">YouTube</label>
-                            <input
-                                type="text"
-                                name="youtube"
-                                defaultValue={initialSettings?.socialMedia?.youtube || ''}
-                                placeholder="https://youtube.com/..."
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            />
-                        </div>
-                        <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-slate-700 mb-1">
-                                📱 WhatsApp Numarası
-                            </label>
-                            <input
-                                type="text"
-                                name="whatsappNumber"
-                                defaultValue={initialSettings?.whatsappNumber || ''}
-                                placeholder="905551234567 (Ülke kodu ile, başında + olmadan)"
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            />
-                            <p className="text-xs text-slate-500 mt-1">
-                                Sağ altta görünen WhatsApp destek butonunda kullanılacak numara. Örnek: 905551234567
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                {/* --- SEO --- */}
+                <div className={activeTab === 'seo' ? 'block' : 'hidden'}>
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">SEO Ayarları</h2>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Meta Başlık (Title Tag)</label>
+                                <input
+                                    type="text"
+                                    name="metaTitle"
+                                    defaultValue={initialSettings?.metaTitle || ''}
+                                    placeholder="Aquachems - İnsana ve Doğaya Saygılı Üretim"
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                                <p className="text-xs text-slate-500 mt-1">Google'da görünecek başlık (50-60 karakter)</p>
+                            </div>
 
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                    <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">Kurumsal İçerik</h2>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Meta Açıklama (Description)</label>
+                                <textarea
+                                    name="metaDescription"
+                                    rows={3}
+                                    defaultValue={initialSettings?.metaDescription || ''}
+                                    placeholder="Site açıklaması..."
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                                <p className="text-xs text-slate-500 mt-1">Google'da görünecek açıklama (150-160 karakter)</p>
+                            </div>
 
-                    <div className="space-y-6">
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">Hakkımızda Görseli</label>
-                            <div className="max-w-md">
-                                <ImageUpload
-                                    value={aboutImage}
-                                    onChange={(url) => setAboutImage(url)}
-                                    onRemove={() => setAboutImage('')}
-                                    label="Görsel Yükle"
-                                    description="Kurumsal sayfada görünecek (önerilen: 800x600px)"
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Anahtar Kelimeler</label>
+                                <input
+                                    type="text"
+                                    name="metaKeywords"
+                                    defaultValue={initialSettings?.metaKeywords || ''}
+                                    placeholder="kimya, temizlik, endüstriyel..."
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 />
                             </div>
-                            <input type="hidden" name="aboutImage" value={aboutImage} />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">Hakkımızda</label>
-                            <textarea
-                                name="aboutUs"
-                                rows={5}
-                                defaultValue={initialSettings?.aboutUs || ''}
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            ></textarea>
-                        </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Misyonumuz</label>
-                                <textarea
-                                    name="mission"
-                                    rows={4}
-                                    defaultValue={initialSettings?.mission || ''}
-                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                ></textarea>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Paylaşım Görseli (OG Image)</label>
+                                <div className="max-w-md">
+                                    <ImageUpload
+                                        value={ogImage}
+                                        onChange={(url) => setOgImage(url)}
+                                        onRemove={() => setOgImage('')}
+                                        label="OG Image Yükle"
+                                        description="1200x630 px önerilir"
+                                    />
+                                </div>
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Vizyonumuz</label>
-                                <textarea
-                                    name="vision"
-                                    rows={4}
-                                    defaultValue={initialSettings?.vision || ''}
-                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                ></textarea>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">İnsan Politikamız</label>
-                            <textarea
-                                name="humanPolicy"
-                                rows={3}
-                                defaultValue={initialSettings?.humanPolicy || ''}
-                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                            ></textarea>
                         </div>
                     </div>
                 </div>
 
-                <div className="flex justify-end sticky bottom-4">
+                <div className="fixed bottom-6 right-6 z-40">
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-xl flex items-center gap-2 transition-colors disabled:opacity-50 shadow-lg"
+                        className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-full flex items-center gap-3 transition-all disabled:opacity-50 shadow-xl hover:shadow-2xl hover:scale-105"
                     >
-                        {isLoading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                        Ayarları Kaydet
+                        {isLoading ? <Loader2 className="animate-spin" size={24} /> : <Save size={24} />}
+                        <span className="font-bold text-lg">Kaydet</span>
                     </button>
                 </div>
             </form>
