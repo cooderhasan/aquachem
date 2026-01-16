@@ -6,6 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { sendMail } from '@/lib/mail';
 
 export async function submitApplication(formData: FormData) {
     try {
@@ -53,6 +54,31 @@ export async function submitApplication(formData: FormData) {
             phone,
             position,
             cvUrl,
+        });
+
+        // Send Email Notification
+        // Note: process.env.NEXT_PUBLIC_APP_URL should be defined, fallback to window location if client-side but this is server action
+        // We'll use a relative path or construct full URL if domain is known, here assuming simple link
+        const cvFullUrl = process.env.NEXT_PUBLIC_APP_URL ? `${process.env.NEXT_PUBLIC_APP_URL}${cvUrl}` : cvUrl;
+
+        await sendMail({
+            to: ['info@aquachems.com', 'onurvarol@aquachems.com', 'selimvarol@aquachems.com'],
+            subject: `Yeni İş Başvurusu: ${position}`,
+            text: `
+                Ad Soyad: ${name}
+                E-posta: ${email}
+                Telefon: ${phone}
+                Pozisyon: ${position}
+                CV: ${cvFullUrl}
+            `,
+            html: `
+                <h3>Yeni İş Başvurusu</h3>
+                <p><strong>Ad Soyad:</strong> ${name}</p>
+                <p><strong>E-posta:</strong> ${email}</p>
+                <p><strong>Telefon:</strong> ${phone}</p>
+                <p><strong>Pozisyon:</strong> ${position}</p>
+                <p><strong>CV:</strong> <a href="${cvFullUrl}">Dosyayı Görüntüle</a></p>
+            `
         });
 
         revalidatePath('/admin/applications');

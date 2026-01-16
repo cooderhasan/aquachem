@@ -3,6 +3,7 @@
 import { db } from '@/lib/db';
 import { messages } from '@/db/schema';
 import { revalidatePath } from 'next/cache';
+import { sendMail } from '@/lib/mail';
 
 export async function submitContactForm(formData: FormData) {
     try {
@@ -20,6 +21,26 @@ export async function submitContactForm(formData: FormData) {
             email,
             subject,
             message,
+        });
+
+        // Send Email Notification
+        await sendMail({
+            to: ['info@aquachems.com', 'onurvarol@aquachems.com', 'selimvarol@aquachems.com'],
+            subject: `Yeni İletişim Formu Mesajı: ${subject}`,
+            text: `
+                Ad Soyad: ${name}
+                E-posta: ${email}
+                Konu: ${subject}
+                Mesaj: ${message}
+            `,
+            html: `
+                <h3>Yeni İletişim Formu Mesajı</h3>
+                <p><strong>Ad Soyad:</strong> ${name}</p>
+                <p><strong>E-posta:</strong> ${email}</p>
+                <p><strong>Konu:</strong> ${subject}</p>
+                <p><strong>Mesaj:</strong></p>
+                <p>${message}</p>
+            `
         });
 
         revalidatePath('/admin/messages');
