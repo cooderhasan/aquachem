@@ -48,6 +48,7 @@ export async function updateSettings(formData: FormData) {
         const ogImage = formData.get('ogImage') as string;
         const whatsappNumber = formData.get('whatsappNumber') as string;
         const footerLogo = formData.get('footerLogo') as string;
+        const logoHeight = parseInt(formData.get('logoHeight') as string) || 48;
 
         if (currentSettings) {
             await db.update(settings).set({
@@ -69,6 +70,7 @@ export async function updateSettings(formData: FormData) {
                 ogImage: ogImage || currentSettings.ogImage,
                 whatsappNumber: whatsappNumber || currentSettings.whatsappNumber,
                 footerLogo: footerLogo || currentSettings.footerLogo,
+                logoHeight: logoHeight || currentSettings.logoHeight,
             }).where(eq(settings.id, currentSettings.id));
         } else {
             await db.insert(settings).values({
@@ -89,6 +91,7 @@ export async function updateSettings(formData: FormData) {
                 ogImage,
                 whatsappNumber,
                 footerLogo,
+                logoHeight,
             });
         }
 

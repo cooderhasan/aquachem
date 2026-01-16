@@ -89,7 +89,10 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
                         {settings?.logo ? (
-                            <div className="relative h-12 w-auto min-w-[120px]">
+                            <div
+                                className="relative w-auto min-w-[120px]"
+                                style={{ height: settings?.logoHeight ? `${settings.logoHeight}px` : '48px' }}
+                            >
                                 <img
                                     src={settings.logo}
                                     alt={settings.siteTitle || 'Logo'}
