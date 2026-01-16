@@ -12,6 +12,8 @@ import { getSettings } from '@/app/admin/settings/actions';
 import { getHeroSlides } from '@/app/admin/hero/actions';
 import { getReferences } from '@/app/admin/references/actions';
 
+import { getPosts } from '@/app/admin/posts/actions';
+
 export default async function Home() {
   const slides = await getHeroSlides();
   const activities = await getActivities();
@@ -19,6 +21,7 @@ export default async function Home() {
   const stats = await getStats();
   const settings = await getSettings();
   const references = await getReferences();
+  const posts = await getPosts();
 
   return (
     <main className="flex flex-col min-h-screen bg-white">
@@ -26,7 +29,7 @@ export default async function Home() {
       <MissionSection />
       <ProductGroups />
       <InnovationSection items={innovationItems} />
-      <ActivitiesSection activities={activities} catalogUrl={settings?.catalogUrl} />
+      <ActivitiesSection activities={activities} posts={posts} catalogUrl={settings?.catalogUrl} />
       <StatsSection stats={stats} />
       {/* References Section */}
       <ReferencesCarousel

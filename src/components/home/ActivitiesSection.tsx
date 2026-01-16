@@ -12,10 +12,11 @@ interface Activity {
 
 interface ActivitiesSectionProps {
     activities: Activity[];
+    posts?: any[];
     catalogUrl?: string | null;
 }
 
-const ActivitiesSection = ({ activities, catalogUrl }: ActivitiesSectionProps) => {
+const ActivitiesSection = ({ activities, posts = [], catalogUrl }: ActivitiesSectionProps) => {
     // Filter active items if needed, or assume server returns all and we filter here
     const activeActivities = activities.filter(a => a.isActive !== false);
 
@@ -48,19 +49,24 @@ const ActivitiesSection = ({ activities, catalogUrl }: ActivitiesSectionProps) =
                             Bizden Haberler
                         </h3>
                         <div className="space-y-4">
-                            <div className="group cursor-pointer">
-                                <span className="text-xs text-primary-500 font-bold block mb-1">18 Aralık 2025</span>
-                                <p className="text-slate-700 font-medium group-hover:text-primary-600 transition-colors">
-                                    Yeni üretim tesisimiz faaliyete geçti.
-                                </p>
-                            </div>
-                            <hr className="border-slate-100" />
-                            <div className="group cursor-pointer">
-                                <span className="text-xs text-primary-500 font-bold block mb-1">15 Kasım 2025</span>
-                                <p className="text-slate-700 font-medium group-hover:text-primary-600 transition-colors">
-                                    ISO 14001 Çevre Yönetim Sistemi sertifikamızı yeniledik.
-                                </p>
-                            </div>
+                            {posts && posts.length > 0 ? (
+                                posts.map((post: any) => (
+                                    <React.Fragment key={post.id}>
+                                        <div className="group cursor-pointer">
+                                            <span className="text-xs text-primary-500 font-bold block mb-1">
+                                                {new Date(post.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                            </span>
+                                            <p className="text-slate-700 font-medium group-hover:text-primary-600 transition-colors line-clamp-3">
+                                                {post.title}
+                                            </p>
+                                        </div>
+                                        <hr className="border-slate-100 last:hidden" />
+                                    </React.Fragment>
+                                ))
+                            ) : (
+                                <p className="text-slate-500 text-sm">Henüz haber eklenmemiş.</p>
+                            )}
+
                             <Link href="/news" className="inline-block mt-4 text-sm text-primary-600 font-bold hover:underline">
                                 Tüm Haberler &rarr;
                             </Link>
