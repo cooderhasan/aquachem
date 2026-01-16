@@ -2,7 +2,7 @@
 import React from 'react';
 import { updatePost } from '@/app/admin/posts/actions';
 import { getPost } from '@/lib/data';
-import PostForm from '../PostForm';
+import PostForm from '../../PostForm';
 import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
