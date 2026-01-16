@@ -145,6 +145,20 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                 label="Footer Logo Yükle"
                                 description="Sitenin alt kısmında görünecek logo (Şeffaf PNG önerilir)"
                             />
+                            <div className="mt-3">
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Footer Logo Üst Boşluk (Padding)</label>
+                                <div className="flex items-center gap-2">
+                                    <input
+                                        type="number"
+                                        name="footerLogoPadding"
+                                        defaultValue={initialSettings?.footerLogoPadding || 0}
+                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                        placeholder="Örn: 10 veya -5"
+                                    />
+                                    <span className="text-sm text-slate-500 whitespace-nowrap">px</span>
+                                </div>
+                                <p className="text-xs text-slate-500 mt-1">Logoyu yukarı/aşağı hizalamak için kullanın. Negatif değer girebilirsiniz.</p>
+                            </div>
                         </div>
                     </div>
 

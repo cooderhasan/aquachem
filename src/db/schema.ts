@@ -106,6 +106,7 @@ export const settings = pgTable('settings', {
   logoHeight: integer('logo_height').default(48), // Logo height in pixels (default 48px approx h-12)
   menuFontSize: integer('menu_font_size').default(14), // Menu font size in pixels (default 14px text-sm)
   headerPadding: integer('header_padding').default(20), // Header vertical padding in pixels (default 20px py-5)
+  footerLogoPadding: integer('footer_logo_padding').default(0), // Footer logo top padding in pixels (default 0)
 });
 
 export const contactLocations = pgTable('contact_locations', {
