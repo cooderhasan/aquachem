@@ -28,7 +28,11 @@ export default async function Home() {
       <InnovationSection items={innovationItems} />
       <ActivitiesSection activities={activities} catalogUrl={settings?.catalogUrl} />
       <StatsSection stats={stats} />
-      <ReferencesCarousel references={references} />
+      {/* References Section */}
+      <ReferencesCarousel
+        references={references || []}
+        settings={settings}
+      />
     </main>
   );
 }

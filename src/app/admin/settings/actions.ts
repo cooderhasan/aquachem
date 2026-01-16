@@ -52,6 +52,7 @@ export async function updateSettings(formData: FormData) {
         const menuFontSize = parseInt(formData.get('menuFontSize') as string) || 14;
         const headerPadding = parseInt(formData.get('headerPadding') as string) || 20;
         const footerLogoPadding = parseInt(formData.get('footerLogoPadding') as string) || 0;
+        const referencesScrollSpeed = parseInt(formData.get('referencesScrollSpeed') as string) || 30;
 
         if (currentSettings) {
             await db.update(settings).set({
@@ -77,6 +78,7 @@ export async function updateSettings(formData: FormData) {
                 menuFontSize: menuFontSize || currentSettings.menuFontSize,
                 headerPadding: headerPadding || currentSettings.headerPadding,
                 footerLogoPadding: footerLogoPadding || currentSettings.footerLogoPadding,
+                referencesScrollSpeed: referencesScrollSpeed || currentSettings.referencesScrollSpeed,
             }).where(eq(settings.id, currentSettings.id));
         } else {
             await db.insert(settings).values({
@@ -101,6 +103,7 @@ export async function updateSettings(formData: FormData) {
                 menuFontSize,
                 headerPadding,
                 footerLogoPadding,
+                referencesScrollSpeed,
             });
         }
 

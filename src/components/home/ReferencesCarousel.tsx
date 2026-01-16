@@ -11,13 +11,17 @@ interface Reference {
 
 interface ReferencesCarouselProps {
     references: Reference[];
+    settings?: any; // Settings prop eklendi
 }
 
-const ReferencesCarousel = ({ references }: ReferencesCarouselProps) => {
+const ReferencesCarousel = ({ references, settings }: ReferencesCarouselProps) => {
     // Referans yoksa bileşeni gösterme
     if (!references || references.length === 0) {
         return null;
     }
+
+    // Default duration 30s or from settings
+    const duration = settings?.referencesScrollSpeed ? `${settings.referencesScrollSpeed}s` : '30s';
 
     return (
         <section className="py-12 bg-slate-50 border-t border-slate-100">
@@ -35,7 +39,10 @@ const ReferencesCarousel = ({ references }: ReferencesCarouselProps) => {
                 <div className="absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-slate-50 to-transparent z-10" />
                 <div className="absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-slate-50 to-transparent z-10" />
 
-                <div className="flex gap-16 w-max animate-scroll py-4">
+                <div
+                    className="flex gap-16 w-max animate-scroll py-4"
+                    style={{ animationDuration: duration }}
+                >
                     {/* Double the list for infinite scroll effect */}
                     {[...references, ...references, ...references].map((ref, index) => (
                         <div

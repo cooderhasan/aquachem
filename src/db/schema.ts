@@ -107,6 +107,7 @@ export const settings = pgTable('settings', {
   menuFontSize: integer('menu_font_size').default(14), // Menu font size in pixels (default 14px text-sm)
   headerPadding: integer('header_padding').default(20), // Header vertical padding in pixels (default 20px py-5)
   footerLogoPadding: integer('footer_logo_padding').default(0), // Footer logo top padding in pixels (default 0)
+  referencesScrollSpeed: integer('references_scroll_speed').default(30), // References scroll animation duration in seconds (default 30s)
 });
 
 export const contactLocations = pgTable('contact_locations', {
