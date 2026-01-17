@@ -61,7 +61,9 @@ export async function submitApplication(formData: FormData) {
         // We'll use a relative path or construct full URL if domain is known, here assuming simple link
         const cvFullUrl = process.env.NEXT_PUBLIC_APP_URL ? `${process.env.NEXT_PUBLIC_APP_URL}${cvUrl}` : cvUrl;
 
-        await sendMail({
+        console.log('CAREER FORM: About to send email to:', ['info@aquachems.com', 'onurvarol@aquachems.com', 'selimvarol@aquachems.com', 'cooderhasan@gmail.com']);
+
+        const emailResult = await sendMail({
             to: ['info@aquachems.com', 'onurvarol@aquachems.com', 'selimvarol@aquachems.com', 'cooderhasan@gmail.com'],
             subject: `Yeni İş Başvurusu: ${position}`,
             text: `
@@ -80,6 +82,8 @@ export async function submitApplication(formData: FormData) {
                 <p><strong>CV:</strong> <a href="${cvFullUrl}">Dosyayı Görüntüle</a></p>
             `
         });
+
+        console.log('CAREER FORM: Email result:', emailResult);
 
         revalidatePath('/admin/applications');
         return { success: true };
