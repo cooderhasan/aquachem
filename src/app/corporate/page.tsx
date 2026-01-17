@@ -39,31 +39,64 @@ export default async function CorporatePage() {
             </div>
 
             {/* About Us */}
-            <div className="py-20">
+            <div className="py-24 bg-gradient-to-b from-white to-slate-50">
                 <div className="container mx-auto px-4">
-                    <div className="flex flex-col lg:flex-row gap-16 items-center">
-                        <div className="w-full lg:flex-1 space-y-6">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold">
+                    <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+                        {/* Text Content */}
+                        <div className="w-full lg:w-1/2 space-y-8 pt-4">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold border border-blue-100">
                                 <Building2 size={18} />
-                                Hakkımızda
+                                <span className="uppercase tracking-wide">Hakkımızda</span>
                             </div>
-                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
-                                {settings?.siteTitle || 'Aquachems'}
-                            </h2>
-                            <p className="text-lg text-slate-600 leading-relaxed whitespace-pre-wrap">
-                                {settings?.aboutUs || 'Hakkımızda yazısı henüz eklenmedi.'}
-                            </p>
+
+                            <div className="space-y-6">
+                                <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight">
+                                    {settings?.siteTitle || 'Aquachems'}
+                                </h2>
+                                <div className="h-1 w-20 bg-blue-600 rounded-full"></div>
+                            </div>
+
+                            <div className="prose prose-lg text-slate-600 max-w-none prose-p:leading-relaxed">
+                                <p className="whitespace-pre-wrap">
+                                    {settings?.aboutUs || 'Hakkımızda yazısı henüz eklenmedi. Endüstriyel çözümlerimiz ve kaliteli hizmet anlayışımızla sektörde fark yaratıyoruz.'}
+                                </p>
+                            </div>
+
+                            <div className="flex gap-4 pt-4">
+                                <div className="flex flex-col">
+                                    <span className="text-3xl font-bold text-blue-600">10+</span>
+                                    <span className="text-sm text-slate-500 font-medium">Yıllık Tecrübe</span>
+                                </div>
+                                <div className="w-px h-12 bg-slate-200"></div>
+                                <div className="flex flex-col">
+                                    <span className="text-3xl font-bold text-blue-600">100+</span>
+                                    <span className="text-sm text-slate-500 font-medium">Tamamlanan Proje</span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="w-full lg:flex-1 relative">
-                            <div className="relative h-[300px] md:h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl">
-                                <Image
-                                    src={settings?.aboutImage || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80"}
-                                    alt="About Us"
-                                    fill
-                                    className="object-cover"
-                                />
+
+                        {/* Image Content */}
+                        <div className="w-full lg:w-1/2 relative lg:sticky lg:top-24">
+                            <div className="relative group">
+                                <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-emerald-100 rounded-[2rem] opacity-50 blur-2xl group-hover:opacity-75 transition duration-500"></div>
+                                <div className="relative aspect-[4/3] w-full rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white">
+                                    <Image
+                                        src={settings?.aboutImage || "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80"}
+                                        alt="Hakkımızda"
+                                        fill
+                                        className="object-cover transform group-hover:scale-105 transition duration-700"
+                                    />
+
+                                    {/* Abstract decorative element */}
+                                    <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                                    <div className="absolute bottom-6 left-6 text-white">
+                                        <div className="flex items-center gap-2">
+                                            <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+                                            <span className="font-semibold text-lg">Kalite Standartları</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            {/* Stats or Decorative elements could go here */}
                         </div>
                     </div>
                 </div>
