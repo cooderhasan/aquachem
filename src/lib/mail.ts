@@ -16,6 +16,11 @@ export async function sendMail({ to, subject, text, html }: MailOptions) {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS,
         },
+        connectionTimeout: 10000, // 10 seconds
+        socketTimeout: 10000,
+        tls: {
+            rejectUnauthorized: false
+        }
     });
 
     try {
