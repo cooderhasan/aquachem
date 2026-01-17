@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, ShoppingBag, FolderTree, FileText, Image as ImageIcon, Settings, GalleryHorizontal, MapPin, Mail, Briefcase, FileCheck, LogOut, Activity, BarChart3, Lightbulb, Menu, X } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, FolderTree, FileText, Image as ImageIcon, Settings, GalleryHorizontal, MapPin, Mail, Briefcase, FileCheck, LogOut, Activity, BarChart3, Lightbulb, Menu, X, Heart } from 'lucide-react';
 import { Toaster } from 'sonner';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -25,6 +25,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { name: 'Faaliyet Alanları', href: '/admin/activities', icon: Activity },
         { name: 'İstatistikler', href: '/admin/stats', icon: BarChart3 },
         { name: 'İnovasyon', href: '/admin/innovation', icon: Lightbulb },
+        { name: 'Anasayfa Kartları', href: '/admin/mission', icon: Heart },
         { name: 'Belgeler', href: '/admin/certificates', icon: FileCheck },
         { name: 'Hero Slider', href: '/admin/hero', icon: GalleryHorizontal },
         { name: 'İletişim Bilgileri', href: '/admin/contact', icon: MapPin },

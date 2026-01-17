@@ -155,6 +155,7 @@ export const missionCards = pgTable('mission_cards', {
   description: text('description').notNull(),
   icon: text('icon').notNull(),
   image: text('image'),
+  features: jsonb('features'), // Array of strings for list items
   order: integer('order').default(0),
 });
 
