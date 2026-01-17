@@ -20,8 +20,8 @@ export default async function CorporatePage() {
     return (
         <div className="bg-white">
             {/* Hero Section */}
-            <div className="relative bg-slate-900 text-white py-24 md:py-32 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/90 to-transparent z-10" />
+            <div className="relative bg-primary-900 text-white py-24 md:py-32 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-900 via-primary-900/90 to-transparent z-10" />
                 <div className="absolute inset-0">
                     <Image
                         src="/images/corporate-hero.jpg" // You might want to make this dynamic too later
