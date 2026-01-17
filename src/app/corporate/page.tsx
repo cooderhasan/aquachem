@@ -20,7 +20,7 @@ export default async function CorporatePage() {
     return (
         <div className="bg-white">
             {/* Hero Section */}
-            <div className="relative bg-primary-900 text-white py-24 md:py-32 overflow-hidden">
+            <div className="relative bg-primary-900 text-white pt-48 pb-16 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-900 via-primary-900/90 to-transparent z-10" />
                 <div className="absolute inset-0">
                     <Image
@@ -31,7 +31,7 @@ export default async function CorporatePage() {
                     />
                 </div>
                 <div className="container-custom relative z-20">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-6">Kurumsal</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-6 !text-white">Kurumsal</h1>
                     <p className="text-xl text-primary-200 max-w-2xl">
                         {settings?.description || 'Aquachems olarak endüstriyel çözümlerimizle değer katıyoruz.'}
                     </p>
@@ -40,7 +40,7 @@ export default async function CorporatePage() {
 
             {/* About Us */}
             <div className="py-24 bg-gradient-to-b from-white to-slate-50">
-                <div className="container mx-auto px-4">
+                <div className="container-custom">
                     <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
                         {/* Text Content */}
                         <div className="w-full lg:w-1/2 space-y-8 pt-4">
@@ -104,7 +104,7 @@ export default async function CorporatePage() {
 
             {/* Mission & Vision */}
             <div className="py-20 bg-slate-50">
-                <div className="container mx-auto px-4">
+                <div className="container-custom">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
                         {/* Mission */}
                         <div className="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
@@ -133,7 +133,7 @@ export default async function CorporatePage() {
 
             {/* Human Policy */}
             <div className="py-20">
-                <div className="container mx-auto px-4">
+                <div className="container-custom">
                     <div className="max-w-4xl mx-auto text-center">
                         <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center mx-auto mb-6">
                             <Users size={32} />

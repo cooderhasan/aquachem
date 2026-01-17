@@ -37,9 +37,9 @@ export default async function ProductsPage() {
     ];
 
     return (
-        <div className="bg-slate-50 min-h-screen pb-20 pt-28">
+        <div className="bg-slate-50 min-h-screen pb-20">
             {/* Header Banner */}
-            <div className="bg-primary-900 text-white py-16">
+            <div className="bg-primary-900 text-white pt-48 pb-16">
                 <div className="container-custom">
                     <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white">Ürün Grupları</h1>
                     <p className="text-primary-200 text-lg">
