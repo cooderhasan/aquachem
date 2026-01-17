@@ -31,7 +31,7 @@ export default function RelatedProducts({ products, categorySlug, currentProduct
         <div className="border-t border-slate-200 mt-16 pt-12">
             <div className="container-custom">
                 <h2 className="text-2xl font-bold text-slate-800 mb-8">
-                    Bu Ürünleri de İnceleyebilirsiniz
+                    Aynı Kategoriden Diğer Ürünler
                 </h2>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
