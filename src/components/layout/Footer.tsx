@@ -19,9 +19,9 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
             className="bg-slate-900 text-slate-300 pt-20 pb-10 mt-auto relative z-50 overflow-hidden"
         >
             <div className="container-custom">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-16">
                     {/* Brand Info */}
-                    <div className="space-y-6">
+                    <div className="col-span-2 lg:col-span-1 space-y-6">
                         <Link href="/" className="flex items-center gap-3 group">
                             {settings?.footerLogo ? (
                                 <img
@@ -100,7 +100,7 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
                     </div>
 
                     {/* Contact Info */}
-                    <div>
+                    <div className="col-span-2 lg:col-span-1">
                         <h3 className="text-white font-bold text-lg mb-6">İletişim</h3>
                         <ul className="space-y-4 text-sm">
                             <li className="flex items-start gap-3">
