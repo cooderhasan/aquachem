@@ -30,9 +30,9 @@ export default async function CorporatePage() {
                         className="object-cover opacity-50"
                     />
                 </div>
-                <div className="container mx-auto px-4 relative z-20">
+                <div className="container-custom relative z-20">
                     <h1 className="text-4xl md:text-5xl font-bold mb-6">Kurumsal</h1>
-                    <p className="text-xl text-slate-300 max-w-2xl">
+                    <p className="text-xl text-primary-200 max-w-2xl">
                         {settings?.description || 'Aquachems olarak endüstriyel çözümlerimizle değer katıyoruz.'}
                     </p>
                 </div>
