@@ -41,7 +41,7 @@ export default async function ApplicationsPage() {
                                     </h3>
                                     {getStatusBadge(app.status || 'new')}
                                     <span className="text-xs text-slate-400 ml-auto md:ml-2">
-                                        {new Date(app.createdAt || Date.now()).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                        {new Date(app.createdAt || Date.now()).toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Istanbul' })}
                                     </span>
                                 </div>
 
