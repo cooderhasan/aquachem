@@ -5,9 +5,10 @@ interface MailOptions {
     subject: string;
     text: string;
     html?: string;
+    attachments?: { filename: string; content: Buffer }[];
 }
 
-export async function sendMail({ to, subject, text, html }: MailOptions) {
+export async function sendMail({ to, subject, text, html, attachments }: MailOptions) {
     const transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: Number(process.env.SMTP_PORT),
@@ -30,6 +31,7 @@ export async function sendMail({ to, subject, text, html }: MailOptions) {
             subject,
             text,
             html,
+            attachments,
         });
         console.log('Message sent: %s', info.messageId);
         return { success: true };
