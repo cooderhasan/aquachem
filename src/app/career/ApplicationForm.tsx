@@ -12,13 +12,22 @@ export default function ApplicationForm() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log('CLIENT: Form submission started');
         setIsLoading(true);
         setStatus('idle');
 
         const formData = new FormData(e.currentTarget);
+        console.log('CLIENT: FormData created', {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            fileSize: (formData.get('cv') as File)?.size
+        });
 
         try {
+            console.log('CLIENT: Calling server action...');
             const result = await submitApplication(formData);
+            console.log('CLIENT: Server action result:', result);
+
             if (result.success) {
                 setStatus('success');
                 (e.target as HTMLFormElement).reset();
@@ -26,10 +35,12 @@ export default function ApplicationForm() {
             } else {
                 setStatus('error');
                 setErrorMessage(result.error || 'Bir hata oluştu.');
+                console.error('CLIENT: Server returned error:', result.error);
             }
         } catch (error) {
+            console.error('CLIENT: Submission error caught:', error);
             setStatus('error');
-            setErrorMessage('Bir hata oluştu.');
+            setErrorMessage('Bir hata oluştu (Detay konsolda).');
         } finally {
             setIsLoading(false);
         }
