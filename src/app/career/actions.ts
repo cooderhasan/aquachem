@@ -62,7 +62,7 @@ export async function submitApplication(formData: FormData) {
         const cvFullUrl = process.env.NEXT_PUBLIC_APP_URL ? `${process.env.NEXT_PUBLIC_APP_URL}${cvUrl}` : cvUrl;
 
         await sendMail({
-            to: ['info@aquachems.com', 'onurvarol@aquachems.com', 'selimvarol@aquachems.com'],
+            to: ['info@aquachems.com', 'onurvarol@aquachems.com', 'selimvarol@aquachems.com', 'cooderhasan@gmail.com'],
             subject: `Yeni İş Başvurusu: ${position}`,
             text: `
                 Ad Soyad: ${name}
