@@ -108,6 +108,8 @@ export const settings = pgTable('settings', {
   headerPadding: integer('header_padding').default(20), // Header vertical padding in pixels (default 20px py-5)
   footerLogoPadding: integer('footer_logo_padding').default(0), // Footer logo top padding in pixels (default 0)
   referencesScrollSpeed: integer('references_scroll_speed').default(30), // References scroll animation duration in seconds (default 30s)
+  aboutUsFontSize: text('about_us_font_size').default('text-lg'), // text-base, text-lg, text-xl
+  aboutUsDarkness: text('about_us_darkness').default('text-slate-600'), // text-slate-600, text-slate-700, text-slate-900, text-black
 });
 
 export const contactLocations = pgTable('contact_locations', {

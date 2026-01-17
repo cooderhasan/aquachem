@@ -56,7 +56,7 @@ export default async function CorporatePage() {
                                 <div className="h-1 w-20 bg-blue-600 rounded-full"></div>
                             </div>
 
-                            <div className="prose prose-lg text-slate-600 max-w-none prose-p:leading-relaxed">
+                            <div className={`prose max-w-none prose-p:leading-relaxed ${settings?.aboutUsFontSize || 'text-lg'} ${settings?.aboutUsDarkness || 'text-slate-600'}`}>
                                 <p className="whitespace-pre-wrap">
                                     {settings?.aboutUs || 'Hakkımızda yazısı henüz eklenmedi. Endüstriyel çözümlerimiz ve kaliteli hizmet anlayışımızla sektörde fark yaratıyoruz.'}
                                 </p>

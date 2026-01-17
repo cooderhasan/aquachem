@@ -23,6 +23,8 @@ export async function updateSettings(formData: FormData) {
         const mission = formData.get('mission') as string;
         const vision = formData.get('vision') as string;
         const humanPolicy = formData.get('humanPolicy') as string;
+        const aboutUsFontSize = formData.get('aboutUsFontSize') as string;
+        const aboutUsDarkness = formData.get('aboutUsDarkness') as string;
 
         // Check if settings exist
         const currentSettings = await getSettings();
@@ -66,6 +68,8 @@ export async function updateSettings(formData: FormData) {
                 mission,
                 vision,
                 humanPolicy,
+                aboutUsFontSize,
+                aboutUsDarkness,
                 socialMedia,
                 // SEO fields
                 metaTitle: metaTitle || currentSettings.metaTitle,
@@ -90,6 +94,8 @@ export async function updateSettings(formData: FormData) {
                 mission,
                 vision,
                 humanPolicy,
+                aboutUsFontSize,
+                aboutUsDarkness,
                 catalogUrl,
                 socialMedia,
                 // SEO fields

@@ -239,6 +239,35 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                 ></textarea>
                             </div>
 
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Yazı Boyutu</label>
+                                    <select
+                                        name="aboutUsFontSize"
+                                        defaultValue={initialSettings?.aboutUsFontSize || 'text-lg'}
+                                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
+                                    >
+                                        <option value="text-base">Normal (16px)</option>
+                                        <option value="text-lg">Orta (18px)</option>
+                                        <option value="text-xl">Büyük (20px)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Yazı Koyuluğu</label>
+                                    <select
+                                        name="aboutUsDarkness"
+                                        defaultValue={initialSettings?.aboutUsDarkness || 'text-slate-600'}
+                                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
+                                    >
+                                        <option value="text-slate-600">Normal (Gri)</option>
+                                        <option value="text-slate-700">Koyu (Koyu Gri)</option>
+                                        <option value="text-slate-900">Çok Koyu (Siyahımsı)</option>
+                                        <option value="text-black">Tam Siyah</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 mb-1">Misyonumuz</label>
