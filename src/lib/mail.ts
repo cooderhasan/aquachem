@@ -14,13 +14,13 @@ export async function sendMail({ to, subject, text, html }: MailOptions) {
         secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
         auth: {
             user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASSWORD,
+            pass: process.env.SMTP_PASS,
         },
     });
 
     try {
         const info = await transporter.sendMail({
-            from: process.env.SMTP_FROM_EMAIL,
+            from: process.env.SMTP_FROM,
             to: Array.isArray(to) ? to.join(', ') : to,
             subject,
             text,
