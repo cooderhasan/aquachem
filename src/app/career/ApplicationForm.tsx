@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Send, Loader2, CheckCircle, AlertCircle, Upload } from 'lucide-react';
-import { submitApplication } from './actions';
+import { submitCareerApplication as submitApplication } from '@/app/contact/actions';
 
 export default function ApplicationForm() {
     const [isLoading, setIsLoading] = useState(false);
