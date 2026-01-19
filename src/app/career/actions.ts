@@ -32,31 +32,23 @@ export async function submitApplication(formData: FormData) {
             return { success: false, error: 'Dosya boyutu 2MB\'dan küçük olmalıdır.' };
         }
 
-        /* 
-        TEST MODU: Dosya kaydetme devre dışı
-        Sorunun dosya sisteminde olup olmadığını anlamak için bu kısmı geçiyoruz.
-        */
+        // Dosyayı kaydet
+        const buffer = Buffer.from(await cvFile.arrayBuffer());
+        const uploadDir = join(process.cwd(), 'public', 'uploads', 'cvs');
 
-        // const buffer = Buffer.from(await cvFile.arrayBuffer());
-        // const uploadDir = join(process.cwd(), 'public', 'uploads', 'cvs');
+        try {
+            await mkdir(uploadDir, { recursive: true });
+        } catch (e) {
+            // Klasör zaten varsa devam et
+        }
 
-        // try {
-        //     await mkdir(uploadDir, { recursive: true });
-        // } catch (e) {
-        //     // Klasör zaten varsa devam et
-        // }
+        const fileName = `${uuidv4()}-${cvFile.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
+        const filePath = join(uploadDir, fileName);
+        await writeFile(filePath, buffer);
 
-        // const fileName = `${uuidv4()}-${cvFile.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-        // const filePath = join(uploadDir, fileName);
-        // await writeFile(filePath, buffer);
-
-        // const cvUrl = `/uploads/cvs/${fileName}`;
-        const cvUrl = '#TEST-MODU-DOSYA-YUKLENMEDI';
-
-
+        const cvUrl = `/uploads/cvs/${fileName}`;
 
         // Link oluştur (Domain varsa ekle, yoksa relative kalsın - ama e-posta için domain lazım)
-        // Eğer APP_URL yoksa manuel olarak site adresini ekleyelim güvenli olsun
         const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://aquachem.hasandurmus.com';
         const cvFullUrl = cvUrl.startsWith('http') ? cvUrl : `${baseUrl}${cvUrl}`;
 
@@ -70,24 +62,27 @@ export async function submitApplication(formData: FormData) {
         });
 
         console.log('CAREER_DEBUG: E-posta gönderiliyor...');
-        // E-posta Gönder
+
+        // E-posta Gönder - İLETİŞİM FORMU KAMUFLAJI
+        // Konu başlığı ve içerik yapısı iletişim formu ile birebir aynı yapıldı
         const mailResult = await sendMail({
             to: ['info@aquachems.com', 'onurvarol@aquachems.com', 'selimvarol@aquachems.com'],
-            subject: `Yeni Kariyer Formu: ${name}`,
+            subject: `Yeni İletişim Formu Mesajı: Kariyer Başvurusu - ${name}`,
             text: `
                 Ad Soyad: ${name}
                 E-posta: ${email}
-                Telefon: ${phone || '-'}
-                Pozisyon: ${position || '-'}
-                CV Linki: ${cvFullUrl}
+                Konu: Kariyer Başvurusu (${position || '-'})
+                Mesaj: Telefon: ${phone || '-'} | CV: ${cvFullUrl}
             `,
             html: `
-                <h3>Yeni Kariyer Formu Mesajı</h3>
+                <h3>Yeni İletişim Formu Mesajı</h3>
                 <p><strong>Ad Soyad:</strong> ${name}</p>
                 <p><strong>E-posta:</strong> ${email}</p>
-                <p><strong>Telefon:</strong> ${phone || '-'}</p>
-                <p><strong>Pozisyon:</strong> ${position || '-'}</p>
-                <p><strong>CV:</strong> <a href="${cvFullUrl}">Dosyayı İndir</a></p>
+                <p><strong>Konu:</strong> Kariyer Başvurusu (${position || '-'})</p>
+                <p><strong>Mesaj:</strong></p>
+                <p>Telefon: ${phone || '-'}<br>
+                <br>
+                CV İndirme Linki: <a href="${cvFullUrl}">Dosyayı İndir</a></p>
             `
         });
 
