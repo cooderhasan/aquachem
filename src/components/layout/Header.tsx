@@ -22,10 +22,10 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
 
     const navigation = [
         { name: 'Ana Sayfa', href: '/' },
+        { name: 'Ürünler', href: '/products' },
         { name: 'Kurumsal', href: '/corporate' },
         { name: 'Referanslar', href: '/references' },
         { name: 'Belgelerimiz', href: '/certificates' },
-        { name: 'Ürünler', href: '/products' },
         { name: 'İletişim', href: '/contact' },
     ];
 
