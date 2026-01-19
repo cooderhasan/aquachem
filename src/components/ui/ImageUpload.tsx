@@ -44,22 +44,27 @@ export default function ImageUpload({ value, onChange, onRemove, label, descript
 
     if (value) {
         return (
-            <div className="relative w-full h-64 bg-slate-100 rounded-xl overflow-hidden group border border-slate-200">
-                <div className="absolute top-2 right-2 z-10">
-                    <button
-                        type="button"
-                        onClick={onRemove}
-                        className="p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors shadow-sm"
-                    >
-                        <X size={16} />
-                    </button>
+            <div className="space-y-2">
+                <div className="relative w-full h-64 bg-slate-100 rounded-xl overflow-hidden group border border-slate-200">
+                    <div className="absolute top-2 right-2 z-10">
+                        <button
+                            type="button"
+                            onClick={onRemove}
+                            className="p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors shadow-sm"
+                        >
+                            <X size={16} />
+                        </button>
+                    </div>
+                    <Image
+                        fill
+                        src={value}
+                        alt="Upload"
+                        className="object-cover transition-transform group-hover:scale-105"
+                    />
                 </div>
-                <Image
-                    fill
-                    src={value}
-                    alt="Upload"
-                    className="object-cover transition-transform group-hover:scale-105"
-                />
+                {description && (
+                    <p className="text-xs text-slate-500 text-center">{description}</p>
+                )}
             </div>
         );
     }
