@@ -195,7 +195,7 @@ export default function CategoriesClient({ initialCategories }: CategoriesClient
                                     onChange={(url) => setFormData({ ...formData, image: url })}
                                     onRemove={() => setFormData({ ...formData, image: '' })}
                                     label="Görsel Yükle"
-                                    description="PNG, JPG, WEBP (Max 4MB)"
+                                    description="Önerilen: 600x400 px • WebP/PNG formatı • Max 2MB"
                                 />
                             </div>
                             <div>

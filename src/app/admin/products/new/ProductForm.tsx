@@ -138,6 +138,7 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
                             onChange={setImages}
                             maxImages={6}
                             label=""
+                            description="Önerilen: 800x800 px (kare) • WebP/PNG formatı • Max 2MB"
                         />
                         {/* Main image (first one) */}
                         <input type="hidden" name="image" value={images[0] || ''} />

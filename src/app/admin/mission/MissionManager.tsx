@@ -263,6 +263,7 @@ export default function MissionManager({ initialCards }: { initialCards: Mission
                                         onChange={(url) => setEditForm({ ...editForm, image: url })}
                                         onRemove={() => setEditForm({ ...editForm, image: '' })}
                                         label="Görsel Değiştir"
+                                        description="Önerilen: 600x400 px • WebP/PNG • Max 2MB"
                                     />
                                     <p className="text-xs text-slate-500 mt-2">Bu kart için kullanılan arka plan görseli.</p>
                                 </div>

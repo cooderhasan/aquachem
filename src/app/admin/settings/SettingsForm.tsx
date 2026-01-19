@@ -225,7 +225,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                         onChange={(url) => setAboutImage(url)}
                                         onRemove={() => setAboutImage('')}
                                         label="Görsel Yükle"
-                                        description="Kurumsal sayfada görünecek (önerilen: 800x600px)"
+                                        description="Önerilen: 800x600 px • WebP/JPG • Max 2MB"
                                     />
                                 </div>
                             </div>
@@ -315,7 +315,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                         onChange={(url) => setLogo(url)}
                                         onRemove={() => setLogo('')}
                                         label="Logo Yükle"
-                                        description="Şeffaf arka planlı PNG/SVG"
+                                        description="Önerilen: 200x60 px • PNG (şeffaf) • Max 1MB"
                                     />
                                 </div>
                                 <div className="mt-4 p-4 bg-slate-50 rounded-lg space-y-3">
@@ -368,7 +368,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                             onChange={(url) => setFavicon(url)}
                                             onRemove={() => setFavicon('')}
                                             label="Favicon"
-                                            description="32x32 px"
+                                            description="Önerilen: 32x32 px • PNG/ICO"
                                         />
                                     </div>
                                 </div>
@@ -382,7 +382,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                             onChange={(url) => setFooterLogo(url)}
                                             onRemove={() => setFooterLogo('')}
                                             label="Footer Logo"
-                                            description="Şeffaf PNG önerilir"
+                                            description="Önerilen: 200x60 px • PNG (şeffaf) • Max 1MB"
                                         />
                                     </div>
                                     <div>
@@ -551,7 +551,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                         onChange={(url) => setOgImage(url)}
                                         onRemove={() => setOgImage('')}
                                         label="OG Image Yükle"
-                                        description="1200x630 px önerilir"
+                                        description="Önerilen: 1200x630 px • WebP/JPG • Max 2MB"
                                     />
                                 </div>
                             </div>

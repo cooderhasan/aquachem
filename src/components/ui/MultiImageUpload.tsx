@@ -9,9 +9,10 @@ interface MultiImageUploadProps {
     onChange: (urls: string[]) => void;
     maxImages?: number;
     label?: string;
+    description?: string;
 }
 
-export default function MultiImageUpload({ values = [], onChange, maxImages = 5, label }: MultiImageUploadProps) {
+export default function MultiImageUpload({ values = [], onChange, maxImages = 5, label, description }: MultiImageUploadProps) {
     const [isLoading, setIsLoading] = useState(false);
 
     const onUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,7 +102,7 @@ export default function MultiImageUpload({ values = [], onChange, maxImages = 5,
             </div>
 
             <p className="text-xs text-slate-500">
-                {values.length}/{maxImages} görsel eklendi. İlk görsel ana görsel olarak kullanılır.
+                {values.length}/{maxImages} görsel eklendi. {description || 'İlk görsel ana görsel olarak kullanılır.'}
             </p>
         </div>
     );

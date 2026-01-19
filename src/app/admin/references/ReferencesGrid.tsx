@@ -166,6 +166,7 @@ export default function ReferencesGrid({ initialReferences, categories }: Refere
                             <Upload size={32} className="mb-2" />
                         )}
                         <span className="text-sm font-medium">{isUploading ? 'Yükleniyor...' : 'Bu Kategoriye Ekle'}</span>
+                        <span className="text-xs text-slate-400 mt-1">200x100 px • PNG/SVG</span>
                     </div>
                 )}
 

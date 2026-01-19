@@ -119,6 +119,7 @@ export default function CertificateForm({ initialData }: CertificateFormProps = 
                             onChange={setImage}
                             onRemove={() => setImage('')}
                             label="Görsel Yükle"
+                            description="Önerilen: 800x600 px • WebP/PNG • Max 2MB"
                         />
                         <input type="hidden" name="image" value={image} />
                     </div>

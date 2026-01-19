@@ -55,7 +55,7 @@ export default function HeroForm({ slide }: HeroFormProps) {
                     <div>
                         <ImageUpload
                             label="Slide Görseli"
-                            description="Geniş format (1920x1080) önerilir. (Max 5MB)"
+                            description="Önerilen: 1920x800 px • WebP/JPG formatı • Max 2MB"
                             value={image}
                             onChange={(url) => setImage(url)}
                             onRemove={() => setImage(null)}

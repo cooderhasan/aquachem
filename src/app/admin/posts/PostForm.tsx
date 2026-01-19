@@ -140,6 +140,7 @@ export default function PostForm({ initialData, onSubmit, title }: PostFormProps
                             <div className="border-2 border-dashed border-slate-300 rounded-xl p-6 hover:bg-slate-50 transition-colors cursor-pointer text-center relative">
                                 <Upload className={`mx-auto text-slate-400 mb-2 ${uploading ? 'animate-bounce' : ''}`} size={24} />
                                 <p className="text-slate-500 text-sm">{uploading ? 'Yükleniyor...' : 'Görsel Yükle'}</p>
+                                <p className="text-slate-400 text-xs mt-1">Önerilen: 1200x630 px • WebP/JPG • Max 2MB</p>
                                 <input
                                     type="file"
                                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
