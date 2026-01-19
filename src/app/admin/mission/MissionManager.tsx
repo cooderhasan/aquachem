@@ -3,9 +3,26 @@
 import React, { useState } from 'react';
 import { updateMissionCard } from './actions';
 import ImageUpload from '@/components/ui/ImageUpload';
-import { Loader2, Plus, Trash2, Check, X } from 'lucide-react';
+import { Loader2, Plus, Trash2, Check, X, GripVertical } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import {
+    DndContext,
+    closestCenter,
+    KeyboardSensor,
+    PointerSensor,
+    useSensor,
+    useSensors,
+    DragEndEvent,
+} from '@dnd-kit/core';
+import {
+    arrayMove,
+    SortableContext,
+    sortableKeyboardCoordinates,
+    useSortable,
+    verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface MissionCard {
     id: number;
@@ -15,6 +32,56 @@ interface MissionCard {
     image: string | null;
     features: any; // jsonb
     order: number | null;
+}
+
+// Sortable Feature Item Component
+function SortableFeatureItem({
+    id,
+    feature,
+    onRemove
+}: {
+    id: string;
+    feature: string;
+    onRemove: () => void;
+}) {
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+        isDragging,
+    } = useSortable({ id });
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+        opacity: isDragging ? 0.5 : 1,
+    };
+
+    return (
+        <div
+            ref={setNodeRef}
+            style={style}
+            className="flex items-center gap-2 bg-slate-50 p-2 rounded-lg border border-slate-200"
+        >
+            <button
+                type="button"
+                {...attributes}
+                {...listeners}
+                className="cursor-grab active:cursor-grabbing p-1 text-slate-400 hover:text-slate-600"
+            >
+                <GripVertical size={16} />
+            </button>
+            <span className="flex-1 text-sm text-slate-700">{feature}</span>
+            <button
+                onClick={onRemove}
+                className="text-red-500 hover:bg-red-50 p-1 rounded"
+            >
+                <Trash2 size={16} />
+            </button>
+        </div>
+    );
 }
 
 export default function MissionManager({ initialCards }: { initialCards: MissionCard[] }) {
@@ -28,6 +95,14 @@ export default function MissionManager({ initialCards }: { initialCards: Mission
     const [newFeature, setNewFeature] = useState('');
 
     const router = useRouter();
+
+    // DnD sensors
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        })
+    );
 
     const handleEdit = (card: MissionCard) => {
         setEditingId(card.id);
@@ -50,6 +125,18 @@ export default function MissionManager({ initialCards }: { initialCards: Mission
 
     const handleRemoveFeature = (index: number) => {
         setTempFeatures(tempFeatures.filter((_, i) => i !== index));
+    };
+
+    const handleDragEnd = (event: DragEndEvent) => {
+        const { active, over } = event;
+
+        if (over && active.id !== over.id) {
+            setTempFeatures((items) => {
+                const oldIndex = items.findIndex((_, i) => `feature-${i}` === active.id);
+                const newIndex = items.findIndex((_, i) => `feature-${i}` === over.id);
+                return arrayMove(items, oldIndex, newIndex);
+            });
+        }
     };
 
     const handleSave = async (id: number) => {
@@ -125,20 +212,31 @@ export default function MissionManager({ initialCards }: { initialCards: Mission
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-1">Maddeler (Özellikler)</label>
-                                        <div className="space-y-2 mb-2">
-                                            {tempFeatures.map((feature, idx) => (
-                                                <div key={idx} className="flex items-center gap-2 bg-slate-50 p-2 rounded-lg border border-slate-200">
-                                                    <span className="flex-1 text-sm text-slate-700">{feature}</span>
-                                                    <button
-                                                        onClick={() => handleRemoveFeature(idx)}
-                                                        className="text-red-500 hover:bg-red-50 p-1 rounded"
-                                                    >
-                                                        <Trash2 size={16} />
-                                                    </button>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">
+                                            Maddeler (Özellikler)
+                                            <span className="text-xs text-slate-400 ml-2">Sürükleyerek sıralayabilirsiniz</span>
+                                        </label>
+                                        <DndContext
+                                            sensors={sensors}
+                                            collisionDetection={closestCenter}
+                                            onDragEnd={handleDragEnd}
+                                        >
+                                            <SortableContext
+                                                items={tempFeatures.map((_, i) => `feature-${i}`)}
+                                                strategy={verticalListSortingStrategy}
+                                            >
+                                                <div className="space-y-2 mb-2">
+                                                    {tempFeatures.map((feature, idx) => (
+                                                        <SortableFeatureItem
+                                                            key={`feature-${idx}`}
+                                                            id={`feature-${idx}`}
+                                                            feature={feature}
+                                                            onRemove={() => handleRemoveFeature(idx)}
+                                                        />
+                                                    ))}
                                                 </div>
-                                            ))}
-                                        </div>
+                                            </SortableContext>
+                                        </DndContext>
                                         <div className="flex gap-2">
                                             <input
                                                 type="text"

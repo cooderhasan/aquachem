@@ -41,7 +41,7 @@ export default async function CorporatePage() {
             {/* About Us */}
             <div className="py-24 bg-gradient-to-b from-white to-slate-50">
                 <div className="container-custom">
-                    <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+                    <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
                         {/* Text Content */}
                         <div className="w-full lg:w-1/2 space-y-8 pt-4">
                             <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-semibold border border-blue-100">
