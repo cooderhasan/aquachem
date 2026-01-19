@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Send, Loader2, CheckCircle, AlertCircle, Upload } from 'lucide-react';
-import { submitCareerApplication as submitApplication } from '@/app/contact/actions';
+
 
 export default function ApplicationForm() {
     const [isLoading, setIsLoading] = useState(false);
@@ -17,18 +17,18 @@ export default function ApplicationForm() {
         setStatus('idle');
 
         const formData = new FormData(e.currentTarget);
-        console.log('CLIENT: FormData created', {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            fileSize: (formData.get('cv') as File)?.size
-        });
 
         try {
-            console.log('CLIENT: Calling server action...');
-            const result = await submitApplication(formData);
-            console.log('CLIENT: Server action result:', result);
+            console.log('CLIENT: Calling API route...');
+            const response = await fetch('/api/career', {
+                method: 'POST',
+                body: formData,
+            });
 
-            if (result.success) {
+            const result = await response.json();
+            console.log('CLIENT: API result:', result);
+
+            if (response.ok && result.success) {
                 setStatus('success');
                 (e.target as HTMLFormElement).reset();
                 setFileName('');
