@@ -69,8 +69,9 @@ export async function submitApplication(formData: FormData) {
             cvUrl,
         });
 
-        // E-posta Gönder (İletişim formu ile AYNI yapıda)
-        await sendMail({
+        console.log('CAREER_DEBUG: E-posta gönderiliyor...');
+        // E-posta Gönder
+        const mailResult = await sendMail({
             to: ['info@aquachems.com', 'onurvarol@aquachems.com', 'selimvarol@aquachems.com'],
             subject: `Yeni Kariyer Formu: ${name}`,
             text: `
@@ -90,10 +91,17 @@ export async function submitApplication(formData: FormData) {
             `
         });
 
+        console.log('CAREER_DEBUG: E-posta sonucu:', JSON.stringify(mailResult, null, 2));
+
+        if (!mailResult.success) {
+            console.error('CAREER_DEBUG: E-posta GÖNDERİLEMEDİ:', mailResult.error);
+            return { success: false, error: `E-posta hatası: ${JSON.stringify(mailResult.error)}` };
+        }
+
         revalidatePath('/admin/applications');
         return { success: true };
     } catch (error) {
-        console.error('Application submission error:', error);
-        return { success: false, error: 'Başvurunuz gönderilirken bir hata oluştu.' };
+        console.error('CAREER_DEBUG: Catch bloguna düştü:', error);
+        return { success: false, error: `Sunucu hatası: ${error instanceof Error ? error.message : JSON.stringify(error)}` };
     }
 }
