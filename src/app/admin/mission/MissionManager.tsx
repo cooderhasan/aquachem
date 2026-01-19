@@ -5,6 +5,7 @@ import { updateMissionCard } from './actions';
 import ImageUpload from '@/components/ui/ImageUpload';
 import { Loader2, Plus, Trash2, Check, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 interface MissionCard {
     id: number;
@@ -62,14 +63,15 @@ export default function MissionManager({ initialCards }: { initialCards: Mission
 
             const result = await updateMissionCard(id, formData);
             if (result.success) {
+                toast.success('Kart başarıyla güncellendi');
                 setEditingId(null);
                 router.refresh();
             } else {
-                alert('Hata oluştu!');
+                toast.error(result.error || 'Güncelleme başarısız oldu');
             }
         } catch (error) {
             console.error(error);
-            alert('Bir hata oluştu!');
+            toast.error('Bir hata oluştu');
         } finally {
             setIsLoading(false);
         }
