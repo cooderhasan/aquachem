@@ -50,7 +50,7 @@ export async function submitApplication(formData: FormData) {
 
         // Link oluştur (Domain varsa ekle, yoksa relative kalsın - ama e-posta için domain lazım)
         // Eğer APP_URL yoksa manuel olarak site adresini ekleyelim güvenli olsun
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.aquachems.com.tr';
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.aquachems.com';
         const cvFullUrl = cvUrl.startsWith('http') ? cvUrl : `${baseUrl}${cvUrl}`;
 
         // Veritabanına kaydet
