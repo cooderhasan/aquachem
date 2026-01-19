@@ -64,7 +64,7 @@ export async function submitApplication(formData: FormData) {
         console.log('CAREER FORM: ACTION STARTED - Processing application for:', email);
 
         const emailResult = await sendMail({
-            to: ['info@aquachems.com', 'onurvarol@aquachems.com', 'selimvarol@aquachems.com'],
+            to: 'info@aquachems.com',
             subject: `Yeni Kariyer Formu: ${name}`,
             text: `
                 Ad Soyad: ${name}
