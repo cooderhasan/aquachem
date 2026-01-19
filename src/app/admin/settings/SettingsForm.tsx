@@ -5,7 +5,16 @@ import { Loader2, Save, CheckCircle, XCircle } from 'lucide-react';
 import { updateSettings } from './actions';
 import { useRouter } from 'next/navigation';
 import ImageUpload from '@/components/ui/ImageUpload';
+import MenuEditor from './MenuEditor';
 
+const defaultMenuItems = [
+    { id: 'home', name: 'Ana Sayfa', href: '/' },
+    { id: 'products', name: 'Ürünler', href: '/products' },
+    { id: 'corporate', name: 'Kurumsal', href: '/corporate' },
+    { id: 'references', name: 'Referanslar', href: '/references' },
+    { id: 'certificates', name: 'Belgelerimiz', href: '/certificates' },
+    { id: 'contact', name: 'İletişim', href: '/contact' },
+];
 
 interface SettingsFormProps {
     initialSettings: any;
@@ -21,6 +30,13 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
     const [ogImage, setOgImage] = useState(initialSettings?.ogImage || '');
     const [footerLogo, setFooterLogo] = useState(initialSettings?.footerLogo || '');
     const [pdfUrl, setPdfUrl] = useState(initialSettings?.catalogUrl || '');
+
+    // Menu Items State (Default to hardcoded list if empty)
+    const [menuItems, setMenuItems] = useState(
+        (initialSettings?.menuItems && initialSettings.menuItems.length > 0)
+            ? initialSettings.menuItems
+            : defaultMenuItems
+    );
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -54,6 +70,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
         { id: 'corporate', label: 'Kurumsal', icon: 'Building' },
         { id: 'design', label: 'Görünüm & Tasarım', icon: 'Palette' },
         { id: 'social', label: 'İletişim & Medya', icon: 'Share2' },
+        { id: 'menu', label: 'Menü Yönetimi', icon: 'Menu' },
         { id: 'seo', label: 'SEO', icon: 'Search' },
     ];
 
@@ -102,6 +119,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                 <input type="hidden" name="footerLogo" value={footerLogo} />
                 <input type="hidden" name="aboutImage" value={aboutImage} />
                 <input type="hidden" name="ogImage" value={ogImage} />
+                <input type="hidden" name="menuItems" value={JSON.stringify(menuItems)} />
 
                 {/* --- GENEL AYARLAR --- */}
                 <div className={activeTab === 'general' ? 'block' : 'hidden'}>
@@ -499,6 +517,37 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                     Sağ altta görünen WhatsApp butonunda kullanılacak numara.
                                 </p>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* --- MENÜ YÖNETİMİ --- */}
+                <div className={activeTab === 'menu' ? 'block' : 'hidden'}>
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div className="flex items-center justify-between mb-4 pb-2 border-b">
+                            <h2 className="text-lg font-bold text-slate-800">Menü Sıralaması</h2>
+                            <button
+                                type="button"
+                                onClick={() => setMenuItems(defaultMenuItems)}
+                                className="text-sm text-primary-600 hover:text-primary-700 font-medium hover:underline"
+                            >
+                                Varsayılan Sıralamaya Dön
+                            </button>
+                        </div>
+
+                        <div className="max-w-xl">
+                            <div className="bg-blue-50 text-blue-800 p-4 rounded-lg text-sm mb-6 flex items-start gap-3">
+                                <div className="mt-0.5">ℹ️</div>
+                                <div>
+                                    <p className="font-semibold mb-1">Nasıl Kullanılır?</p>
+                                    <p>Menü öğelerinin yerini değiştirmek için <strong>tutma simgesinden (⋮⋮)</strong> tutup sürükleyiniz. Değişiklikleri kaydetmek için sayfanın altındaki "Kaydet" butonuna basmayı unutmayınız.</p>
+                                </div>
+                            </div>
+
+                            <MenuEditor
+                                items={menuItems}
+                                onReorder={setMenuItems}
+                            />
                         </div>
                     </div>
                 </div>

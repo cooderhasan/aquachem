@@ -20,7 +20,7 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const navigation = [
+    const defaultNavigation = [
         { name: 'Ana Sayfa', href: '/' },
         { name: 'Ürünler', href: '/products' },
         { name: 'Kurumsal', href: '/corporate' },
@@ -28,6 +28,10 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
         { name: 'Belgelerimiz', href: '/certificates' },
         { name: 'İletişim', href: '/contact' },
     ];
+
+    const navigation: any[] = (settings?.menuItems && settings.menuItems.length > 0)
+        ? settings.menuItems
+        : defaultNavigation;
 
     return (
         <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">

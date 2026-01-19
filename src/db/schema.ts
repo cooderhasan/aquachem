@@ -110,6 +110,7 @@ export const settings = pgTable('settings', {
   referencesScrollSpeed: integer('references_scroll_speed').default(30), // References scroll animation duration in seconds (default 30s)
   aboutUsFontSize: text('about_us_font_size').default('text-lg'), // text-base, text-lg, text-xl
   aboutUsDarkness: text('about_us_darkness').default('text-slate-600'), // text-slate-600, text-slate-700, text-slate-900, text-black
+  menuItems: jsonb('menu_items').default('[]'), // Store custom menu items order/structure
 });
 
 export const contactLocations = pgTable('contact_locations', {

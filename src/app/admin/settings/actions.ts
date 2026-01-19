@@ -54,7 +54,19 @@ export async function updateSettings(formData: FormData) {
         const menuFontSize = parseInt(formData.get('menuFontSize') as string) || 14;
         const headerPadding = parseInt(formData.get('headerPadding') as string) || 20;
         const footerLogoPadding = parseInt(formData.get('footerLogoPadding') as string) || 0;
+
         const referencesScrollSpeed = parseInt(formData.get('referencesScrollSpeed') as string) || 30;
+
+        // Parse menu items
+        let menuItems = [];
+        try {
+            const menuItemsJson = formData.get('menuItems') as string;
+            if (menuItemsJson) {
+                menuItems = JSON.parse(menuItemsJson);
+            }
+        } catch (e) {
+            console.error('Failed to parse menu items', e);
+        }
 
         if (currentSettings) {
             await db.update(settings).set({
@@ -82,7 +94,9 @@ export async function updateSettings(formData: FormData) {
                 menuFontSize: menuFontSize || currentSettings.menuFontSize,
                 headerPadding: headerPadding || currentSettings.headerPadding,
                 footerLogoPadding: footerLogoPadding || currentSettings.footerLogoPadding,
+
                 referencesScrollSpeed: referencesScrollSpeed || currentSettings.referencesScrollSpeed,
+                menuItems,
             }).where(eq(settings.id, currentSettings.id));
         } else {
             await db.insert(settings).values({
@@ -109,7 +123,9 @@ export async function updateSettings(formData: FormData) {
                 menuFontSize,
                 headerPadding,
                 footerLogoPadding,
+
                 referencesScrollSpeed,
+                menuItems,
             });
         }
 
