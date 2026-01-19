@@ -96,7 +96,7 @@ export default function ApplicationForm() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">CV Yükle (PDF, Word - Max 5MB) *</label>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">CV Yükle (PDF, Word - Max 2MB) *</label>
                     <div className="relative">
                         <input
                             type="file"

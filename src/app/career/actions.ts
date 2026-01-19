@@ -26,9 +26,9 @@ export async function submitApplication(formData: FormData) {
             return { success: false, error: 'Lütfen geçerli bir dosya yükleyiniz (PDF, DOC, DOCX).' };
         }
 
-        // Validate file size (max 5MB)
-        if (cvFile.size > 5 * 1024 * 1024) {
-            return { success: false, error: 'Dosya boyutu 5MB\'dan küçük olmalıdır.' };
+        // Validate file size (max 2MB)
+        if (cvFile.size > 2 * 1024 * 1024) {
+            return { success: false, error: 'Dosya boyutu 2MB\'dan küçük olmalıdır.' };
         }
 
         // Save file
@@ -84,12 +84,18 @@ export async function submitApplication(formData: FormData) {
             attachments: [
                 {
                     filename: cvFile.name,
-                    content: buffer
+                    content: buffer,
+                    contentType: cvFile.type
                 }
             ]
         });
 
         console.log('CAREER FORM: EMAIL RESULT:', emailResult);
+
+        if (!emailResult.success) {
+            console.error('CAREER FORM: Email sending failed:', emailResult.error);
+            return { success: false, error: 'E-posta gönderilemedi. Lütfen daha sonra tekrar deneyiniz.' };
+        }
 
         revalidatePath('/admin/applications');
         return { success: true };
