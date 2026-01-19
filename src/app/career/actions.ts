@@ -32,21 +32,28 @@ export async function submitApplication(formData: FormData) {
             return { success: false, error: 'Dosya boyutu 2MB\'dan küçük olmalıdır.' };
         }
 
-        // Dosyayı kaydet
-        const buffer = Buffer.from(await cvFile.arrayBuffer());
-        const uploadDir = join(process.cwd(), 'public', 'uploads', 'cvs');
+        /* 
+        TEST MODU: Dosya kaydetme devre dışı
+        Sorunun dosya sisteminde olup olmadığını anlamak için bu kısmı geçiyoruz.
+        */
 
-        try {
-            await mkdir(uploadDir, { recursive: true });
-        } catch (e) {
-            // Klasör zaten varsa devam et
-        }
+        // const buffer = Buffer.from(await cvFile.arrayBuffer());
+        // const uploadDir = join(process.cwd(), 'public', 'uploads', 'cvs');
 
-        const fileName = `${uuidv4()}-${cvFile.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
-        const filePath = join(uploadDir, fileName);
-        await writeFile(filePath, buffer);
+        // try {
+        //     await mkdir(uploadDir, { recursive: true });
+        // } catch (e) {
+        //     // Klasör zaten varsa devam et
+        // }
 
-        const cvUrl = `/uploads/cvs/${fileName}`;
+        // const fileName = `${uuidv4()}-${cvFile.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
+        // const filePath = join(uploadDir, fileName);
+        // await writeFile(filePath, buffer);
+
+        // const cvUrl = `/uploads/cvs/${fileName}`;
+        const cvUrl = '#TEST-MODU-DOSYA-YUKLENMEDI';
+
+
 
         // Link oluştur (Domain varsa ekle, yoksa relative kalsın - ama e-posta için domain lazım)
         // Eğer APP_URL yoksa manuel olarak site adresini ekleyelim güvenli olsun
