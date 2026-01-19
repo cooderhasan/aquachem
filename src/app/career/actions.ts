@@ -65,44 +65,21 @@ export async function submitApplication(formData: FormData) {
 
         const emailResult = await sendMail({
             to: ['info@aquachems.com', 'onurvarol@aquachems.com', 'selimvarol@aquachems.com'],
-            subject: `Yeni İş Başvurusu: ${position || 'Belirtilmedi'}`,
+            subject: `Yeni Kariyer Formu: ${name}`,
             text: `
-                Yeni bir iş başvurusu alındı.
-                
                 Ad Soyad: ${name}
                 E-posta: ${email}
-                Telefon: ${phone || 'Belirtilmedi'}
-                Pozisyon: ${position || 'Belirtilmedi'}
-                
-                CV İndirme Linki: ${cvFullUrl}
+                Telefon: ${phone || '-'}
+                Pozisyon: ${position || '-'}
+                CV: ${cvFullUrl}
             `,
             html: `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                    <h2 style="color: #1e40af; border-bottom: 2px solid #1e40af; padding-bottom: 10px;">Yeni İş Başvurusu</h2>
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <tr>
-                            <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;"><strong>Ad Soyad:</strong></td>
-                            <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">${name}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;"><strong>E-posta:</strong></td>
-                            <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;"><a href="mailto:${email}">${email}</a></td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;"><strong>Telefon:</strong></td>
-                            <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">${phone || 'Belirtilmedi'}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;"><strong>Pozisyon:</strong></td>
-                            <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">${position || 'Belirtilmedi'}</td>
-                        </tr>
-                    </table>
-                    <div style="margin-top: 20px; padding: 15px; background-color: #f0f9ff; border-radius: 8px;">
-                        <p style="margin: 0 0 10px 0;"><strong>📎 CV Dosyası:</strong></p>
-                        <a href="${cvFullUrl}" style="display: inline-block; background-color: #1e40af; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">CV'yi İndir</a>
-                    </div>
-                    <p style="color: #6b7280; font-size: 12px; margin-top: 20px;">Bu e-posta aquachems.com kariyer formu üzerinden gönderilmiştir.</p>
-                </div>
+                <h3>Yeni Kariyer Formu Mesajı</h3>
+                <p><strong>Ad Soyad:</strong> ${name}</p>
+                <p><strong>E-posta:</strong> ${email}</p>
+                <p><strong>Telefon:</strong> ${phone || '-'}</p>
+                <p><strong>Pozisyon:</strong> ${position || '-'}</p>
+                <p><strong>CV:</strong> <a href="${cvFullUrl}">Dosyayı İndir</a></p>
             `
         });
 
