@@ -39,6 +39,7 @@ export async function updateMissionCard(id: number, formData: FormData) {
         }).where(eq(missionCards.id, id));
 
         revalidatePath('/');
+        revalidatePath('/admin/mission');
         return { success: true };
     } catch (error) {
         console.error('Failed to update mission card:', error);
