@@ -24,10 +24,11 @@ export default async function CorporatePage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-900 via-primary-900/90 to-transparent z-10" />
                 <div className="absolute inset-0">
                     <Image
-                        src="/images/corporate-hero.jpg" // You might want to make this dynamic too later
+                        src={settings?.aboutImage || "/images/about_us.jpg"}
                         alt="Corporate Hero"
                         fill
                         className="object-cover opacity-50"
+                        unoptimized
                     />
                 </div>
                 <div className="container-custom relative z-20">
