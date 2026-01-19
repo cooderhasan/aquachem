@@ -118,7 +118,7 @@ export async function submitCareerApplication(formData: FormData) {
                 Ad Soyad: ${name}
                 E-posta: ${email}
                 Konu: Kariyer Başvurusu (${position || '-'})
-                Mesaj: Telefon: ${phone || '-'} | CV: ${cvFullUrl}
+                Mesaj: Telefon: ${phone || '-'} | CV Linki Sistemden Kaldırıldı (Test)
             `,
             html: `
                 <h3>Yeni İletişim Formu Mesajı</h3>
@@ -128,7 +128,7 @@ export async function submitCareerApplication(formData: FormData) {
                 <p><strong>Mesaj:</strong></p>
                 <p>Telefon: ${phone || '-'}<br>
                 <br>
-                CV İndirme Linki: <a href="${cvFullUrl}">Dosyayı İndir</a></p>
+                CV Linki: <em>Test amaçlı kaldırıldı</em></p>
             `
         });
 
