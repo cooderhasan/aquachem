@@ -63,7 +63,7 @@ export default async function AdminDashboard() {
             {/* Quick Actions & Welcome */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Welcome Section */}
-                <div className="lg:col-span-2 bg-gradient-to-br from-primary-600 to-primary-800 p-8 rounded-2xl shadow-lg text-white relative overflow-hidden">
+                <div className="lg:col-span-2 bg-gradient-to-br from-primary-600 to-primary-800 bg-primary-600 p-8 rounded-2xl shadow-lg text-white relative overflow-hidden">
                     <div className="absolute top-0 right-0 opacity-10">
                         <TrendingUp size={200} />
                     </div>

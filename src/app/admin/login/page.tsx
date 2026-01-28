@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-primary-900 to-slate-800 relative overflow-hidden">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-primary-900 to-slate-800 bg-slate-900 relative overflow-hidden">
             {/* Animated Background */}
             <div className="absolute inset-0 opacity-20">
                 <div className="absolute top-20 left-20 w-72 h-72 bg-primary-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
@@ -99,7 +99,7 @@ export default function AdminLoginPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-primary-500/30 group"
+                        className="w-full bg-gradient-to-r from-primary-600 to-primary-700 bg-primary-600 hover:from-primary-700 hover:to-primary-800 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-primary-500/30 group"
                     >
                         {loading ? (
                             'Giriş Yapılıyor...'
