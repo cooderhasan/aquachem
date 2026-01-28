@@ -423,20 +423,36 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
 
                         <div className="mt-6 border-t pt-6">
                             <h3 className="text-md font-bold text-slate-800 mb-4">Referanslar (Sayan Logo)</h3>
-                            <div className="max-w-md">
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Kaydırma Süresi (Saniye)</label>
-                                <div className="flex items-center gap-2">
-                                    <input
-                                        type="number"
-                                        name="referencesScrollSpeed"
-                                        defaultValue={initialSettings?.referencesScrollSpeed || 30}
-                                        min="5"
-                                        max="300"
-                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                    />
-                                    <span className="text-sm text-slate-500 whitespace-nowrap">saniye</span>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Kaydırma Süresi (Saniye)</label>
+                                    <div className="flex items-center gap-2">
+                                        <input
+                                            type="number"
+                                            name="referencesScrollSpeed"
+                                            defaultValue={initialSettings?.referencesScrollSpeed || 30}
+                                            min="5"
+                                            max="300"
+                                            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                        />
+                                        <span className="text-sm text-slate-500 whitespace-nowrap">saniye</span>
+                                    </div>
+                                    <p className="text-xs text-slate-500 mt-1">Süre arttıkça kayma hızı <strong>YAVAŞLAR</strong>.</p>
                                 </div>
-                                <p className="text-xs text-slate-500 mt-1">Süre arttıkça kayma hızı <strong>YAVAŞLAR</strong>.</p>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Logo Yüksekliği (px)</label>
+                                    <div className="flex items-center gap-2">
+                                        <input
+                                            type="number"
+                                            name="referenceLogoHeight"
+                                            defaultValue={initialSettings?.referenceLogoHeight || 100}
+                                            min="20"
+                                            max="300"
+                                            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                        />
+                                        <span className="text-sm text-slate-500 whitespace-nowrap">px</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

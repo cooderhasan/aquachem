@@ -40,19 +40,23 @@ const ReferencesCarousel = ({ references, settings }: ReferencesCarouselProps) =
                 <div className="absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-slate-50 to-transparent z-10" />
 
                 <div
-                    className="flex gap-16 w-max animate-scroll py-4"
+                    className="flex gap-16 w-max animate-scroll py-8 px-4"
                     style={{ animationDuration: duration }}
                 >
                     {/* Double the list for infinite scroll effect */}
                     {[...references, ...references, ...references].map((ref, index) => (
                         <div
                             key={`${ref.id}-${index}`}
-                            className="w-[220px] h-[100px] flex items-center justify-center grayscale hover:grayscale-0 opacity-50 hover:opacity-100 transition-all duration-500 transform hover:scale-110"
+                            className="flex items-center justify-center transition-all duration-300 transform hover:scale-125 hover:drop-shadow-2xl"
+                            style={{
+                                height: settings?.referenceLogoHeight ? `${settings.referenceLogoHeight}px` : '100px',
+                                width: settings?.referenceLogoHeight ? `${Number(settings.referenceLogoHeight) * 2.2}px` : '220px'
+                            }}
                         >
                             <img
                                 src={ref.image}
                                 alt={ref.title}
-                                className="max-w-full max-h-full object-contain mix-blend-multiply"
+                                className="max-w-full max-h-full object-contain mix-blend-multiply filter drop-shadow hover:drop-shadow-lg transition-all duration-300"
                             />
                         </div>
                     ))}

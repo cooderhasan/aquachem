@@ -96,6 +96,7 @@ export async function updateSettings(formData: FormData) {
                 footerLogoPadding: footerLogoPadding || currentSettings.footerLogoPadding,
 
                 referencesScrollSpeed: referencesScrollSpeed || currentSettings.referencesScrollSpeed,
+                referenceLogoHeight: parseInt(formData.get('referenceLogoHeight') as string) || 100,
                 menuItems,
             }).where(eq(settings.id, currentSettings.id));
         } else {
@@ -125,6 +126,7 @@ export async function updateSettings(formData: FormData) {
                 footerLogoPadding,
 
                 referencesScrollSpeed,
+                referenceLogoHeight: parseInt(formData.get('referenceLogoHeight') as string) || 100,
                 menuItems,
             });
         }
