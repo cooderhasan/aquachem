@@ -1,7 +1,15 @@
 import React from 'react';
-import { ShoppingBag, Users, Activity, TrendingUp, Package, FileText } from 'lucide-react';
+import { ShoppingBag, Users, Activity, Package, FileText, TrendingUp } from 'lucide-react';
+import { db } from '@/lib/db';
+import { products, posts, references, categories } from '@/db/schema';
+import { count } from 'drizzle-orm';
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
+    const [productData] = await db.select({ count: count() }).from(products);
+    const [postData] = await db.select({ count: count() }).from(posts);
+    const [referenceData] = await db.select({ count: count() }).from(references);
+    const [categoryData] = await db.select({ count: count() }).from(categories);
+
     return (
         <div>
             <div className="mb-8">
@@ -16,10 +24,9 @@ export default function AdminDashboard() {
                         <div className="bg-blue-100 text-blue-600 p-3 rounded-xl group-hover:scale-110 transition-transform">
                             <ShoppingBag size={24} />
                         </div>
-                        <span className="text-blue-600 text-sm font-bold">+12%</span>
                     </div>
                     <p className="text-sm text-slate-500 font-medium mb-1">Toplam Ürün</p>
-                    <h3 className="text-3xl font-bold text-slate-900">150</h3>
+                    <h3 className="text-3xl font-bold text-slate-900">{productData?.count || 0}</h3>
                 </div>
 
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-lg transition-shadow group">
@@ -27,10 +34,9 @@ export default function AdminDashboard() {
                         <div className="bg-emerald-100 text-emerald-600 p-3 rounded-xl group-hover:scale-110 transition-transform">
                             <Activity size={24} />
                         </div>
-                        <span className="text-emerald-600 text-sm font-bold">Aktif</span>
                     </div>
                     <p className="text-sm text-slate-500 font-medium mb-1">Yayındaki Haberler</p>
-                    <h3 className="text-3xl font-bold text-slate-900">8</h3>
+                    <h3 className="text-3xl font-bold text-slate-900">{postData?.count || 0}</h3>
                 </div>
 
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-lg transition-shadow group">
@@ -38,10 +44,9 @@ export default function AdminDashboard() {
                         <div className="bg-purple-100 text-purple-600 p-3 rounded-xl group-hover:scale-110 transition-transform">
                             <Users size={24} />
                         </div>
-                        <span className="text-purple-600 text-sm font-bold">+5%</span>
                     </div>
                     <p className="text-sm text-slate-500 font-medium mb-1">Referans Firma</p>
-                    <h3 className="text-3xl font-bold text-slate-900">42</h3>
+                    <h3 className="text-3xl font-bold text-slate-900">{referenceData?.count || 0}</h3>
                 </div>
 
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-lg transition-shadow group">
@@ -49,10 +54,9 @@ export default function AdminDashboard() {
                         <div className="bg-amber-100 text-amber-600 p-3 rounded-xl group-hover:scale-110 transition-transform">
                             <Package size={24} />
                         </div>
-                        <span className="text-amber-600 text-sm font-bold">10</span>
                     </div>
                     <p className="text-sm text-slate-500 font-medium mb-1">Ürün Kategorisi</p>
-                    <h3 className="text-3xl font-bold text-slate-900">10</h3>
+                    <h3 className="text-3xl font-bold text-slate-900">{categoryData?.count || 0}</h3>
                 </div>
             </div>
 
