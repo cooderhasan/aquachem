@@ -81,7 +81,6 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
                             <li><Link href="/corporate" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Kurumsal</Link></li>
                             <li><Link href="/products" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Ürünlerimiz</Link></li>
                             <li><Link href="/references" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Referanslarımız</Link></li>
-                            <li><Link href="/certificates" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Belgelerimiz</Link></li>
                             <li><Link href="/human-resources" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">İnsan Kaynakları</Link></li>
                             <li><Link href="/contact" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">İletişim</Link></li>
                         </ul>

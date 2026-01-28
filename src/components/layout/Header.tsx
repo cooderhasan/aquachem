@@ -30,8 +30,8 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
     ];
 
     const navigation: any[] = (settings?.menuItems && settings.menuItems.length > 0)
-        ? settings.menuItems
-        : defaultNavigation;
+        ? settings.menuItems.filter((item: any) => item.href !== '/certificates')
+        : defaultNavigation.filter((item) => item.href !== '/certificates');
 
     return (
         <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
