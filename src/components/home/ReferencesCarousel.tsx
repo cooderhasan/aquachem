@@ -24,8 +24,8 @@ const ReferencesCarousel = ({ references, settings }: ReferencesCarouselProps) =
     const duration = settings?.referencesScrollSpeed ? `${settings.referencesScrollSpeed}s` : '30s';
 
     return (
-        <section className="py-12 bg-slate-50 border-t border-slate-100">
-            <div className="container-custom mb-12 text-center">
+        <section className="py-8 bg-slate-50 border-t border-slate-100">
+            <div className="container-custom mb-8 text-center">
                 <span className="inline-block bg-white text-slate-600 text-sm font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider shadow-sm border border-slate-200">
                     Referanslarımız
                 </span>
@@ -40,7 +40,7 @@ const ReferencesCarousel = ({ references, settings }: ReferencesCarouselProps) =
                 <div className="absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-slate-50 to-transparent z-10" />
 
                 <div
-                    className="flex gap-16 w-max animate-scroll py-8 px-4"
+                    className="flex gap-16 w-max animate-scroll py-4 px-4"
                     style={{ animationDuration: duration }}
                 >
                     {/* Double the list for infinite scroll effect */}
