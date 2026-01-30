@@ -3,11 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Phone, Droplets, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { Menu, X, Phone, Droplets, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SearchModal from '@/components/ui/SearchModal';
 
 const Header = ({ settings, contactLocation }: { settings?: any; contactLocation?: any }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const pathname = usePathname();
 
@@ -139,6 +141,15 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                             );
                         })}
 
+                        {/* Search Icon */}
+                        <button
+                            onClick={() => setIsSearchOpen(true)}
+                            className="text-slate-600 hover:text-primary-600 transition-colors p-2 rounded-full hover:bg-slate-50"
+                            aria-label="Arama Yap"
+                        >
+                            <Search size={24} />
+                        </button>
+
                         <Link
                             href="/contact"
                             className={`
@@ -206,7 +217,13 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                     )}
                 </AnimatePresence>
             </header>
-        </div>
+
+            {/* Search Modal */}
+            <SearchModal
+                isOpen={isSearchOpen}
+                onClose={() => setIsSearchOpen(false)}
+            />
+        </div >
     );
 };
 
