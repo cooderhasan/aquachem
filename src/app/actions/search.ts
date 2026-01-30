@@ -26,8 +26,8 @@ export async function searchProducts(query: string) {
                 or(
                     ilike(products.title, `%${query}%`),
                     ilike(products.description, `%${query}%`),
-                    ilike(products.shortDescription, `%${query}%`),
-                    ilike(products.features, `%${query}%`) // Search in features JSON array (cast to text implicity by some drivers, but ilike works on text)
+                    ilike(products.shortDescription, `%${query}%`)
+                    // ilike(products.features, `%${query}%`) - Removed to prevent JSONB error
                     // Note: querying JSONB with ilike might vary by driver compatibility, usually need sql operator.
                     // For simplicity and safety, let's stick to title and descriptions for now.
                     // If features search is needed, we'd do sql`...`
