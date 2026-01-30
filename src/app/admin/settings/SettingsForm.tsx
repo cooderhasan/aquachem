@@ -455,6 +455,44 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                 </div>
                             </div>
                         </div>
+
+                        <div className="mt-6 border-t pt-6">
+                            <h3 className="text-md font-bold text-slate-800 mb-4">Hero Slider Ayarları</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Resim Koyuluğu ({initialSettings?.heroOverlayOpacity || 60}%)</label>
+                                    <input
+                                        type="range"
+                                        name="heroOverlayOpacity"
+                                        defaultValue={initialSettings?.heroOverlayOpacity || 60}
+                                        min="0"
+                                        max="100"
+                                        className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                                        onInput={(e) => {
+                                            const target = e.target as HTMLInputElement;
+                                            target.previousElementSibling!.textContent = `Resim Koyuluğu (${target.value}%)`;
+                                        }}
+                                    />
+                                    <p className="text-xs text-slate-500 mt-1">Slayt resminin üzerine gelen siyahın yoğunluğu.</p>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Gradyan Geçişi ({initialSettings?.heroGradientOpacity || 80}%)</label>
+                                    <input
+                                        type="range"
+                                        name="heroGradientOpacity"
+                                        defaultValue={initialSettings?.heroGradientOpacity || 80}
+                                        min="0"
+                                        max="100"
+                                        className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                                        onInput={(e) => {
+                                            const target = e.target as HTMLInputElement;
+                                            target.previousElementSibling!.textContent = `Gradyan Geçişi (${target.value}%)`;
+                                        }}
+                                    />
+                                    <p className="text-xs text-slate-500 mt-1">Yazıların altındaki geçişli siyahın yoğunluğu (Soldan sağa).</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

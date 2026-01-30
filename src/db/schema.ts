@@ -112,6 +112,8 @@ export const settings = pgTable('settings', {
   aboutUsDarkness: text('about_us_darkness').default('text-slate-600'), // text-slate-600, text-slate-700, text-slate-900, text-black
   menuItems: jsonb('menu_items').default('[]'), // Store custom menu items order/structure
   referenceLogoHeight: integer('reference_logo_height').default(100), // Reference logo height in pixels (default 100px)
+  heroOverlayOpacity: integer('hero_overlay_opacity').default(60), // Hero slider image opacity (0-100)
+  heroGradientOpacity: integer('hero_gradient_opacity').default(80), // Hero slider gradient opacity (0-100)
 });
 
 export const contactLocations = pgTable('contact_locations', {

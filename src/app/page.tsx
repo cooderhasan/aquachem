@@ -27,7 +27,7 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col min-h-screen bg-white">
-      <HeroSlider slides={slides} />
+      <HeroSlider slides={slides} settings={settings} />
       <MissionSection cards={missionCards} />
       <ProductGroups />
       <InnovationSection items={innovationItems} />

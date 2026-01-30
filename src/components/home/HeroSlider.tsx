@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const HeroSlider = ({ slides }: { slides: any[] }) => {
+const HeroSlider = ({ slides, settings }: { slides: any[], settings?: any }) => {
     const [current, setCurrent] = useState(0);
 
     // If no slides, show nothing or a default placeholder
@@ -26,6 +26,9 @@ const HeroSlider = ({ slides }: { slides: any[] }) => {
         setCurrent(current === 0 ? slides.length - 1 : current - 1);
     };
 
+    const overlayOpacity = settings?.heroOverlayOpacity !== undefined ? settings.heroOverlayOpacity / 100 : 0.6;
+    const gradientOpacity = settings?.heroGradientOpacity !== undefined ? settings.heroGradientOpacity / 100 : 0.8;
+
     return (
         <section className="relative h-[600px] md:h-[700px] overflow-hidden bg-slate-900 pt-20">
             <AnimatePresence mode="wait">
@@ -43,10 +46,16 @@ const HeroSlider = ({ slides }: { slides: any[] }) => {
                             src={slides[current].image}
                             alt={slides[current].title}
                             fill
-                            className="object-cover opacity-60"
+                            className="object-cover transition-opacity duration-300"
+                            style={{ opacity: overlayOpacity }}
                             priority
                         />
-                        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-transparent" />
+                        <div
+                            className="absolute inset-0"
+                            style={{
+                                background: `linear-gradient(to right, rgba(15, 23, 42, ${gradientOpacity}), transparent)`
+                            }}
+                        />
                     </div>
 
                     {/* Content */}

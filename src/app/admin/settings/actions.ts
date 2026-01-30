@@ -97,6 +97,10 @@ export async function updateSettings(formData: FormData) {
 
                 referencesScrollSpeed: referencesScrollSpeed || currentSettings.referencesScrollSpeed,
                 referenceLogoHeight: parseInt(formData.get('referenceLogoHeight') as string) || 100,
+                referencesScrollSpeed: referencesScrollSpeed || currentSettings.referencesScrollSpeed,
+                referenceLogoHeight: parseInt(formData.get('referenceLogoHeight') as string) || 100,
+                heroOverlayOpacity: parseInt(formData.get('heroOverlayOpacity') as string) || 60,
+                heroGradientOpacity: parseInt(formData.get('heroGradientOpacity') as string) || 80,
                 menuItems,
             }).where(eq(settings.id, currentSettings.id));
         } else {
