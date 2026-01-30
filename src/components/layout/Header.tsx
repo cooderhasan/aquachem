@@ -165,12 +165,21 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                     </nav>
 
                     {/* Mobile Menu Button */}
-                    <button
-                        className="xl:hidden text-slate-600 hover:text-primary-600 transition-colors p-2"
-                        onClick={() => setIsOpen(!isOpen)}
-                    >
-                        {isOpen ? <X size={28} /> : <Menu size={28} />}
-                    </button>
+                    <div className="flex items-center gap-2 xl:hidden">
+                        <button
+                            onClick={() => setIsSearchOpen(true)}
+                            className="text-slate-600 hover:text-primary-600 transition-colors p-2"
+                            aria-label="Arama Yap"
+                        >
+                            <Search size={24} />
+                        </button>
+                        <button
+                            className="text-slate-600 hover:text-primary-600 transition-colors p-2"
+                            onClick={() => setIsOpen(!isOpen)}
+                        >
+                            {isOpen ? <X size={28} /> : <Menu size={28} />}
+                        </button>
+                    </div>
                 </div>
 
                 {/* Mobile Menu Overlay */}
