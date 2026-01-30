@@ -21,10 +21,10 @@ export default async function ContactPage() {
     return (
         <div className="bg-slate-50 min-h-screen">
             {/* Header */}
-            <div className="bg-primary-900 text-white pt-64 pb-20">
-                <div className="container mx-auto px-4 text-center">
-                    <h1 className="text-4xl font-bold mb-4 text-white">İletişim</h1>
-                    <p className="text-primary-200 text-lg max-w-2xl mx-auto">
+            <div className="bg-primary-900 text-white pt-48 pb-16">
+                <div className="container mx-auto px-4">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">İletişim</h1>
+                    <p className="text-primary-200 text-lg max-w-2xl">
                         Sorularınız, önerileriniz veya işbirliği talepleriniz için bize ulaşın.
                     </p>
                 </div>
