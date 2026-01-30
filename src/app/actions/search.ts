@@ -18,7 +18,8 @@ export async function searchProducts(query: string) {
                 image: products.image,
                 categoryId: products.categoryId,
                 categorySlug: categories.slug,
-                description: products.shortDescription
+                shortDescription: products.shortDescription,
+                description: products.description
             })
             .from(products)
             .leftJoin(categories, eq(products.categoryId, categories.id))

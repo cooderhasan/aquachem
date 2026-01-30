@@ -178,7 +178,9 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                                         </div>
                                                         <div className="flex-1 min-w-0">
                                                             <h4 className="font-bold text-slate-800 group-hover:text-primary-700 truncate">{product.title}</h4>
-                                                            <p className="text-sm text-slate-500 truncate">{product.description || 'Açıklama bulunmuyor'}</p>
+                                                            <p className="text-sm text-slate-500 truncate">
+                                                                {product.shortDescription || (product.description ? product.description.substring(0, 100) : 'Ürün detaylarını inceleyin')}
+                                                            </p>
                                                         </div>
                                                         <div className="text-slate-300 group-hover:text-primary-400 group-hover:translate-x-1 transition-all">
                                                             <ArrowRight size={20} />
