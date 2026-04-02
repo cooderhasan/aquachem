@@ -19,18 +19,30 @@ export async function getMainContactLocation() {
     try {
         const locations = await getContactLocations();
 
-        // Öncelikli olarak "Fabrika", "Merkez" veya "Bölge Müdürlüğü" ara
-        const mainLocation = locations.find(loc => {
+        // 1. Adres ve Telefon için "İç Anadolu"yu bul
+        const icAnadoluLocation = locations.find(loc => {
             const title = loc.title.toLowerCase();
-            return title.includes('fabrika') ||
-                title.includes('merkez') ||
-                title.includes('bölge müdürlüğü') ||
-                title.includes('iç anadolu') ||
-                title.includes('ic anadolu');
+            return title.includes('iç anadolu') || title.includes('ic anadolu');
         });
 
-        // Bulunamazsa ilk kaydı, o da yoksa null dön
-        return mainLocation || locations[0] || null;
+        // 2. E-posta için "Fabrika"yı bul
+        const fabrikaLocation = locations.find(loc => {
+            const title = loc.title.toLowerCase();
+            return title.includes('fabrika');
+        });
+
+        // Temel lokasyon (Varsayılan: İç Anadolu veya ilk kayıt)
+        const main = icAnadoluLocation || locations[0] || null;
+
+        // Eğer e-posta kaynağı (Fabrika) varsa, sadece e-posta bilgisini ez
+        if (main && fabrikaLocation && fabrikaLocation.email) {
+            return {
+                ...main,
+                email: fabrikaLocation.email
+            };
+        }
+
+        return main;
     } catch (error) {
         console.error('Failed to fetch main contact location:', error);
         return null;
