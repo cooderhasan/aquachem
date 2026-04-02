@@ -1,14 +1,20 @@
 import React from 'react';
-import { ShoppingBag, Users, Activity, Package, FileText, TrendingUp } from 'lucide-react';
+import { ShoppingBag, Users, Activity, Package, FileText, TrendingUp, Mail, ClipboardList, ArrowRight } from 'lucide-react';
 import { db } from '@/lib/db';
-import { products, posts, references, categories } from '@/db/schema';
-import { count } from 'drizzle-orm';
+import { products, posts, references, categories, messages, quoteRequests } from '@/db/schema';
+import { count, eq } from 'drizzle-orm';
 
 export default async function AdminDashboard() {
     const [productData] = await db.select({ count: count() }).from(products);
     const [postData] = await db.select({ count: count() }).from(posts);
     const [referenceData] = await db.select({ count: count() }).from(references);
     const [categoryData] = await db.select({ count: count() }).from(categories);
+
+    // Mesaj ve Teklif Talebi Verileri
+    const [messageTotal] = await db.select({ count: count() }).from(messages);
+    const [messageUnread] = await db.select({ count: count() }).from(messages).where(eq(messages.isRead, false));
+    const [quoteTotal] = await db.select({ count: count() }).from(quoteRequests);
+    const [quoteUnread] = await db.select({ count: count() }).from(quoteRequests).where(eq(quoteRequests.isRead, false));
 
     return (
         <div>
@@ -18,7 +24,7 @@ export default async function AdminDashboard() {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-lg transition-shadow group">
                     <div className="flex items-center justify-between mb-4">
                         <div className="bg-blue-100 text-blue-600 p-3 rounded-xl group-hover:scale-110 transition-transform">
@@ -35,7 +41,7 @@ export default async function AdminDashboard() {
                             <Activity size={24} />
                         </div>
                     </div>
-                    <p className="text-sm text-slate-500 font-medium mb-1">Yayındaki Haberler</p>
+                    <p className="text-sm text-slate-500 font-medium mb-1">Haberler</p>
                     <h3 className="text-3xl font-bold text-slate-900">{postData?.count || 0}</h3>
                 </div>
 
@@ -45,7 +51,7 @@ export default async function AdminDashboard() {
                             <Users size={24} />
                         </div>
                     </div>
-                    <p className="text-sm text-slate-500 font-medium mb-1">Referans Firma</p>
+                    <p className="text-sm text-slate-500 font-medium mb-1">Referanslar</p>
                     <h3 className="text-3xl font-bold text-slate-900">{referenceData?.count || 0}</h3>
                 </div>
 
@@ -55,9 +61,41 @@ export default async function AdminDashboard() {
                             <Package size={24} />
                         </div>
                     </div>
-                    <p className="text-sm text-slate-500 font-medium mb-1">Ürün Kategorisi</p>
+                    <p className="text-sm text-slate-500 font-medium mb-1">Kategoriler</p>
                     <h3 className="text-3xl font-bold text-slate-900">{categoryData?.count || 0}</h3>
                 </div>
+
+                {/* Teklif Talepleri Card */}
+                <a href="/admin/quotes" className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-lg transition-shadow group relative overflow-hidden">
+                    <div className="flex items-center justify-between mb-4">
+                        <div className="bg-rose-100 text-rose-600 p-3 rounded-xl group-hover:scale-110 transition-transform">
+                            <ClipboardList size={24} />
+                        </div>
+                        {quoteUnread.count > 0 && (
+                            <span className="bg-rose-600 text-white text-[10px] font-bold px-2 py-1 rounded-lg animate-pulse">
+                                {quoteUnread.count} YENİ
+                            </span>
+                        )}
+                    </div>
+                    <p className="text-sm text-slate-500 font-medium mb-1">Teklif Talebi</p>
+                    <h3 className="text-3xl font-bold text-slate-900">{quoteTotal?.count || 0}</h3>
+                </a>
+
+                {/* İletişim Mesajları Card */}
+                <a href="/admin/messages" className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-lg transition-shadow group relative overflow-hidden">
+                    <div className="flex items-center justify-between mb-4">
+                        <div className="bg-indigo-100 text-indigo-600 p-3 rounded-xl group-hover:scale-110 transition-transform">
+                            <Mail size={24} />
+                        </div>
+                        {messageUnread.count > 0 && (
+                            <span className="bg-indigo-600 text-white text-[10px] font-bold px-2 py-1 rounded-lg animate-pulse">
+                                {messageUnread.count} YENİ
+                            </span>
+                        )}
+                    </div>
+                    <p className="text-sm text-slate-500 font-medium mb-1">Mesajlar</p>
+                    <h3 className="text-3xl font-bold text-slate-900">{messageTotal?.count || 0}</h3>
+                </a>
             </div>
 
             {/* Quick Actions & Welcome */}
@@ -91,21 +129,44 @@ export default async function AdminDashboard() {
                         Hızlı Bağlantılar
                     </h3>
                     <div className="space-y-3">
+                        <a href="/admin/quotes" className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors group">
+                            <div className="flex items-center gap-3">
+                                <ClipboardList size={18} className="text-slate-400" />
+                                <span className="text-slate-700 font-medium">Teklif Talepleri</span>
+                                {quoteUnread.count > 0 && (
+                                    <span className="bg-rose-100 text-rose-600 text-[10px] font-bold px-2 py-0.5 rounded-md">
+                                        {quoteUnread.count} Yeni
+                                    </span>
+                                )}
+                            </div>
+                            <ArrowRight size={16} className="text-slate-300 group-hover:text-primary-600 opacity-0 group-hover:opacity-100 transition-all" />
+                        </a>
+                        <a href="/admin/messages" className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors group">
+                            <div className="flex items-center gap-3">
+                                <Mail size={18} className="text-slate-400" />
+                                <span className="text-slate-700 font-medium">Gelen Kutusu</span>
+                                {messageUnread.count > 0 && (
+                                    <span className="bg-indigo-100 text-indigo-600 text-[10px] font-bold px-2 py-0.5 rounded-md">
+                                        {messageUnread.count} Yeni
+                                    </span>
+                                )}
+                            </div>
+                            <ArrowRight size={16} className="text-slate-300 group-hover:text-primary-600 opacity-0 group-hover:opacity-100 transition-all" />
+                        </a>
+                        <div className="border-t border-slate-100 my-2 pt-2"></div>
                         <a href="/admin/products" className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors group">
-                            <span className="text-slate-700 font-medium">Ürün Yönetimi</span>
-                            <span className="text-slate-400 group-hover:text-primary-600">→</span>
+                            <div className="flex items-center gap-3">
+                                <ShoppingBag size={18} className="text-slate-400" />
+                                <span className="text-slate-700 font-medium">Ürün Yönetimi</span>
+                            </div>
+                            <ArrowRight size={16} className="text-slate-300 group-hover:text-primary-600 opacity-0 group-hover:opacity-100 transition-all" />
                         </a>
                         <a href="/admin/categories" className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors group">
-                            <span className="text-slate-700 font-medium">Kategori Yönetimi</span>
-                            <span className="text-slate-400 group-hover:text-primary-600">→</span>
-                        </a>
-                        <a href="/admin/posts" className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors group">
-                            <span className="text-slate-700 font-medium">Haber & Blog</span>
-                            <span className="text-slate-400 group-hover:text-primary-600">→</span>
-                        </a>
-                        <a href="/admin/references" className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors group">
-                            <span className="text-slate-700 font-medium">Referanslar</span>
-                            <span className="text-slate-400 group-hover:text-primary-600">→</span>
+                            <div className="flex items-center gap-3">
+                                <FolderTree size={18} className="text-slate-400" />
+                                <span className="text-slate-700 font-medium">Kategori Yönetimi</span>
+                            </div>
+                            <ArrowRight size={16} className="text-slate-300 group-hover:text-primary-600 opacity-0 group-hover:opacity-100 transition-all" />
                         </a>
                     </div>
                 </div>
@@ -113,3 +174,6 @@ export default async function AdminDashboard() {
         </div>
     );
 }
+
+// Ensure FolderTree is imported as it was used in replacement but not in original
+import { FolderTree } from 'lucide-react';
