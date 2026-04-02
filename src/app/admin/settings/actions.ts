@@ -26,6 +26,9 @@ export async function updateSettings(formData: FormData) {
         const aboutUsFontSize = formData.get('aboutUsFontSize') as string;
         const aboutUsDarkness = formData.get('aboutUsDarkness') as string;
 
+        const homeIntroTitle = formData.get('homeIntroTitle') as string;
+        const homeIntroDescription = formData.get('homeIntroDescription') as string;
+
         // Check if settings exist
         const currentSettings = await getSettings();
 
@@ -102,6 +105,8 @@ export async function updateSettings(formData: FormData) {
                 heroOverlayOpacity: parseInt(formData.get('heroOverlayOpacity') as string) || 60,
                 heroGradientOpacity: parseInt(formData.get('heroGradientOpacity') as string) || 80,
                 menuItems,
+                homeIntroTitle,
+                homeIntroDescription,
             }).where(eq(settings.id, currentSettings.id));
         } else {
             await db.insert(settings).values({
@@ -132,6 +137,8 @@ export async function updateSettings(formData: FormData) {
                 referencesScrollSpeed,
                 referenceLogoHeight: parseInt(formData.get('referenceLogoHeight') as string) || 100,
                 menuItems,
+                homeIntroTitle,
+                homeIntroDescription,
             });
         }
 

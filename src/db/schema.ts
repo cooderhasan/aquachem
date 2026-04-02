@@ -127,6 +127,8 @@ export const settings = pgTable('settings', {
   referenceLogoHeight: integer('reference_logo_height').default(100), // Reference logo height in pixels (default 100px)
   heroOverlayOpacity: integer('hero_overlay_opacity').default(60), // Hero slider image opacity (0-100)
   heroGradientOpacity: integer('hero_gradient_opacity').default(80), // Hero slider gradient opacity (0-100)
+  homeIntroTitle: text('home_intro_title'),
+  homeIntroDescription: text('home_intro_description'),
 });
 
 export const contactLocations = pgTable('contact_locations', {

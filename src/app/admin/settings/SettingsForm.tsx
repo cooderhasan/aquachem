@@ -147,6 +147,30 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                         </div>
 
                         <div className="border-t pt-6">
+                            <h3 className="text-md font-bold text-slate-800 mb-4">Ana Sayfa Tanıtım Bölümü</h3>
+                            <div>
+                                <label htmlFor="homeIntroTitle" className="block text-sm font-medium text-slate-700 mb-1">Tanıtım Başlığı</label>
+                                <input
+                                    type="text"
+                                    id="homeIntroTitle"
+                                    name="homeIntroTitle"
+                                    defaultValue={initialSettings?.homeIntroTitle || ''}
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                            </div>
+                            <div className="mt-4">
+                                <label htmlFor="homeIntroDescription" className="block text-sm font-medium text-slate-700 mb-1">Tanıtım Açıklaması</label>
+                                <textarea
+                                    id="homeIntroDescription"
+                                    name="homeIntroDescription"
+                                    rows={4}
+                                    defaultValue={initialSettings?.homeIntroDescription || ''}
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                ></textarea>
+                            </div>
+                        </div>
+
+                        <div className="border-t pt-6">
                             <h2 className="text-lg font-bold text-slate-800 mb-4 pb-2 border-b">PDF Katalog</h2>
                             <div className="mb-6">
                                 <label className="block text-sm font-medium text-slate-700 mb-2">PDF Katalog Dosyası</label>
