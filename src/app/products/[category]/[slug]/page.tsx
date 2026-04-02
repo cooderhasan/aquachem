@@ -9,6 +9,7 @@ import { eq } from 'drizzle-orm';
 import ProductTabs from './ProductTabs';
 import ProductImageGallery from './ProductImageGallery';
 import RelatedProducts from './RelatedProducts';
+import QuoteButton from './QuoteButton';
 
 interface PageProps {
     params: Promise<{ category: string; slug: string }>;
@@ -151,12 +152,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
                         />
 
                         <div className="flex gap-4">
-                            <Link
-                                href="/contact"
-                                className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-xl font-bold transition-transform active:scale-95 text-center flex-1 md:flex-none"
-                            >
-                                Teklif İste
-                            </Link>
+                            <QuoteButton productName={product.title} />
                         </div>
                     </div>
 

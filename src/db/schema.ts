@@ -12,6 +12,19 @@ export const messages = pgTable('messages', {
   createdAt: timestamp('created_at').defaultNow(),
 });
 
+export const quoteRequests = pgTable('quote_requests', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull(),
+  phone: text('phone').notNull(),
+  company: text('company'),
+  productName: text('product_name').notNull(), // Ürün veya kategori adı
+  quantity: text('quantity'),                   // Miktar / açıklama
+  status: text('status').default('new'),        // new, inProgress, done
+  isRead: boolean('is_read').default(false),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
 export const applications = pgTable('applications', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),

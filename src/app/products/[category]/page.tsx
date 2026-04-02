@@ -6,6 +6,7 @@ import { ArrowLeft, Package, ChevronLeft, ChevronRight } from 'lucide-react';
 import { db } from '@/lib/db';
 import { products as productsTable, categories as categoriesTable } from '@/db/schema';
 import { eq, sql } from 'drizzle-orm';
+import CategoryProducts from './CategoryProducts';
 
 const PRODUCTS_PER_PAGE = 12;
 
@@ -158,133 +159,97 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
             </div>
 
             <div className="container-custom py-12">
-                {products.length > 0 ? (
-                    <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {products.map((product) => (
-                                <Link href={`/products/${category.slug}/${product.slug}`} key={product.id} className="group">
-                                    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col">
-                                        <div className="aspect-square relative bg-slate-100 overflow-hidden">
-                                            {product.image ? (
-                                                <img
-                                                    src={product.image}
-                                                    alt={product.title}
-                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                                />
-                                            ) : (
-                                                <div className="w-full h-full flex items-center justify-center text-slate-400">
-                                                    <Package size={48} />
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="p-6 flex-1 flex flex-col">
-                                            <h3 className="text-lg font-bold text-slate-800 mb-2 group-hover:text-primary-600 transition-colors">{product.title}</h3>
-                                            <p className="text-sm text-slate-500 mb-4 flex-1 line-clamp-2">{product.shortDescription || product.description || ''}</p>
-                                            <div className="bg-slate-50 text-slate-600 text-sm py-2 px-4 rounded-lg font-medium text-center group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors">
-                                                Detaylı İncele
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
+                <CategoryProducts
+                    products={products}
+                    categorySlug={category.slug}
+                    categoryTitle={category.title}
+                />
 
-                        {/* Pagination */}
-                        {totalPages > 1 && (
-                            <nav className="mt-12 flex justify-center" aria-label="Sayfalama">
-                                <ul className="flex items-center gap-2">
-                                    {/* Previous Button */}
-                                    {currentPage > 1 ? (
-                                        <li>
-                                            <Link
-                                                href={`/products/${category.slug}${currentPage === 2 ? '' : `?page=${currentPage - 1}`}`}
-                                                className="flex items-center gap-1 px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-primary-50 hover:text-primary-600 hover:border-primary-200 transition-colors"
-                                                rel="prev"
-                                            >
-                                                <ChevronLeft size={18} />
-                                                <span className="hidden sm:inline">Önceki</span>
-                                            </Link>
+                {/* Pagination */}
+                {totalPages > 1 && (
+                    <nav className="mt-12 flex justify-center" aria-label="Sayfalama">
+                        <ul className="flex items-center gap-2">
+                            {/* Previous Button */}
+                            {currentPage > 1 ? (
+                                <li>
+                                    <Link
+                                        href={`/products/${category.slug}${currentPage === 2 ? '' : `?page=${currentPage - 1}`}`}
+                                        className="flex items-center gap-1 px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-primary-50 hover:text-primary-600 hover:border-primary-200 transition-colors"
+                                        rel="prev"
+                                    >
+                                        <ChevronLeft size={18} />
+                                        <span className="hidden sm:inline">Önceki</span>
+                                    </Link>
+                                </li>
+                            ) : (
+                                <li>
+                                    <span className="flex items-center gap-1 px-4 py-2 rounded-lg bg-slate-100 text-slate-400 cursor-not-allowed">
+                                        <ChevronLeft size={18} />
+                                        <span className="hidden sm:inline">Önceki</span>
+                                    </span>
+                                </li>
+                            )}
+
+                            {/* Page Numbers */}
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
+                                const showPage =
+                                    pageNum === 1 ||
+                                    pageNum === totalPages ||
+                                    Math.abs(pageNum - currentPage) <= 1;
+                                const showEllipsisBefore = pageNum === currentPage - 2 && currentPage > 3;
+                                const showEllipsisAfter = pageNum === currentPage + 2 && currentPage < totalPages - 2;
+
+                                if (showEllipsisBefore || showEllipsisAfter) {
+                                    return (
+                                        <li key={pageNum}>
+                                            <span className="px-2 py-2 text-slate-400">...</span>
                                         </li>
-                                    ) : (
-                                        <li>
-                                            <span className="flex items-center gap-1 px-4 py-2 rounded-lg bg-slate-100 text-slate-400 cursor-not-allowed">
-                                                <ChevronLeft size={18} />
-                                                <span className="hidden sm:inline">Önceki</span>
+                                    );
+                                }
+                                if (!showPage) return null;
+                                return (
+                                    <li key={pageNum}>
+                                        {pageNum === currentPage ? (
+                                            <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-600 text-white font-semibold">
+                                                {pageNum}
                                             </span>
-                                        </li>
-                                    )}
-
-                                    {/* Page Numbers */}
-                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
-                                        // Show first page, last page, current page, and pages around current
-                                        const showPage =
-                                            pageNum === 1 ||
-                                            pageNum === totalPages ||
-                                            Math.abs(pageNum - currentPage) <= 1;
-
-                                        const showEllipsisBefore = pageNum === currentPage - 2 && currentPage > 3;
-                                        const showEllipsisAfter = pageNum === currentPage + 2 && currentPage < totalPages - 2;
-
-                                        if (showEllipsisBefore || showEllipsisAfter) {
-                                            return (
-                                                <li key={pageNum}>
-                                                    <span className="px-2 py-2 text-slate-400">...</span>
-                                                </li>
-                                            );
-                                        }
-
-                                        if (!showPage) return null;
-
-                                        return (
-                                            <li key={pageNum}>
-                                                {pageNum === currentPage ? (
-                                                    <span className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary-600 text-white font-semibold">
-                                                        {pageNum}
-                                                    </span>
-                                                ) : (
-                                                    <Link
-                                                        href={`/products/${category.slug}${pageNum === 1 ? '' : `?page=${pageNum}`}`}
-                                                        className="flex items-center justify-center w-10 h-10 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-primary-50 hover:text-primary-600 hover:border-primary-200 transition-colors font-medium"
-                                                    >
-                                                        {pageNum}
-                                                    </Link>
-                                                )}
-                                            </li>
-                                        );
-                                    })}
-
-                                    {/* Next Button */}
-                                    {currentPage < totalPages ? (
-                                        <li>
+                                        ) : (
                                             <Link
-                                                href={`/products/${category.slug}?page=${currentPage + 1}`}
-                                                className="flex items-center gap-1 px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-primary-50 hover:text-primary-600 hover:border-primary-200 transition-colors"
-                                                rel="next"
+                                                href={`/products/${category.slug}${pageNum === 1 ? '' : `?page=${pageNum}`}`}
+                                                className="flex items-center justify-center w-10 h-10 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-primary-50 hover:text-primary-600 hover:border-primary-200 transition-colors font-medium"
                                             >
-                                                <span className="hidden sm:inline">Sonraki</span>
-                                                <ChevronRight size={18} />
+                                                {pageNum}
                                             </Link>
-                                        </li>
-                                    ) : (
-                                        <li>
-                                            <span className="flex items-center gap-1 px-4 py-2 rounded-lg bg-slate-100 text-slate-400 cursor-not-allowed">
-                                                <span className="hidden sm:inline">Sonraki</span>
-                                                <ChevronRight size={18} />
-                                            </span>
-                                        </li>
-                                    )}
-                                </ul>
-                            </nav>
-                        )}
-                    </>
-                ) : (
-                    <div className="text-center py-20 bg-white rounded-xl shadow-sm border border-slate-100">
-                        <Package size={48} className="mx-auto text-slate-300 mb-4" />
-                        <h3 className="text-lg font-bold text-slate-700">Ürün Bulunamadı</h3>
-                        <p className="text-slate-500 mt-2">Bu kategoriye ait henüz bir ürün eklenmemiş.</p>
-                    </div>
+                                        )}
+                                    </li>
+                                );
+                            })}
+
+                            {/* Next Button */}
+                            {currentPage < totalPages ? (
+                                <li>
+                                    <Link
+                                        href={`/products/${category.slug}?page=${currentPage + 1}`}
+                                        className="flex items-center gap-1 px-4 py-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-primary-50 hover:text-primary-600 hover:border-primary-200 transition-colors"
+                                        rel="next"
+                                    >
+                                        <span className="hidden sm:inline">Sonraki</span>
+                                        <ChevronRight size={18} />
+                                    </Link>
+                                </li>
+                            ) : (
+                                <li>
+                                    <span className="flex items-center gap-1 px-4 py-2 rounded-lg bg-slate-100 text-slate-400 cursor-not-allowed">
+                                        <span className="hidden sm:inline">Sonraki</span>
+                                        <ChevronRight size={18} />
+                                    </span>
+                                </li>
+                            )}
+                        </ul>
+                    </nav>
                 )}
             </div>
         </div>
     );
 }
+
