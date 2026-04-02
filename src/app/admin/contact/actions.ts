@@ -19,13 +19,14 @@ export async function getMainContactLocation() {
     try {
         const locations = await getContactLocations();
 
-        // Öncelikli olarak "İç Anadolu Bölge Müdürlüğü" veya benzer isimleri ara
+        // Öncelikli olarak "Fabrika", "Merkez" veya "Bölge Müdürlüğü" ara
         const mainLocation = locations.find(loc => {
             const title = loc.title.toLowerCase();
-            return title.includes('iç anadolu') ||
-                title.includes('ic anadolu') ||
+            return title.includes('fabrika') ||
                 title.includes('merkez') ||
-                title.includes('bölge müdürlüğü');
+                title.includes('bölge müdürlüğü') ||
+                title.includes('iç anadolu') ||
+                title.includes('ic anadolu');
         });
 
         // Bulunamazsa ilk kaydı, o da yoksa null dön
