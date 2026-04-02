@@ -6,10 +6,12 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, Phone, Droplets, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SearchModal from '@/components/ui/SearchModal';
+import QuoteModal from '@/components/shared/QuoteModal';
 
 const Header = ({ settings, contactLocation }: { settings?: any; contactLocation?: any }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [isQuoteOpen, setIsQuoteOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const pathname = usePathname();
 
@@ -150,8 +152,8 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                             <Search size={24} />
                         </button>
 
-                        <Link
-                            href="/contact"
+                        <button
+                            onClick={() => setIsQuoteOpen(true)}
                             className={`
                                 ml-4 px-7 py-3 rounded-full font-bold text-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5
                                 ${scrolled
@@ -161,7 +163,7 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                             `}
                         >
                             Teklif Al
-                        </Link>
+                        </button>
                     </nav>
 
                     {/* Mobile Menu Button */}
@@ -203,13 +205,15 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                                         {item.name}
                                     </Link>
                                 ))}
-                                <Link
-                                    href="/contact"
+                                <button
                                     className="bg-primary-600 text-white px-5 py-4 rounded-xl font-bold text-center hover:bg-primary-700 transition-colors mt-4 shadow-lg shadow-primary-600/20"
-                                    onClick={() => setIsOpen(false)}
+                                    onClick={() => {
+                                        setIsOpen(false);
+                                        setIsQuoteOpen(true);
+                                    }}
                                 >
                                     Teklif İsteyin
-                                </Link>
+                                </button>
 
                                 <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col gap-4 text-slate-500 text-sm font-medium">
                                     <div className="flex items-center justify-center gap-2">
@@ -232,9 +236,17 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                 isOpen={isSearchOpen}
                 onClose={() => setIsSearchOpen(false)}
             />
+
+            {/* Quote Modal */}
+            <QuoteModal
+                isOpen={isQuoteOpen}
+                onClose={() => setIsQuoteOpen(false)}
+                productName="Genel Bilgi / Teklif"
+            />
         </div >
     );
 };
 
 export default Header;
+
 
