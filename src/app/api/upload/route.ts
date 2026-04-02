@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { slugify } from '@/lib/utils';
 
 export async function POST(request: NextRequest) {
     try {
@@ -13,7 +14,12 @@ export async function POST(request: NextRequest) {
         }
 
         const buffer = Buffer.from(await file.arrayBuffer());
-        const fileName = `${uuidv4()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`;
+        
+        // Sanitize filename while preserving extension
+        const ext = path.extname(file.name);
+        const nameWithoutExt = path.basename(file.name, ext);
+        const sanitizedName = slugify(nameWithoutExt);
+        const fileName = `${uuidv4()}-${sanitizedName}${ext}`;
 
         // Use /app/public/uploads for Docker (matches Coolify volume mount) or fallback to public/uploads for local dev
         const uploadDir = process.env.NODE_ENV === 'production'
