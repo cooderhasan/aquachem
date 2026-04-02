@@ -65,7 +65,7 @@ export default async function CorporatePage() {
 
                             <div className="flex gap-4 pt-4">
                                 <div className="flex flex-col">
-                                    <span className="text-3xl font-bold text-blue-600">10+</span>
+                                    <span className="text-3xl font-bold text-blue-600">15+</span>
                                     <span className="text-sm text-slate-500 font-medium">Yıllık Tecrübe</span>
                                 </div>
                                 <div className="w-px h-12 bg-slate-200"></div>
