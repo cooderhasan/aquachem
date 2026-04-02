@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-    title: 'Haberler & Duyurular | Aquachems',
+    title: 'Haberler & Duyurular',
     description: 'Aquachems ile ilgili en güncel haberler, duyurular ve gelişmeler.',
 };
 

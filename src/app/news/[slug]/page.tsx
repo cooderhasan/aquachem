@@ -11,11 +11,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const post = await getPostBySlug(resolvedParams.slug);
     if (!post) {
         return {
-            title: 'Haber Bulunamadı | Aquachems'
+            title: 'Haber Bulunamadı'
         };
     }
     return {
-        title: `${post.title} | Aquachems`,
+        title: post.title,
         description: post.content?.substring(0, 160),
     };
 }

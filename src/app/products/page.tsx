@@ -11,7 +11,7 @@ import { Metadata } from 'next';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-    title: 'Ürün Grupları | Aquachems',
+    title: 'Ürün Grupları',
     description: 'Aquachems endüstriyel ve bireysel ürün gruplarını inceleyin.',
 };
 
