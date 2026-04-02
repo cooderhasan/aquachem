@@ -37,13 +37,9 @@ const MissionSection = ({ cards = [] }: { cards?: any[] }) => {
                         transition={{ delay: 0.1 }}
                         className="mb-6"
                     >
-                        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-2">
-                            İnsana ve Doğaya
+                        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
+                            Sürdürülebilir ve Çevre Dostu Üretim Anlayışı
                         </h2>
-                        <div className="relative inline-block">
-                            <span className="relative z-10 text-4xl md:text-5xl font-bold text-slate-900">Saygılıyız</span>
-                            <div className="absolute bottom-2 left-0 w-full h-3 bg-primary-100/50 -z-10 rounded-full" />
-                        </div>
                     </motion.div>
                     <motion.p
                         initial={{ opacity: 0, y: 10 }}

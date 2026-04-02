@@ -39,7 +39,7 @@ export default function ProductGroupsClient({ categories }: ProductGroupsClientP
             <div className="container-custom">
                 <div className="text-center mb-16">
                     <span className="inline-block bg-primary-100 text-primary-700 text-sm font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider">Kapsamlı Çözümler</span>
-                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Ürün Gruplarımız</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Endüstriyel Çözümler Sunan Ürün Gruplarımız</h2>
                     <p className="text-slate-600 max-w-2xl mx-auto text-lg">
                         Endüstriyel ve bireysel ihtiyaçlarınız için özel olarak formüle edilmiş geniş ürün yelpazemiz.
                     </p>

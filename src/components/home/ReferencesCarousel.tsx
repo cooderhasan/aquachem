@@ -44,22 +44,41 @@ const ReferencesCarousel = ({ references, settings }: ReferencesCarouselProps) =
                     style={{ animationDuration: duration }}
                 >
                     {/* Double the list for infinite scroll effect */}
-                    {[...references, ...references, ...references].map((ref, index) => (
-                        <div
-                            key={`${ref.id}-${index}`}
-                            className="flex items-center justify-center transition-all duration-300 transform hover:scale-125 hover:drop-shadow-2xl"
-                            style={{
-                                height: settings?.referenceLogoHeight ? `${settings.referenceLogoHeight}px` : '100px',
-                                width: settings?.referenceLogoHeight ? `${Number(settings.referenceLogoHeight) * 2.2}px` : '220px'
-                            }}
-                        >
-                            <img
-                                src={ref.image}
-                                alt={ref.title}
-                                className="max-w-full max-h-full object-contain mix-blend-multiply filter drop-shadow hover:drop-shadow-lg transition-all duration-300"
-                            />
-                        </div>
-                    ))}
+                                        {/* Render the list twice for the infinite scroll effect */}
+                    <>
+                        {references.map((ref, index) => (
+                            <div
+                                key={`${ref.id}-${index}-a`}
+                                className="flex items-center justify-center transition-all duration-300 transform hover:scale-125 hover:drop-shadow-2xl"
+                                style={{
+                                    height: settings?.referenceLogoHeight ? `${settings.referenceLogoHeight}px` : '100px',
+                                    width: settings?.referenceLogoHeight ? `${Number(settings.referenceLogoHeight) * 2.2}px` : '220px'
+                                }}
+                            >
+                                <img
+                                    src={ref.image}
+                                    alt={ref.title}
+                                    className="max-w-full max-h-full object-contain mix-blend-multiply filter drop-shadow hover:drop-shadow-lg transition-all duration-300"
+                                />
+                            </div>
+                        ))}
+                        {references.map((ref, index) => (
+                            <div
+                                key={`${ref.id}-${index}-b`}
+                                className="flex items-center justify-center transition-all duration-300 transform hover:scale-125 hover:drop-shadow-2xl"
+                                style={{
+                                    height: settings?.referenceLogoHeight ? `${settings.referenceLogoHeight}px` : '100px',
+                                    width: settings?.referenceLogoHeight ? `${Number(settings.referenceLogoHeight) * 2.2}px` : '220px'
+                                }}
+                            >
+                                <img
+                                    src={ref.image}
+                                    alt={ref.title}
+                                    className="max-w-full max-h-full object-contain mix-blend-multiply filter drop-shadow hover:drop-shadow-lg transition-all duration-300"
+                                />
+                            </div>
+                        ))}
+                    </>
                 </div>
             </div>
         </section>

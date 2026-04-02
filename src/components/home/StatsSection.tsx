@@ -52,7 +52,7 @@ const StatsSection = ({ stats }: StatsSectionProps) => {
                         transition={{ delay: 0.1 }}
                         className="text-3xl md:text-4xl font-bold text-white mb-4"
                     >
-                        Güvenilir İş Ortağınız
+                        Rakamlarla Sektördeki Gücümüz
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}

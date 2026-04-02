@@ -98,6 +98,38 @@ export default async function RootLayout({
       </head>
       <body className={`${ubuntu.variable} font-sans antialiased text-slate-600`}>
         <ConditionalLayout settings={settings} contactLocation={contactLocation}>{children}</ConditionalLayout>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": settings?.siteTitle || "Aquachems",
+              "url": process.env.NEXT_PUBLIC_SITE_URL || "https://aquachems.com",
+              "logo": settings?.logo || (process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/images/logo.png` : ""),
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": contactLocation?.phone || "",
+                "contactType": "customer service",
+                "areaServed": "TR",
+                "availableLanguage": "Turkish"
+              },
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": contactLocation?.address || "",
+                "addressLocality": contactLocation?.city || "",
+                "postalCode": contactLocation?.postalCode || "",
+                "addressCountry": "TR"
+              },
+              "sameAs": [
+                settings?.facebookUrl,
+                settings?.twitterUrl,
+                settings?.linkedinUrl,
+                settings?.instagramUrl
+              ].filter(Boolean)
+            })
+          }}
+        />
       </body>
     </html>
   );
