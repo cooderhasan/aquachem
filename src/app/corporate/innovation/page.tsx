@@ -1,5 +1,11 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { FlaskConical, Lightbulb, TrendingUp } from 'lucide-react';
+
+export const metadata: Metadata = {
+    title: 'AR-GE ve İnovasyon',
+    description: 'Aquachems AR-GE çalışmaları, ÜR-GE süreçleri ve inovasyon kültürü hakkında bilgi edinin.',
+};
 
 export default function InnovationPage() {
     return (
@@ -18,7 +24,7 @@ export default function InnovationPage() {
                 <div className="max-w-4xl mx-auto space-y-20">
 
                     {/* AR-GE Section */}
-                    <div id="arge" className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-8">
+                    <div id="arge" className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-8 scroll-mt-32">
                         <div className="w-20 h-20 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shrink-0">
                             <FlaskConical size={40} />
                         </div>
@@ -41,7 +47,7 @@ export default function InnovationPage() {
                     <hr className="border-slate-100" />
 
                     {/* ÜR-GE Section */}
-                    <div id="urge" className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-8">
+                    <div id="urge" className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-8 scroll-mt-32">
                         <div className="w-20 h-20 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center shrink-0">
                             <Lightbulb size={40} />
                         </div>
@@ -64,7 +70,7 @@ export default function InnovationPage() {
                     <hr className="border-slate-100" />
 
                     {/* İnovasyon Section */}
-                    <div id="inovasyon" className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-8">
+                    <div id="inovasyon" className="grid grid-cols-1 md:grid-cols-[80px_1fr] gap-8 scroll-mt-32">
                         <div className="w-20 h-20 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center shrink-0">
                             <TrendingUp size={40} />
                         </div>

@@ -119,10 +119,16 @@ const InnovationSection = ({ items }: InnovationSectionProps) => {
                                             {item.description}
                                         </p>
 
-                                        <Link href="/corporate/innovation" className={`flex items-center ${style.btnText} font-bold group/btn cursor-pointer`}>
-                                            <span className="mr-2">İncele</span>
-                                            <ArrowUpRight size={20} className="transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
-                                        </Link>
+                                        {(() => {
+                                            const anchors = ['#arge', '#urge', '#inovasyon'];
+                                            const anchor = anchors[index % anchors.length];
+                                            return (
+                                                <Link href={`/corporate/innovation${anchor}`} className={`flex items-center ${style.btnText} font-bold group/btn cursor-pointer`}>
+                                                    <span className="mr-2">İncele</span>
+                                                    <ArrowUpRight size={20} className="transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
+                                                </Link>
+                                            );
+                                        })()}
                                     </div>
                                 </motion.div>
                             );
