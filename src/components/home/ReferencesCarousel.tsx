@@ -58,7 +58,7 @@ const ReferencesCarousel = ({ references, settings }: ReferencesCarouselProps) =
                                 <img
                                     src={ref.image}
                                     alt={ref.title}
-                                    className="max-w-full max-h-full object-contain mix-blend-multiply filter drop-shadow hover:drop-shadow-lg transition-all duration-300"
+                                    className="max-w-full max-h-full object-contain mix-blend-multiply transition-all duration-300"
                                 />
                             </div>
                         ))}
@@ -74,7 +74,7 @@ const ReferencesCarousel = ({ references, settings }: ReferencesCarouselProps) =
                                 <img
                                     src={ref.image}
                                     alt={ref.title}
-                                    className="max-w-full max-h-full object-contain mix-blend-multiply filter drop-shadow hover:drop-shadow-lg transition-all duration-300"
+                                    className="max-w-full max-h-full object-contain mix-blend-multiply transition-all duration-300"
                                 />
                             </div>
                         ))}

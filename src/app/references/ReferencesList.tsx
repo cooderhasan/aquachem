@@ -82,13 +82,13 @@ export default function ReferencesList({ references, categories }: ReferencesLis
                                     exit={{ opacity: 0, scale: 0.8 }}
                                     transition={{ duration: 0.3 }}
                                     key={ref.id}
-                                    className="group relative flex items-center justify-center p-2 sm:p-4 md:p-6 rounded-xl border border-slate-100 hover:border-primary-100 hover:shadow-lg transition-all duration-300 bg-slate-50/50"
+                                    className="group relative flex items-center justify-center p-2 rounded-xl border border-slate-100 hover:border-primary-100 hover:shadow-lg transition-all duration-300 bg-slate-50/50"
                                 >
-                                    <div className="relative w-full h-[100px] sm:h-[130px] md:h-[140px] flex items-center justify-center p-1 sm:p-3">
+                                    <div className="relative w-full h-[120px] sm:h-[150px] md:h-[165px] flex items-center justify-center p-1">
                                         <img
                                             src={ref.image}
                                             alt={ref.title}
-                                            className="w-full h-full object-contain mix-blend-multiply filter drop-shadow hover:drop-shadow-lg transition-all duration-300"
+                                            className="w-full h-full object-contain mix-blend-multiply transition-all duration-300"
                                         />
                                     </div>
                                     {/* Optional: Show category name on hover */}
