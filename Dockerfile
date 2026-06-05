@@ -56,18 +56,20 @@ RUN chown nextjs:nodejs .next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Create uploads directory and set permissions for persistence
-# Using 777 to ensure volume mounts work correctly with any user
-RUN mkdir -p /app/public/uploads && \
-    chown -R nextjs:nodejs /app/public && \
-    chmod -R 777 /app/public/uploads
+# Create uploads directory with open permissions for Docker volume mounts
+RUN mkdir -p /app/public/uploads && chmod -R 777 /app/public/uploads
 
-USER nextjs
+# Copy entrypoint script (runs as root to fix volume permissions at startup)
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Run as root so we can chmod the mounted volume at container start
+# The entrypoint.sh handles permission setup before starting the app
+USER root
 
 EXPOSE 3000
 
 ENV PORT 3000
 
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD ["node", "server.js"]
+# Entrypoint fixes volume permissions then starts the app
+ENTRYPOINT ["/entrypoint.sh"]
