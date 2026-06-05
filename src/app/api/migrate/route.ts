@@ -163,6 +163,8 @@ export async function GET(request: NextRequest) {
               parsedRow[camelKey] = true;
             } else if (val === 'false') {
               parsedRow[camelKey] = false;
+            } else if ((camelKey.endsWith('At') || camelKey.endsWith('Date')) && typeof val === 'string' && val !== '') {
+              parsedRow[camelKey] = new Date(val);
             } else {
               parsedRow[camelKey] = val;
             }
