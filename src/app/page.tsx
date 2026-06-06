@@ -27,7 +27,6 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col min-h-screen bg-white">
-      <h1 className="sr-only">Endüstriyel Temizlik ve Bakım Kimyasalları | Aquachems</h1>
       <HeroSlider slides={slides} settings={settings} />
       <MissionSection cards={missionCards} />
       {settings?.homeIntroTitle && (
