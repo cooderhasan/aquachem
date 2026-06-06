@@ -61,14 +61,14 @@ const HeroSlider = ({ slides, settings }: { slides: any[], settings?: any }) => 
                     {/* Content */}
                     <div className="container-custom relative h-full flex items-center px-12 md:px-4">
                         <div className="max-w-2xl text-white pt-20">
-                            <motion.h2
+                            <motion.h1
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.3, duration: 0.5 }}
                                 className="text-3xl md:text-6xl font-bold mb-6 leading-tight text-white uppercase"
                             >
                                 {slides[current].title}
-                            </motion.h2>
+                            </motion.h1>
                             <motion.p
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}

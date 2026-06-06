@@ -36,7 +36,7 @@ const InnovationSection = ({ items }: InnovationSectionProps) => {
                         Sürekli Gelişim
                     </span>
                     <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
-                        AR-GE ve İnovasyon <span className="text-primary-600">Vizyonumuz</span>
+                        Endüstriyel Kimya <span className="text-primary-600">AR-GE Çalışmalarımız</span>
                     </h2>
                     <p className="text-slate-600 text-lg leading-relaxed">
                         Sektördeki standartları belirleyen, yenilikçi ve sürdürülebilir çözümlerimizle geleceği bugünden tasarlıyoruz.

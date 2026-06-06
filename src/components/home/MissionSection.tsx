@@ -38,7 +38,7 @@ const MissionSection = ({ cards = [] }: { cards?: any[] }) => {
                         className="mb-6"
                     >
                         <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
-                            Sürdürülebilir ve Çevre Dostu Üretim Anlayışı
+                            Çevre Dostu Endüstriyel Kimya Çözümleri
                         </h2>
                     </motion.div>
                     <motion.p

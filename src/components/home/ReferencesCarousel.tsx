@@ -30,7 +30,7 @@ const ReferencesCarousel = ({ references, settings }: ReferencesCarouselProps) =
                     Referanslarımız
                 </span>
                 <h2 className="text-3xl font-bold text-slate-900">
-                    Güçlü İş Birliklerimiz
+                    Referans Firmalarımız ve İş Ortaklarımız
                 </h2>
             </div>
 
