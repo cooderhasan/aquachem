@@ -22,6 +22,7 @@ export async function GET(request: NextRequest) {
     await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "corporate_stat2_value" text DEFAULT '100+'`);
     await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "corporate_stat2_label" text DEFAULT 'Tamamlanan Proje'`);
     await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "site_slogan" text DEFAULT 'İnsanların yüzündeki gülümsemeyi görmek için çalışıyoruz'`);
+    await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "site_slogan_font_size" integer DEFAULT 10`);
 
     return NextResponse.json({
       success: true,

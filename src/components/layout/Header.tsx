@@ -105,7 +105,8 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                                 </div>
                                 {settings?.siteSlogan && (
                                     <span 
-                                        className={`text-[9px] text-slate-500 font-medium tracking-wide transition-all duration-300 ${
+                                        style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize}px` : '10px' }}
+                                        className={`text-slate-500 font-medium tracking-wider italic font-serif transition-all duration-300 ${
                                             scrolled ? 'max-h-0 opacity-0 overflow-hidden mt-0' : 'max-h-8 opacity-100 mt-1'
                                         } hidden sm:inline-block`}
                                     >
@@ -125,7 +126,10 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                                     <span className={`font-bold text-slate-900 leading-none tracking-tight transition-all ${scrolled ? 'text-xl' : 'text-2xl'}`}>
                                         {settings?.siteTitle || 'AQUACHEMS'}
                                     </span>
-                                    <span className="text-[10px] text-slate-500 font-bold tracking-[0.2em] uppercase mt-0.5">
+                                    <span 
+                                        style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize}px` : '10px' }}
+                                        className="text-slate-500 font-medium tracking-wider italic font-serif mt-1"
+                                    >
                                         {settings?.siteSlogan || 'Kimya & İnovasyon'}
                                     </span>
                                 </div>

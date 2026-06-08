@@ -32,7 +32,10 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
                                         className="h-16 w-auto object-contain"
                                     />
                                     {settings?.siteSlogan && (
-                                        <p className="text-xs text-primary-400 font-medium tracking-wide mt-2">
+                                        <p 
+                                            style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize + 2}px` : '12px' }}
+                                            className="text-primary-400 font-medium tracking-wider italic font-serif mt-2"
+                                        >
                                             {settings.siteSlogan}
                                         </p>
                                     )}
@@ -44,7 +47,10 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-2xl font-bold text-white leading-none tracking-tight">AQUACHEMS</span>
-                                        <span className="text-[10px] text-primary-400 font-bold tracking-widest uppercase">
+                                        <span 
+                                            style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize}px` : '10px' }}
+                                            className="text-primary-400 font-medium tracking-wider italic font-serif mt-1"
+                                        >
                                             {settings?.siteSlogan || 'Kimya & İnovasyon'}
                                         </span>
                                     </div>

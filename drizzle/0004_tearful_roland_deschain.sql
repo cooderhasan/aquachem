@@ -1,0 +1,1 @@
+ALTER TABLE "settings" ADD COLUMN "site_slogan_font_size" integer DEFAULT 10;
