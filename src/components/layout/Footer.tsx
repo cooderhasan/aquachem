@@ -22,24 +22,33 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-16">
                     {/* Brand Info */}
                     <div className="col-span-2 lg:col-span-1 space-y-6">
-                        <Link href="/" className="flex items-center gap-3 group">
+                        <Link href="/" className="flex flex-col items-start gap-3 group">
                             {settings?.footerLogo ? (
-                                <img
-                                    src={settings.footerLogo}
-                                    alt="Aquachems Logo"
-                                    style={{ marginTop: settings?.footerLogoPadding ? `${settings.footerLogoPadding}px` : undefined }}
-                                    className="h-16 w-auto object-contain"
-                                />
+                                <div className="flex flex-col items-start">
+                                    <img
+                                        src={settings.footerLogo}
+                                        alt="Aquachems Logo"
+                                        style={{ marginTop: settings?.footerLogoPadding ? `${settings.footerLogoPadding}px` : undefined }}
+                                        className="h-16 w-auto object-contain"
+                                    />
+                                    {settings?.siteSlogan && (
+                                        <p className="text-xs text-primary-400 font-medium tracking-wide mt-2">
+                                            {settings.siteSlogan}
+                                        </p>
+                                    )}
+                                </div>
                             ) : (
-                                <>
+                                <div className="flex items-center gap-3">
                                     <div className="bg-primary-600 text-white p-2.5 rounded-xl group-hover:bg-primary-500 transition-colors">
                                         <Droplets size={28} />
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-2xl font-bold text-white leading-none tracking-tight">AQUACHEMS</span>
-                                        <span className="text-[10px] text-primary-400 font-bold tracking-widest uppercase">Kimya & İnovasyon</span>
+                                        <span className="text-[10px] text-primary-400 font-bold tracking-widest uppercase">
+                                            {settings?.siteSlogan || 'Kimya & İnovasyon'}
+                                        </span>
                                     </div>
-                                </>
+                                </div>
                             )}
                         </Link>
                         <p className="text-slate-400 leading-relaxed text-sm">

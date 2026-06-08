@@ -144,6 +144,16 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                     className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 />
                             </div>
+                            <div className="md:col-span-2">
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Site Sloganı</label>
+                                <input
+                                    type="text"
+                                    name="siteSlogan"
+                                    defaultValue={initialSettings?.siteSlogan || ''}
+                                    placeholder="İnsanların yüzündeki gülümsemeyi görmek için çalışıyoruz"
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                            </div>
                         </div>
 
                         <div className="border-t pt-6">
@@ -339,6 +349,52 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                     defaultValue={initialSettings?.humanPolicy || ''}
                                     className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 ></textarea>
+                            </div>
+
+                            <div className="border-t pt-6">
+                                <h3 className="text-md font-bold text-slate-800 mb-4">Kurumsal İstatistikler (Hakkımızda Sayfası)</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-slate-50 rounded-lg border border-slate-200">
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">1. İstatistik Değeri</label>
+                                        <input
+                                            type="text"
+                                            name="corporateStat1Value"
+                                            defaultValue={initialSettings?.corporateStat1Value || '15+'}
+                                            placeholder="Örn: 15+"
+                                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">1. İstatistik Açıklaması</label>
+                                        <input
+                                            type="text"
+                                            name="corporateStat1Label"
+                                            defaultValue={initialSettings?.corporateStat1Label || 'Yıllık Tecrübe'}
+                                            placeholder="Örn: Yıllık Tecrübe"
+                                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">2. İstatistik Değeri</label>
+                                        <input
+                                            type="text"
+                                            name="corporateStat2Value"
+                                            defaultValue={initialSettings?.corporateStat2Value || '100+'}
+                                            placeholder="Örn: 100+"
+                                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">2. İstatistik Açıklaması</label>
+                                        <input
+                                            type="text"
+                                            name="corporateStat2Label"
+                                            defaultValue={initialSettings?.corporateStat2Label || 'Tamamlanan Proje'}
+                                            placeholder="Örn: Tamamlanan Proje"
+                                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
+                                        />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

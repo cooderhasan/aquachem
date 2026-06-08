@@ -92,15 +92,26 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
                         {settings?.logo ? (
-                            <div
-                                className="relative w-auto min-w-[120px]"
-                                style={{ height: settings?.logoHeight ? `${settings.logoHeight}px` : '48px' }}
-                            >
-                                <img
-                                    src={settings.logo}
-                                    alt={settings.siteTitle || 'Logo'}
-                                    className="h-full w-auto object-contain"
-                                />
+                            <div className="flex flex-col items-start">
+                                <div
+                                    className="relative w-auto min-w-[120px]"
+                                    style={{ height: settings?.logoHeight ? `${settings.logoHeight}px` : '48px' }}
+                                >
+                                    <img
+                                        src={settings.logo}
+                                        alt={settings.siteTitle || 'Logo'}
+                                        className="h-full w-auto object-contain"
+                                    />
+                                </div>
+                                {settings?.siteSlogan && (
+                                    <span 
+                                        className={`text-[9px] text-slate-500 font-medium tracking-wide transition-all duration-300 ${
+                                            scrolled ? 'max-h-0 opacity-0 overflow-hidden mt-0' : 'max-h-8 opacity-100 mt-1'
+                                        } hidden sm:inline-block`}
+                                    >
+                                        {settings.siteSlogan}
+                                    </span>
+                                )}
                             </div>
                         ) : (
                             <>
@@ -114,7 +125,9 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                                     <span className={`font-bold text-slate-900 leading-none tracking-tight transition-all ${scrolled ? 'text-xl' : 'text-2xl'}`}>
                                         {settings?.siteTitle || 'AQUACHEMS'}
                                     </span>
-                                    <span className="text-[10px] text-slate-500 font-bold tracking-[0.2em] uppercase mt-0.5">Kimya & İnovasyon</span>
+                                    <span className="text-[10px] text-slate-500 font-bold tracking-[0.2em] uppercase mt-0.5">
+                                        {settings?.siteSlogan || 'Kimya & İnovasyon'}
+                                    </span>
                                 </div>
                             </>
                         )}

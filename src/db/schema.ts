@@ -129,6 +129,11 @@ export const settings = pgTable('settings', {
   heroGradientOpacity: integer('hero_gradient_opacity').default(80), // Hero slider gradient opacity (0-100)
   homeIntroTitle: text('home_intro_title'),
   homeIntroDescription: text('home_intro_description'),
+  corporateStat1Value: text('corporate_stat1_value').default('15+'),
+  corporateStat1Label: text('corporate_stat1_label').default('Yıllık Tecrübe'),
+  corporateStat2Value: text('corporate_stat2_value').default('100+'),
+  corporateStat2Label: text('corporate_stat2_label').default('Tamamlanan Proje'),
+  siteSlogan: text('site_slogan').default('İnsanların yüzündeki gülümsemeyi görmek için çalışıyoruz'),
 });
 
 export const contactLocations = pgTable('contact_locations', {

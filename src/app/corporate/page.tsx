@@ -65,13 +65,21 @@ export default async function CorporatePage() {
 
                             <div className="flex gap-4 pt-4">
                                 <div className="flex flex-col">
-                                    <span className="text-3xl font-bold text-blue-600">15+</span>
-                                    <span className="text-sm text-slate-500 font-medium">Yıllık Tecrübe</span>
+                                    <span className="text-3xl font-bold text-blue-600">
+                                        {settings?.corporateStat1Value || '15+'}
+                                    </span>
+                                    <span className="text-sm text-slate-500 font-medium">
+                                        {settings?.corporateStat1Label || 'Yıllık Tecrübe'}
+                                    </span>
                                 </div>
                                 <div className="w-px h-12 bg-slate-200"></div>
                                 <div className="flex flex-col">
-                                    <span className="text-3xl font-bold text-blue-600">100+</span>
-                                    <span className="text-sm text-slate-500 font-medium">Tamamlanan Proje</span>
+                                    <span className="text-3xl font-bold text-blue-600">
+                                        {settings?.corporateStat2Value || '100+'}
+                                    </span>
+                                    <span className="text-sm text-slate-500 font-medium">
+                                        {settings?.corporateStat2Label || 'Tamamlanan Proje'}
+                                    </span>
                                 </div>
                             </div>
                         </div>

@@ -29,6 +29,12 @@ export async function updateSettings(formData: FormData) {
         const homeIntroTitle = formData.get('homeIntroTitle') as string;
         const homeIntroDescription = formData.get('homeIntroDescription') as string;
 
+        const corporateStat1Value = formData.get('corporateStat1Value') as string;
+        const corporateStat1Label = formData.get('corporateStat1Label') as string;
+        const corporateStat2Value = formData.get('corporateStat2Value') as string;
+        const corporateStat2Label = formData.get('corporateStat2Label') as string;
+        const siteSlogan = formData.get('siteSlogan') as string;
+
         // Check if settings exist
         const currentSettings = await getSettings();
 
@@ -107,6 +113,11 @@ export async function updateSettings(formData: FormData) {
                 menuItems,
                 homeIntroTitle,
                 homeIntroDescription,
+                corporateStat1Value,
+                corporateStat1Label,
+                corporateStat2Value,
+                corporateStat2Label,
+                siteSlogan,
             }).where(eq(settings.id, currentSettings.id));
         } else {
             await db.insert(settings).values({
@@ -139,6 +150,11 @@ export async function updateSettings(formData: FormData) {
                 menuItems,
                 homeIntroTitle,
                 homeIntroDescription,
+                corporateStat1Value,
+                corporateStat1Label,
+                corporateStat2Value,
+                corporateStat2Label,
+                siteSlogan,
             });
         }
 
