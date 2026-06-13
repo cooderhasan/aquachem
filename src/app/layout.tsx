@@ -5,6 +5,9 @@ import ConditionalLayout from '@/components/layout/ConditionalLayout';
 import { getSettings } from '@/app/admin/settings/actions';
 import { getMainContactLocation } from '@/app/admin/contact/actions';
 
+// Prevent static pre-rendering at build time (DB is only accessible at runtime)
+export const dynamic = 'force-dynamic';
+
 const ubuntu = Ubuntu({
   subsets: ['latin'],
   weight: ['300', '400', '500', '700'],
