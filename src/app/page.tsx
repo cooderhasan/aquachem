@@ -1,3 +1,4 @@
+import React from 'react';
 import HeroSlider from '@/components/home/HeroSlider';
 import MissionSection from '@/components/home/MissionSection';
 import ProductGroups from '@/components/home/ProductGroups';
@@ -15,6 +16,8 @@ import { getMissionCards } from '@/app/admin/mission/actions';
 
 import { getPosts } from '@/lib/data';
 
+const DEFAULT_SECTION_ORDER = ['products', 'mission', 'innovation', 'activities', 'stats', 'references'];
+
 export default async function Home() {
   const slides = await getHeroSlides();
   const activities = await getActivities();
@@ -25,10 +28,22 @@ export default async function Home() {
   const posts = await getPosts();
   const missionCards = await getMissionCards();
 
+  // Get section order from settings, fallback to default
+  const rawOrder = (settings?.homeSectionOrder as string[] | null);
+  const sectionOrder = (rawOrder && rawOrder.length > 0) ? rawOrder : DEFAULT_SECTION_ORDER;
+
+  const sectionComponents: Record<string, React.ReactNode> = {
+    products: <ProductGroups key="products" />,
+    mission: <MissionSection key="mission" cards={missionCards} />,
+    innovation: <InnovationSection key="innovation" items={innovationItems} />,
+    activities: <ActivitiesSection key="activities" activities={activities} posts={posts} catalogUrl={settings?.catalogUrl} />,
+    stats: <StatsSection key="stats" stats={stats} />,
+    references: <ReferencesCarousel key="references" references={references || []} settings={settings} />,
+  };
+
   return (
     <main className="flex flex-col min-h-screen bg-white">
       <HeroSlider slides={slides} settings={settings} />
-      <MissionSection cards={missionCards} />
       {settings?.homeIntroTitle && (
         <section className="py-20 bg-white">
           <div className="container-custom text-center">
@@ -43,15 +58,7 @@ export default async function Home() {
           </div>
         </section>
       )}
-      <ProductGroups />
-      <InnovationSection items={innovationItems} />
-      <ActivitiesSection activities={activities} posts={posts} catalogUrl={settings?.catalogUrl} />
-      <StatsSection stats={stats} />
-      {/* References Section */}
-      <ReferencesCarousel
-        references={references || []}
-        settings={settings}
-      />
+      {sectionOrder.map((sectionId) => sectionComponents[sectionId] ?? null)}
     </main>
   );
 }

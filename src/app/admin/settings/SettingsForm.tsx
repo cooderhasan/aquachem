@@ -6,6 +6,7 @@ import { updateSettings } from './actions';
 import { useRouter } from 'next/navigation';
 import ImageUpload from '@/components/ui/ImageUpload';
 import MenuEditor from './MenuEditor';
+import SectionOrderEditor, { ALL_SECTIONS, SectionItem } from './SectionOrderEditor';
 
 const defaultMenuItems = [
     { id: 'home', name: 'Ana Sayfa', href: '/' },
@@ -37,6 +38,19 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
             ? initialSettings.menuItems
             : defaultMenuItems
     );
+
+    // Section Order State
+    const [sectionItems, setSectionItems] = useState<SectionItem[]>(() => {
+        const savedOrder: string[] = (initialSettings?.homeSectionOrder && initialSettings.homeSectionOrder.length > 0)
+            ? initialSettings.homeSectionOrder
+            : ALL_SECTIONS.map(s => s.id);
+        // Build ordered list, include any new sections not in saved order
+        const ordered = savedOrder
+            .map(id => ALL_SECTIONS.find(s => s.id === id))
+            .filter(Boolean) as SectionItem[];
+        const missing = ALL_SECTIONS.filter(s => !savedOrder.includes(s.id));
+        return [...ordered, ...missing];
+    });
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -71,6 +85,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
         { id: 'design', label: 'Görünüm & Tasarım', icon: 'Palette' },
         { id: 'social', label: 'İletişim & Medya', icon: 'Share2' },
         { id: 'menu', label: 'Menü Yönetimi', icon: 'Menu' },
+        { id: 'sections', label: 'Ana Sayfa Düzeni', icon: 'Layout' },
         { id: 'seo', label: 'SEO', icon: 'Search' },
     ];
 
@@ -120,6 +135,7 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                 <input type="hidden" name="aboutImage" value={aboutImage} />
                 <input type="hidden" name="ogImage" value={ogImage} />
                 <input type="hidden" name="menuItems" value={JSON.stringify(menuItems)} />
+                <input type="hidden" name="homeSectionOrder" value={JSON.stringify(sectionItems.map(s => s.id))} />
 
                 {/* --- GENEL AYARLAR --- */}
                 <div className={activeTab === 'general' ? 'block' : 'hidden'}>
@@ -693,6 +709,32 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                             <MenuEditor
                                 items={menuItems}
                                 onReorder={setMenuItems}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* --- ANA SAYFA DÜZENİ --- */}
+                <div className={activeTab === 'sections' ? 'block' : 'hidden'}>
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div className="flex items-center justify-between mb-4 pb-2 border-b">
+                            <div>
+                                <h2 className="text-lg font-bold text-slate-800">Ana Sayfa Bölüm Sıralaması</h2>
+                                <p className="text-sm text-slate-500 mt-0.5">Sürükle-bırak ile bölümlerin sırasını değiştirin</p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setSectionItems(ALL_SECTIONS)}
+                                className="text-sm text-primary-600 hover:text-primary-700 font-medium hover:underline"
+                            >
+                                Varsayılan Sıralamaya Dön
+                            </button>
+                        </div>
+
+                        <div className="max-w-xl">
+                            <SectionOrderEditor
+                                sections={sectionItems}
+                                onReorder={setSectionItems}
                             />
                         </div>
                     </div>

@@ -78,6 +78,17 @@ export async function updateSettings(formData: FormData) {
             console.error('Failed to parse menu items', e);
         }
 
+        // Parse section order
+        let homeSectionOrder: string[] = [];
+        try {
+            const sectionOrderJson = formData.get('homeSectionOrder') as string;
+            if (sectionOrderJson) {
+                homeSectionOrder = JSON.parse(sectionOrderJson);
+            }
+        } catch (e) {
+            console.error('Failed to parse section order', e);
+        }
+
         if (currentSettings) {
             await db.update(settings).set({
                 siteTitle: title,
@@ -119,6 +130,7 @@ export async function updateSettings(formData: FormData) {
                 corporateStat2Label,
                 siteSlogan,
                 siteSloganFontSize,
+                homeSectionOrder,
             }).where(eq(settings.id, currentSettings.id));
         } else {
             await db.insert(settings).values({
@@ -157,6 +169,7 @@ export async function updateSettings(formData: FormData) {
                 corporateStat2Label,
                 siteSlogan,
                 siteSloganFontSize,
+                homeSectionOrder,
             });
         }
 

@@ -135,6 +135,7 @@ export const settings = pgTable('settings', {
   corporateStat2Label: text('corporate_stat2_label').default('Tamamlanan Proje'),
   siteSlogan: text('site_slogan').default('İnsanların yüzündeki gülümsemeyi görmek için çalışıyoruz'),
   siteSloganFontSize: integer('site_slogan_font_size').default(10),
+  homeSectionOrder: jsonb('home_section_order').default('[]'), // Array of section IDs in display order
 });
 
 export const contactLocations = pgTable('contact_locations', {
