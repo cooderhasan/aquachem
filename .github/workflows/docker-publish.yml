@@ -24,6 +24,8 @@ jobs:
         with:
           context: .
           push: true
+          build-args: |
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/aquachem:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/aquachem:${{ github.sha }}
