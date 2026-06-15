@@ -125,8 +125,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
     const categoryTitle = (lang === 'en' && category.titleEn) ? category.titleEn : category.title;
     const productTitle = (lang === 'en' && product.titleEn) ? product.titleEn : product.title;
-    const productShortDesc = (lang === 'en' && product.descriptionEn) 
-        ? product.descriptionEn.substring(0, 160) 
+    const productShortDesc = lang === 'en' 
+        ? (product.shortDescriptionEn || '') 
         : (product.shortDescription || '');
     const productDesc = (lang === 'en' && product.descriptionEn) ? product.descriptionEn : (product.description || '');
     const productUsage = (lang === 'en' && product.usageEn) ? product.usageEn : (product.usage || '');
