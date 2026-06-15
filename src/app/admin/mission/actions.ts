@@ -18,11 +18,12 @@ export async function getMissionCards() {
 export async function updateMissionCard(id: number, formData: FormData) {
     try {
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string;
         const description = formData.get('description') as string;
+        const descriptionEn = formData.get('descriptionEn') as string;
         const image = formData.get('image') as string;
 
         // Handle features (list items)
-        // They will come as separate inputs or a JSON string. Let's assume JSON string for simplicity in passing
         const featuresJson = formData.get('features') as string;
         let features = [];
         try {
@@ -31,11 +32,23 @@ export async function updateMissionCard(id: number, formData: FormData) {
             features = [];
         }
 
+        // Handle featuresEn (English list items)
+        const featuresEnJson = formData.get('featuresEn') as string;
+        let featuresEn = [];
+        try {
+            featuresEn = JSON.parse(featuresEnJson);
+        } catch (e) {
+            featuresEn = [];
+        }
+
         await db.update(missionCards).set({
             title,
+            titleEn,
             description,
+            descriptionEn,
             image,
             features,
+            featuresEn,
         }).where(eq(missionCards.id, id));
 
         revalidatePath('/');

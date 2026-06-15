@@ -8,7 +8,9 @@ import { useRouter } from 'next/navigation';
 interface Location {
     id: number;
     title: string;
+    titleEn: string | null;
     address: string;
+    addressEn: string | null;
     phone: string | null;
     email: string | null;
     type: string | null;
@@ -79,14 +81,21 @@ export default function ContactManager({ initialLocations }: ContactManagerProps
                     <h3 className="font-bold text-slate-700 mb-4">Yeni İletişim Noktası</h3>
                     <form onSubmit={(e) => handleFormSubmit(e)} className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <input name="title" placeholder="Başlık (Örn: Merkez Ofis)" required className="p-2 border rounded" />
-                            <select name="type" className="p-2 border rounded">
+                            <input name="title" placeholder="Başlık (TR) (Örn: Fabrika)" required className="p-2 border rounded" />
+                            <input name="titleEn" placeholder="Başlık (EN) (Örn: Factory)" className="p-2 border rounded" />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <input name="address" placeholder="Adres (TR)" required className="p-2 border rounded" />
+                            <input name="addressEn" placeholder="Adres (EN)" className="p-2 border rounded" />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-medium text-slate-500 mb-1">Tür</label>
+                            <select name="type" className="w-full p-2 border rounded">
                                 <option value="office">Ofis</option>
                                 <option value="factory">Fabrika</option>
                                 <option value="store">Mağaza</option>
                             </select>
                         </div>
-                        <input name="address" placeholder="Adres" required className="w-full p-2 border rounded" />
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <input name="phone" placeholder="Telefon" className="p-2 border rounded" />
                             <input name="email" placeholder="E-posta" className="p-2 border rounded" />
@@ -114,14 +123,21 @@ export default function ContactManager({ initialLocations }: ContactManagerProps
                         {isEditing === loc.id ? (
                             <form onSubmit={(e) => handleFormSubmit(e, loc.id)} className="space-y-4">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <input name="title" defaultValue={loc.title} required className="p-2 border rounded" />
-                                    <select name="type" defaultValue={loc.type || 'office'} className="p-2 border rounded">
+                                    <input name="title" defaultValue={loc.title} placeholder="Başlık (TR)" required className="p-2 border rounded" />
+                                    <input name="titleEn" defaultValue={loc.titleEn || ''} placeholder="Başlık (EN)" className="p-2 border rounded" />
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <input name="address" defaultValue={loc.address} placeholder="Adres (TR)" required className="p-2 border rounded" />
+                                    <input name="addressEn" defaultValue={loc.addressEn || ''} placeholder="Adres (EN)" className="p-2 border rounded" />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-medium text-slate-500 mb-1">Tür</label>
+                                    <select name="type" defaultValue={loc.type || 'office'} className="w-full p-2 border rounded">
                                         <option value="office">Ofis</option>
                                         <option value="factory">Fabrika</option>
                                         <option value="store">Mağaza</option>
                                     </select>
                                 </div>
-                                <input name="address" defaultValue={loc.address} required className="w-full p-2 border rounded" />
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <input name="phone" defaultValue={loc.phone || ''} className="p-2 border rounded" />
                                     <input name="email" defaultValue={loc.email || ''} className="p-2 border rounded" />
@@ -139,10 +155,14 @@ export default function ContactManager({ initialLocations }: ContactManagerProps
                                         {loc.type === 'factory' ? <Factory size={24} /> : <Building2 size={24} />}
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-lg text-slate-800">{loc.title}</h3>
+                                        <h3 className="font-bold text-lg text-slate-800">
+                                            {loc.title} {loc.titleEn && <span className="text-xs font-normal text-slate-400">({loc.titleEn})</span>}
+                                        </h3>
                                         <p className="text-slate-600 flex items-center gap-1 mt-1">
                                             <MapPin size={16} className="shrink-0" />
-                                            {loc.address}
+                                            <span>
+                                                {loc.address} {loc.addressEn && <span className="text-xs text-slate-400">({loc.addressEn})</span>}
+                                            </span>
                                         </p>
                                         <div className="flex flex-wrap gap-4 mt-2 text-sm text-slate-500">
                                             {loc.phone && <span>Tel: {loc.phone}</span>}

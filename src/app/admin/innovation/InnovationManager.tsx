@@ -8,7 +8,9 @@ import { useRouter } from 'next/navigation';
 interface InnovationItem {
     id: number;
     title: string;
+    titleEn: string | null;
     description: string;
+    descriptionEn: string | null;
     watermarkText: string | null;
     image: string | null;
     order: number | null;
@@ -86,9 +88,11 @@ export default function InnovationManager({ initialItems }: InnovationManagerPro
                     <div className="bg-blue-50 p-6 rounded-xl border border-blue-100">
                         <h3 className="font-bold text-blue-800 mb-4">Yeni Kart Ekle</h3>
                         <form onSubmit={handleAdd} className="space-y-4">
-                            <input name="title" placeholder="Başlık" required className="w-full p-2 border rounded" />
+                            <input name="title" placeholder="Başlık (TR)" required className="w-full p-2 border rounded font-semibold" />
+                            <input name="titleEn" placeholder="Başlık (EN)" className="w-full p-2 border rounded" />
                             <input name="watermarkText" placeholder="Filigran (Örn: 04)" className="w-full p-2 border rounded" />
-                            <textarea name="description" placeholder="Açıklama" required rows={3} className="w-full p-2 border rounded" />
+                            <textarea name="description" placeholder="Açıklama (TR)" required rows={3} className="w-full p-2 border rounded" />
+                            <textarea name="descriptionEn" placeholder="Açıklama (EN)" rows={3} className="w-full p-2 border rounded" />
                             <div className="flex justify-end gap-2">
                                 <button type="button" onClick={() => setIsAdding(false)} className="px-4 py-2 text-slate-500">İptal</button>
                                 <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Kaydet</button>
@@ -101,9 +105,11 @@ export default function InnovationManager({ initialItems }: InnovationManagerPro
                     <div key={item.id} className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                         {editingId === item.id ? (
                             <form onSubmit={(e) => handleUpdate(e, item.id)} className="space-y-4">
-                                <input name="title" defaultValue={item.title} required className="w-full p-2 border rounded font-bold" />
+                                <input name="title" defaultValue={item.title} placeholder="Başlık (TR)" required className="w-full p-2 border rounded font-bold" />
+                                <input name="titleEn" defaultValue={item.titleEn || ''} placeholder="Başlık (EN)" className="w-full p-2 border rounded font-bold" />
                                 <input name="watermarkText" defaultValue={item.watermarkText || ''} placeholder="Filigran" className="w-full p-2 border rounded" />
-                                <textarea name="description" defaultValue={item.description} required rows={3} className="w-full p-2 border rounded" />
+                                <textarea name="description" defaultValue={item.description} placeholder="Açıklama (TR)" required rows={3} className="w-full p-2 border rounded" />
+                                <textarea name="descriptionEn" defaultValue={item.descriptionEn || ''} placeholder="Açıklama (EN)" rows={3} className="w-full p-2 border rounded" />
                                 <div className="flex justify-end gap-2">
                                     <button type="button" onClick={() => setEditingId(null)} className="px-4 py-2 text-slate-500">İptal</button>
                                     <button type="submit" className="bg-emerald-600 text-white px-4 py-2 rounded">Güncelle</button>
@@ -114,6 +120,7 @@ export default function InnovationManager({ initialItems }: InnovationManagerPro
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
                                         <h3 className="text-xl font-bold text-slate-800">{item.title}</h3>
+                                        {item.titleEn && <h4 className="text-sm font-semibold text-slate-500 mt-1">{item.titleEn}</h4>}
                                         <div className="text-9xl absolute pointer-events-none opacity-[0.03] -mt-10 ml-40 font-bold select-none">
                                             {item.watermarkText}
                                         </div>
@@ -128,6 +135,7 @@ export default function InnovationManager({ initialItems }: InnovationManagerPro
                                     </div>
                                 </div>
                                 <p className="text-slate-600 relative z-10">{item.description}</p>
+                                {item.descriptionEn && <p className="text-slate-500 text-sm mt-2 relative z-10">{item.descriptionEn}</p>}
                             </div>
                         )}
                     </div>

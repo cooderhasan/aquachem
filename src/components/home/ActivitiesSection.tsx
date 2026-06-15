@@ -10,6 +10,7 @@ import { Dictionary } from '@/lib/dictionary';
 interface Activity {
     id: number;
     title: string;
+    titleEn?: string | null;
     isActive: boolean | null;
 }
 
@@ -40,7 +41,9 @@ const ActivitiesSection = ({ activities, posts = [], catalogUrl, lang, dict }: A
                                 activeActivities.map((item) => (
                                     <div key={item.id} className="flex items-start gap-2">
                                         <CheckCircle2 size={20} className="text-primary-500 shrink-0 mt-0.5" />
-                                        <span className="text-slate-600 text-sm">{item.title}</span>
+                                        <span className="text-slate-600 text-sm">
+                                            {lang === 'en' && item.titleEn ? item.titleEn : item.title}
+                                        </span>
                                     </div>
                                 ))
                             ) : (

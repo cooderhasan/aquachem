@@ -52,12 +52,12 @@ export default async function ContactPage({ params }: PageProps) {
                                 <div key={loc.id} className="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
                                     <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
                                         <div className="w-2 h-8 bg-primary-500 rounded-full" />
-                                        {loc.title}
+                                        {lang === 'en' && loc.titleEn ? loc.titleEn : loc.title}
                                     </h3>
                                     <div className="space-y-4 text-slate-600">
                                         <div className="flex items-start gap-3">
                                             <MapPin className="text-primary-500 shrink-0 mt-1" size={20} />
-                                            <p className="text-sm">{loc.address}</p>
+                                            <p className="text-sm">{lang === 'en' && loc.addressEn ? loc.addressEn : loc.address}</p>
                                         </div>
                                         {loc.phone && (
                                             <div className="flex items-center gap-3">

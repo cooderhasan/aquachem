@@ -57,6 +57,22 @@ export async function GET(request: NextRequest) {
     await db.execute(sql`ALTER TABLE "hero_slides" ADD COLUMN IF NOT EXISTS "title_en" text`);
     await db.execute(sql`ALTER TABLE "hero_slides" ADD COLUMN IF NOT EXISTS "description_en" text`);
 
+    // Contact Locations English columns
+    await db.execute(sql`ALTER TABLE "contact_locations" ADD COLUMN IF NOT EXISTS "title_en" text`);
+    await db.execute(sql`ALTER TABLE "contact_locations" ADD COLUMN IF NOT EXISTS "address_en" text`);
+
+    // Mission Cards English columns
+    await db.execute(sql`ALTER TABLE "mission_cards" ADD COLUMN IF NOT EXISTS "title_en" text`);
+    await db.execute(sql`ALTER TABLE "mission_cards" ADD COLUMN IF NOT EXISTS "description_en" text`);
+    await db.execute(sql`ALTER TABLE "mission_cards" ADD COLUMN IF NOT EXISTS "features_en" jsonb`);
+
+    // Innovation Items English columns
+    await db.execute(sql`ALTER TABLE "innovation_items" ADD COLUMN IF NOT EXISTS "title_en" text`);
+    await db.execute(sql`ALTER TABLE "innovation_items" ADD COLUMN IF NOT EXISTS "description_en" text`);
+
+    // Activity Items English columns
+    await db.execute(sql`ALTER TABLE "activity_items" ADD COLUMN IF NOT EXISTS "title_en" text`);
+
     return NextResponse.json({
       success: true,
       message: 'Tablo şeması başarıyla güncellendi!'

@@ -27,10 +27,13 @@ import { CSS } from '@dnd-kit/utilities';
 interface MissionCard {
     id: number;
     title: string;
+    titleEn: string | null;
     description: string;
+    descriptionEn: string | null;
     icon: string;
     image: string | null;
     features: any; // jsonb
+    featuresEn: any; // jsonb
     order: number | null;
 }
 
@@ -92,7 +95,9 @@ export default function MissionManager({ initialCards }: { initialCards: Mission
     // Form states
     const [editForm, setEditForm] = useState<Partial<MissionCard>>({});
     const [tempFeatures, setTempFeatures] = useState<string[]>([]);
+    const [tempFeaturesEn, setTempFeaturesEn] = useState<string[]>([]);
     const [newFeature, setNewFeature] = useState('');
+    const [newFeatureEn, setNewFeatureEn] = useState('');
 
     const router = useRouter();
 
@@ -108,13 +113,16 @@ export default function MissionManager({ initialCards }: { initialCards: Mission
         setEditingId(card.id);
         setEditForm(card);
         setTempFeatures(Array.isArray(card.features) ? card.features : []);
+        setTempFeaturesEn(Array.isArray(card.featuresEn) ? card.featuresEn : []);
         setNewFeature('');
+        setNewFeatureEn('');
     };
 
     const handleCancel = () => {
         setEditingId(null);
         setEditForm({});
         setTempFeatures([]);
+        setTempFeaturesEn([]);
     };
 
     const handleAddFeature = () => {
@@ -139,14 +147,39 @@ export default function MissionManager({ initialCards }: { initialCards: Mission
         }
     };
 
+    const handleAddFeatureEn = () => {
+        if (!newFeatureEn.trim()) return;
+        setTempFeaturesEn([...tempFeaturesEn, newFeatureEn.trim()]);
+        setNewFeatureEn('');
+    };
+
+    const handleRemoveFeatureEn = (index: number) => {
+        setTempFeaturesEn(tempFeaturesEn.filter((_, i) => i !== index));
+    };
+
+    const handleDragEndEn = (event: DragEndEvent) => {
+        const { active, over } = event;
+
+        if (over && active.id !== over.id) {
+            setTempFeaturesEn((items) => {
+                const oldIndex = items.findIndex((_, i) => `feature-en-${i}` === active.id);
+                const newIndex = items.findIndex((_, i) => `feature-en-${i}` === over.id);
+                return arrayMove(items, oldIndex, newIndex);
+            });
+        }
+    };
+
     const handleSave = async (id: number) => {
         setIsLoading(true);
         try {
             const formData = new FormData();
             formData.append('title', editForm.title || '');
+            formData.append('titleEn', editForm.titleEn || '');
             formData.append('description', editForm.description || '');
+            formData.append('descriptionEn', editForm.descriptionEn || '');
             formData.append('image', editForm.image || '');
             formData.append('features', JSON.stringify(tempFeatures));
+            formData.append('featuresEn', JSON.stringify(tempFeaturesEn));
 
             const result = await updateMissionCard(id, formData);
             if (result.success) {
@@ -193,66 +226,135 @@ export default function MissionManager({ initialCards }: { initialCards: Mission
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="space-y-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-1">Başlık</label>
-                                        <input
-                                            type="text"
-                                            value={editForm.title || ''}
-                                            onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-                                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-1">Açıklama</label>
-                                        <textarea
-                                            rows={3}
-                                            value={editForm.description || ''}
-                                            onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
-                                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-slate-700 mb-1">
-                                            Maddeler (Özellikler)
-                                            <span className="text-xs text-slate-400 ml-2">Sürükleyerek sıralayabilirsiniz</span>
-                                        </label>
-                                        <DndContext
-                                            sensors={sensors}
-                                            collisionDetection={closestCenter}
-                                            onDragEnd={handleDragEnd}
-                                        >
-                                            <SortableContext
-                                                items={tempFeatures.map((_, i) => `feature-${i}`)}
-                                                strategy={verticalListSortingStrategy}
-                                            >
-                                                <div className="space-y-2 mb-2">
-                                                    {tempFeatures.map((feature, idx) => (
-                                                        <SortableFeatureItem
-                                                            key={`feature-${idx}`}
-                                                            id={`feature-${idx}`}
-                                                            feature={feature}
-                                                            onRemove={() => handleRemoveFeature(idx)}
-                                                        />
-                                                    ))}
-                                                </div>
-                                            </SortableContext>
-                                        </DndContext>
-                                        <div className="flex gap-2">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-700 mb-1">Başlık (TR)</label>
                                             <input
                                                 type="text"
-                                                value={newFeature}
-                                                onChange={(e) => setNewFeature(e.target.value)}
-                                                onKeyDown={(e) => e.key === 'Enter' && handleAddFeature()}
-                                                placeholder="Yeni madde ekle..."
-                                                className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                                value={editForm.title || ''}
+                                                onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                                             />
-                                            <button
-                                                onClick={handleAddFeature}
-                                                type="button"
-                                                className="p-2 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-lg"
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-700 mb-1">Başlık (EN)</label>
+                                            <input
+                                                type="text"
+                                                value={editForm.titleEn || ''}
+                                                onChange={(e) => setEditForm({ ...editForm, titleEn: e.target.value })}
+                                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-700 mb-1">Açıklama (TR)</label>
+                                            <textarea
+                                                rows={3}
+                                                value={editForm.description || ''}
+                                                onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-700 mb-1">Açıklama (EN)</label>
+                                            <textarea
+                                                rows={3}
+                                                value={editForm.descriptionEn || ''}
+                                                onChange={(e) => setEditForm({ ...editForm, descriptionEn: e.target.value })}
+                                                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-700 mb-1">
+                                                Maddeler (TR)
+                                                <span className="text-xs text-slate-400 ml-2">Sürükleyin</span>
+                                            </label>
+                                            <DndContext
+                                                sensors={sensors}
+                                                collisionDetection={closestCenter}
+                                                onDragEnd={handleDragEnd}
                                             >
-                                                <Plus size={20} />
-                                            </button>
+                                                <SortableContext
+                                                    items={tempFeatures.map((_, i) => `feature-${i}`)}
+                                                    strategy={verticalListSortingStrategy}
+                                                >
+                                                    <div className="space-y-2 mb-2">
+                                                        {tempFeatures.map((feature, idx) => (
+                                                            <SortableFeatureItem
+                                                                key={`feature-${idx}`}
+                                                                id={`feature-${idx}`}
+                                                                feature={feature}
+                                                                onRemove={() => handleRemoveFeature(idx)}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                </SortableContext>
+                                            </DndContext>
+                                            <div className="flex gap-2">
+                                                <input
+                                                    type="text"
+                                                    value={newFeature}
+                                                    onChange={(e) => setNewFeature(e.target.value)}
+                                                    onKeyDown={(e) => e.key === 'Enter' && handleAddFeature()}
+                                                    placeholder="Yeni TR madde..."
+                                                    className="flex-1 px-3 py-1.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                                                />
+                                                <button
+                                                    onClick={handleAddFeature}
+                                                    type="button"
+                                                    className="p-2 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-lg"
+                                                >
+                                                    <Plus size={16} />
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-700 mb-1">
+                                                Maddeler (EN)
+                                                <span className="text-xs text-slate-400 ml-2">Sürükleyin</span>
+                                            </label>
+                                            <DndContext
+                                                sensors={sensors}
+                                                collisionDetection={closestCenter}
+                                                onDragEnd={handleDragEndEn}
+                                            >
+                                                <SortableContext
+                                                    items={tempFeaturesEn.map((_, i) => `feature-en-${i}`)}
+                                                    strategy={verticalListSortingStrategy}
+                                                >
+                                                    <div className="space-y-2 mb-2">
+                                                        {tempFeaturesEn.map((feature, idx) => (
+                                                            <SortableFeatureItem
+                                                                key={`feature-en-${idx}`}
+                                                                id={`feature-en-${idx}`}
+                                                                feature={feature}
+                                                                onRemove={() => handleRemoveFeatureEn(idx)}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                </SortableContext>
+                                            </DndContext>
+                                            <div className="flex gap-2">
+                                                <input
+                                                    type="text"
+                                                    value={newFeatureEn}
+                                                    onChange={(e) => setNewFeatureEn(e.target.value)}
+                                                    onKeyDown={(e) => e.key === 'Enter' && handleAddFeatureEn()}
+                                                    placeholder="Yeni EN madde..."
+                                                    className="flex-1 px-3 py-1.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm"
+                                                />
+                                                <button
+                                                    onClick={handleAddFeatureEn}
+                                                    type="button"
+                                                    className="p-2 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-lg"
+                                                >
+                                                    <Plus size={16} />
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

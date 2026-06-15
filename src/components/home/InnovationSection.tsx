@@ -11,7 +11,9 @@ import { Dictionary } from '@/lib/dictionary';
 interface InnovationItem {
     id: number;
     title: string;
+    titleEn?: string | null;
     description: string;
+    descriptionEn?: string | null;
     watermarkText: string | null;
 }
 
@@ -97,6 +99,9 @@ const InnovationSection = ({ items, lang = 'tr', dict }: InnovationSectionProps)
                             const style = styles[index % styles.length];
                             const Icon = style.Icon;
 
+                            const itemTitle = lang === 'en' && item.titleEn ? item.titleEn : item.title;
+                            const itemDescription = lang === 'en' && item.descriptionEn ? item.descriptionEn : item.description;
+
                             return (
                                 <motion.div
                                     key={item.id}
@@ -121,13 +126,13 @@ const InnovationSection = ({ items, lang = 'tr', dict }: InnovationSectionProps)
                                         </div>
 
                                         <h3 className={`text-2xl font-bold text-slate-900 mb-4 ${style.hoverText} transition-colors`}>
-                                            {item.title}
+                                            {itemTitle}
                                         </h3>
 
                                         <div className={`h-1 w-12 ${style.lineBg} rounded-full mb-6 group-hover:w-20 ${style.lineHover} transition-all duration-500`} />
 
                                         <p className="text-slate-600 leading-relaxed mb-8">
-                                            {item.description}
+                                            {itemDescription}
                                         </p>
 
                                         {(() => {

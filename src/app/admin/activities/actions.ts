@@ -31,12 +31,14 @@ export async function createActivity(formData: FormData) {
 
 export async function addActivity(formData: FormData) {
     const title = formData.get('title') as string;
+    const titleEn = formData.get('titleEn') as string;
     const order = parseInt(formData.get('order') as string) || 0;
     const isActive = formData.get('isActive') === 'on';
 
     try {
         await db.insert(activityItems).values({
             title,
+            titleEn,
             order,
             isActive
         });
@@ -51,6 +53,7 @@ export async function addActivity(formData: FormData) {
 
 export async function updateActivity(id: number, formData: FormData) {
     const title = formData.get('title') as string;
+    const titleEn = formData.get('titleEn') as string;
     const order = parseInt(formData.get('order') as string) || 0;
     const isActive = formData.get('isActive') === 'on';
 
@@ -58,6 +61,7 @@ export async function updateActivity(id: number, formData: FormData) {
         await db.update(activityItems)
             .set({
                 title,
+                titleEn,
                 order,
                 isActive
             })

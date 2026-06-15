@@ -52,16 +52,28 @@ export default function ActivityForm({ initialData, isEdit = false }: ActivityFo
             </div>
 
             <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-6">
-                <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Başlık</label>
-                    <input
-                        type="text"
-                        name="title"
-                        required
-                        defaultValue={initialData?.title || ''}
-                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                        placeholder="Örn: Endüstriyel Su Arıtma"
-                    />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Başlık (TR)</label>
+                        <input
+                            type="text"
+                            name="title"
+                            required
+                            defaultValue={initialData?.title || ''}
+                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                            placeholder="Örn: Endüstriyel Su Arıtma"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Başlık (EN)</label>
+                        <input
+                            type="text"
+                            name="titleEn"
+                            defaultValue={initialData?.titleEn || ''}
+                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                            placeholder="Örn: Industrial Water Treatment"
+                        />
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-6">

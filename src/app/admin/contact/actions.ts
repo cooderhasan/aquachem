@@ -52,7 +52,9 @@ export async function getMainContactLocation() {
 export async function addContactLocation(formData: FormData) {
     try {
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string;
         const address = formData.get('address') as string;
+        const addressEn = formData.get('addressEn') as string;
         const phone = formData.get('phone') as string;
         const email = formData.get('email') as string;
         const type = formData.get('type') as string;
@@ -60,7 +62,9 @@ export async function addContactLocation(formData: FormData) {
 
         await db.insert(contactLocations).values({
             title,
+            titleEn,
             address,
+            addressEn,
             phone,
             email,
             type,
@@ -99,7 +103,9 @@ export async function deleteContactLocation(id: number) {
 export async function updateContactLocation(id: number, formData: FormData) {
     try {
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string;
         const address = formData.get('address') as string;
+        const addressEn = formData.get('addressEn') as string;
         const phone = formData.get('phone') as string;
         const email = formData.get('email') as string;
         const type = formData.get('type') as string;
@@ -107,7 +113,9 @@ export async function updateContactLocation(id: number, formData: FormData) {
 
         await db.update(contactLocations).set({
             title,
+            titleEn,
             address,
+            addressEn,
             phone,
             email,
             type,

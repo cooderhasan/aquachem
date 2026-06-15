@@ -18,13 +18,17 @@ export async function getInnovationItems() {
 export async function updateInnovationItem(id: number, formData: FormData) {
     try {
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string;
         const description = formData.get('description') as string;
+        const descriptionEn = formData.get('descriptionEn') as string;
         const watermarkText = formData.get('watermarkText') as string;
         // Icon handling would ideally differ, but for text based updates:
 
         await db.update(innovationItems).set({
             title,
+            titleEn,
             description,
+            descriptionEn,
             watermarkText,
         }).where(eq(innovationItems.id, id));
 
@@ -44,12 +48,16 @@ export async function updateInnovationItem(id: number, formData: FormData) {
 export async function addInnovationItem(formData: FormData) {
     try {
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string;
         const description = formData.get('description') as string;
+        const descriptionEn = formData.get('descriptionEn') as string;
         const watermarkText = formData.get('watermarkText') as string;
 
         await db.insert(innovationItems).values({
             title,
+            titleEn,
             description,
+            descriptionEn,
             watermarkText,
         });
 

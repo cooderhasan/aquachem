@@ -161,7 +161,9 @@ export const settings = pgTable('settings', {
 export const contactLocations = pgTable('contact_locations', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
+  titleEn: text('title_en'),
   address: text('address').notNull(),
+  addressEn: text('address_en'),
   phone: text('phone'),
   email: text('email'),
   type: text('type').default('office'), // office, factory, etc.
@@ -172,6 +174,7 @@ export const contactLocations = pgTable('contact_locations', {
 export const activityItems = pgTable('activity_items', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
+  titleEn: text('title_en'),
   order: integer('order').default(0),
   isActive: boolean('is_active').default(true),
 });
@@ -200,17 +203,22 @@ export const stats = pgTable('stats', {
 export const missionCards = pgTable('mission_cards', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
+  titleEn: text('title_en'),
   description: text('description').notNull(),
+  descriptionEn: text('description_en'),
   icon: text('icon').notNull(),
   image: text('image'),
   features: jsonb('features'), // Array of strings for list items
+  featuresEn: jsonb('features_en'), // Array of strings for list items in English
   order: integer('order').default(0),
 });
 
 export const innovationItems = pgTable('innovation_items', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
+  titleEn: text('title_en'),
   description: text('description').notNull(),
+  descriptionEn: text('description_en'),
   image: text('image'),
   watermarkText: text('watermark_text'),
   order: integer('order').default(0),

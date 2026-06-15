@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 interface Activity {
     id: number;
     title: string;
+    titleEn: string | null;
     order: number | null;
     isActive: boolean | null;
 }
@@ -83,19 +84,26 @@ export default function ActivitiesManager({ initialActivities }: ActivitiesManag
 
                 {/* Add New Row */}
                 {isAdding && (
-                    <form onSubmit={handleAdd} className="p-4 border-b border-slate-100 bg-blue-50/50 flex gap-4 items-center">
-                        <input
-                            name="title"
-                            autoFocus
-                            placeholder="Yeni faaliyet alanı yazın..."
-                            className="flex-1 p-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                        />
-                        <div className="flex gap-2">
-                            <button type="submit" className="p-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">
-                                <Check size={18} />
+                    <form onSubmit={handleAdd} className="p-4 border-b border-slate-100 bg-blue-50/50 flex flex-col gap-4">
+                        <div className="flex gap-4">
+                            <input
+                                name="title"
+                                autoFocus
+                                placeholder="Yeni faaliyet alanı (TR)..."
+                                className="flex-1 p-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                            />
+                            <input
+                                name="titleEn"
+                                placeholder="Yeni faaliyet alanı (EN)..."
+                                className="flex-1 p-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                            />
+                        </div>
+                        <div className="flex justify-end gap-2">
+                            <button type="submit" className="p-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 flex items-center gap-1 px-4">
+                                <Check size={18} /> Ekle
                             </button>
-                            <button type="button" onClick={() => setIsAdding(false)} className="p-2 bg-slate-300 text-slate-700 rounded-lg hover:bg-slate-400">
-                                <X size={18} />
+                            <button type="button" onClick={() => setIsAdding(false)} className="p-2 bg-slate-300 text-slate-700 rounded-lg hover:bg-slate-400 flex items-center gap-1 px-4">
+                                <X size={18} /> İptal
                             </button>
                         </div>
                     </form>
@@ -114,25 +122,37 @@ export default function ActivitiesManager({ initialActivities }: ActivitiesManag
                             <GripVertical size={20} className="text-slate-300 cursor-move" />
 
                             {editingId === activity.id ? (
-                                <form onSubmit={(e) => handleUpdate(e, activity.id)} className="flex-1 flex gap-4 items-center">
-                                    <input
-                                        name="title"
-                                        defaultValue={activity.title}
-                                        autoFocus
-                                        className="flex-1 p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                    />
-                                    <div className="flex gap-2">
-                                        <button type="submit" className="p-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">
-                                            <Check size={18} />
+                                <form onSubmit={(e) => handleUpdate(e, activity.id)} className="flex-1 flex flex-col gap-4">
+                                    <div className="flex gap-4">
+                                        <input
+                                            name="title"
+                                            defaultValue={activity.title}
+                                            autoFocus
+                                            placeholder="Başlık (TR)"
+                                            className="flex-1 p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                        />
+                                        <input
+                                            name="titleEn"
+                                            defaultValue={activity.titleEn || ''}
+                                            placeholder="Başlık (EN)"
+                                            className="flex-1 p-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                        />
+                                    </div>
+                                    <div className="flex justify-end gap-2">
+                                        <button type="submit" className="p-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 flex items-center gap-1 px-4">
+                                            <Check size={18} /> Güncelle
                                         </button>
-                                        <button type="button" onClick={() => setEditingId(null)} className="p-2 bg-slate-200 text-slate-600 rounded-lg hover:bg-slate-300">
-                                            <X size={18} />
+                                        <button type="button" onClick={() => setEditingId(null)} className="p-2 bg-slate-200 text-slate-600 rounded-lg hover:bg-slate-300 flex items-center gap-1 px-4">
+                                            <X size={18} /> İptal
                                         </button>
                                     </div>
                                 </form>
                             ) : (
                                 <>
-                                    <span className="flex-1 text-slate-700 font-medium">{activity.title}</span>
+                                    <div className="flex-1">
+                                        <div className="text-slate-700 font-medium">{activity.title}</div>
+                                        {activity.titleEn && <div className="text-sm text-slate-400 font-normal">{activity.titleEn}</div>}
+                                    </div>
                                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <button
                                             onClick={() => setEditingId(activity.id)}

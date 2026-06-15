@@ -77,7 +77,11 @@ const MissionSection = ({ cards = [], lang = 'tr', dict }: MissionSectionProps) 
                             const color = colors[index % colors.length];
 
                             // Features handling (could be string array or json)
-                            const features = Array.isArray(card.features) ? card.features : [];
+                            const cardTitle = lang === 'en' && card.titleEn ? card.titleEn : card.title;
+                            const cardDescription = lang === 'en' && card.descriptionEn ? card.descriptionEn : card.description;
+                            const features = lang === 'en' && card.featuresEn 
+                                ? (Array.isArray(card.featuresEn) ? card.featuresEn : []) 
+                                : (Array.isArray(card.features) ? card.features : []);
 
                             return (
                                 <motion.div
@@ -92,7 +96,7 @@ const MissionSection = ({ cards = [], lang = 'tr', dict }: MissionSectionProps) 
                                         <div className={`absolute inset-0 ${color.bg}/10 group-hover:${color.bg}/0 transition-colors z-10`} />
                                         <img
                                             src={card.image || 'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?q=80&w=800&auto=format&fit=crop'}
-                                            alt={card.title}
+                                            alt={cardTitle}
                                             className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                                         />
                                         <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-2xl z-20 shadow-lg">
@@ -101,9 +105,9 @@ const MissionSection = ({ cards = [], lang = 'tr', dict }: MissionSectionProps) 
                                     </div>
 
                                     <div className="px-4 pb-6 flex-1 flex flex-col">
-                                        <h3 className={`text-2xl font-bold text-slate-900 mb-3 transition-colors ${color.hoverText}`}>{card.title}</h3>
+                                        <h3 className={`text-2xl font-bold text-slate-900 mb-3 transition-colors ${color.hoverText}`}>{cardTitle}</h3>
                                         <p className="text-slate-600 leading-relaxed mb-6">
-                                            {card.description}
+                                            {cardDescription}
                                         </p>
 
                                         {features.length > 0 && (
