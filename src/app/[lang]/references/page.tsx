@@ -8,14 +8,15 @@ import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
 interface PageProps {
-    params: Promise<{ lang: Locale }>;
+    params: Promise<{ lang: string }>;
 }
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { lang } = await params;
+    const { lang: rawLang } = await params;
+    const lang = (rawLang === 'en' ? 'en' : 'tr') as Locale;
     const dict = getDictionary(lang);
     return {
         title: dict.seo.referencesTitle,
@@ -24,11 +25,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ReferencesPage({ params }: PageProps) {
-    const { lang } = await params;
+    const { lang: rawLang } = await params;
+    const lang = (rawLang === 'en' ? 'en' : 'tr') as Locale;
     const dict = getDictionary(lang);
 
-    let references = [];
-    let categories = [];
+    let references: any[] = [];
+    let categories: any[] = [];
 
     try {
         [references, categories] = await Promise.all([

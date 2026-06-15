@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FlaskConical, Lightbulb, TrendingUp, ArrowUpRight, LucideIcon } from 'lucide-react';
 
+import { Locale } from '@/lib/i18n';
+import { Dictionary } from '@/lib/dictionary';
+
 interface InnovationItem {
     id: number;
     title: string;
@@ -14,9 +17,11 @@ interface InnovationItem {
 
 interface InnovationSectionProps {
     items: InnovationItem[];
+    lang?: Locale;
+    dict?: Dictionary;
 }
 
-const InnovationSection = ({ items }: InnovationSectionProps) => {
+const InnovationSection = ({ items, lang = 'tr', dict }: InnovationSectionProps) => {
     // Icons map based on index or title keywords if we wanted dynamic icons, 
     // but for now we cycle through base icons or map specific ones.
     // Since admin doesn't select icon yet, we preserve the design's 3 distinct styles by index.
@@ -33,13 +38,19 @@ const InnovationSection = ({ items }: InnovationSectionProps) => {
                 {/* Section Header */}
                 <div className="text-center mb-20 max-w-3xl mx-auto">
                     <span className="inline-block bg-white text-primary-700 text-sm font-bold px-6 py-2 rounded-full mb-6 uppercase tracking-wider shadow-sm border border-slate-100">
-                        Sürekli Gelişim
+                        {lang === 'en' ? 'Continuous Development' : 'Sürekli Gelişim'}
                     </span>
                     <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
-                        Endüstriyel Kimya <span className="text-primary-600">AR-GE Çalışmalarımız</span>
+                        {lang === 'en' ? (
+                            <>Industrial Chemistry <span className="text-primary-600">R&D Studies</span></>
+                        ) : (
+                            <>Endüstriyel Kimya <span className="text-primary-600">AR-GE Çalışmalarımız</span></>
+                        )}
                     </h2>
                     <p className="text-slate-600 text-lg leading-relaxed">
-                        Sektördeki standartları belirleyen, yenilikçi ve sürdürülebilir çözümlerimizle geleceği bugünden tasarlıyoruz.
+                        {lang === 'en'
+                            ? 'We design the future today with our innovative and sustainable solutions that set the standards in the industry.'
+                            : 'Sektördeki standartları belirleyen, yenilikçi ve sürdürülebilir çözümlerimizle geleceği bugünden tasarlıyoruz.'}
                     </p>
                 </div>
 
@@ -123,8 +134,8 @@ const InnovationSection = ({ items }: InnovationSectionProps) => {
                                             const anchors = ['#arge', '#urge', '#inovasyon'];
                                             const anchor = anchors[index % anchors.length];
                                             return (
-                                                <Link href={`/corporate/innovation${anchor}`} className={`flex items-center ${style.btnText} font-bold group/btn cursor-pointer`}>
-                                                    <span className="mr-2">İncele</span>
+                                                <Link href={`/${lang}/corporate/innovation${anchor}`} className={`flex items-center ${style.btnText} font-bold group/btn cursor-pointer`}>
+                                                    <span className="mr-2">{lang === 'en' ? 'Explore' : 'İncele'}</span>
                                                     <ArrowUpRight size={20} className="transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                                                 </Link>
                                             );
@@ -135,7 +146,7 @@ const InnovationSection = ({ items }: InnovationSectionProps) => {
                         })
                     ) : (
                         <div className="col-span-3 text-center text-slate-500 py-10">
-                            Henüz inovasyon içeriği eklenmemiş.
+                            {lang === 'en' ? 'No innovation content added yet.' : 'Henüz inovasyon içeriği eklenmemiş.'}
                         </div>
                     )}
                 </div>

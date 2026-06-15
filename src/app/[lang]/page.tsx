@@ -22,8 +22,9 @@ const DEFAULT_SECTION_ORDER = ['products', 'mission', 'innovation', 'activities'
 
 export const dynamic = 'force-dynamic';
 
-export default async function Home({ params }: { params: Promise<{ lang: Locale }> }) {
-  const { lang } = await params;
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang: rawLang } = await params;
+  const lang = (rawLang === 'en' ? 'en' : 'tr') as Locale;
   const dict = getDictionary(lang);
   
   const slides = await getHeroSlides();

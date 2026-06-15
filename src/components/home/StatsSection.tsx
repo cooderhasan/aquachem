@@ -11,11 +11,27 @@ interface Stat {
     icon: string;
 }
 
+import { Locale } from '@/lib/i18n';
+import { Dictionary } from '@/lib/dictionary';
+
 interface StatsSectionProps {
     stats: Stat[];
+    lang?: Locale;
+    dict?: Dictionary;
 }
 
-const StatsSection = ({ stats }: StatsSectionProps) => {
+const getTranslatedLabel = (label: string, lang?: string) => {
+    if (lang !== 'en') return label;
+    const lower = label.toLowerCase().trim();
+    if (lower.includes('tecrübe') || lower.includes('experience')) return 'Years of Experience';
+    if (lower.includes('müşteri') || lower.includes('customer')) return 'Happy Customers';
+    if (lower.includes('ürün') || lower.includes('product')) return 'Product Types';
+    if (lower.includes('ülke') || lower.includes('countr')) return 'Countries';
+    if (lower.includes('proje') || lower.includes('project')) return 'Completed Projects';
+    return label;
+};
+
+const StatsSection = ({ stats, lang = 'tr', dict }: StatsSectionProps) => {
     // Helper to get icon by name (fallback to Target)
     const getIcon = (name: string): LucideIcon => {
         const icons: { [key: string]: LucideIcon } = {
@@ -43,7 +59,7 @@ const StatsSection = ({ stats }: StatsSectionProps) => {
                         viewport={{ once: true }}
                         className="inline-block bg-white/10 backdrop-blur-sm text-white text-sm font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider border border-white/10"
                     >
-                        Rakamlarla Biz
+                        {lang === 'en' ? 'Us in Numbers' : 'Rakamlarla Biz'}
                     </motion.span>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
@@ -52,7 +68,7 @@ const StatsSection = ({ stats }: StatsSectionProps) => {
                         transition={{ delay: 0.1 }}
                         className="text-3xl md:text-4xl font-bold text-white mb-4"
                     >
-                        Rakamlarla Sektördeki Gücümüz
+                        {lang === 'en' ? 'Our Strength in the Sector in Numbers' : 'Rakamlarla Sektördeki Gücümüz'}
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -61,7 +77,9 @@ const StatsSection = ({ stats }: StatsSectionProps) => {
                         transition={{ delay: 0.2 }}
                         className="text-slate-400 max-w-2xl mx-auto text-lg"
                     >
-                        Yılların deneyimi ve binlerce mutlu müşteri ile sektörde öncü konumdayız
+                        {lang === 'en'
+                            ? 'We are a pioneer in the sector with years of experience and thousands of happy customers'
+                            : 'Yılların deneyimi ve binlerce mutlu müşteri ile sektörde öncü konumdayız'}
                     </motion.p>
                 </div>
 
@@ -100,7 +118,7 @@ const StatsSection = ({ stats }: StatsSectionProps) => {
                                     </div>
 
                                     <div className="text-sm font-semibold text-slate-400 uppercase tracking-wider group-hover:text-white transition-colors">
-                                        {stat.label}
+                                        {getTranslatedLabel(stat.label, lang)}
                                     </div>
                                 </div>
                             </motion.div>

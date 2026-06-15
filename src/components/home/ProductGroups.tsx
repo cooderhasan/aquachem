@@ -16,7 +16,7 @@ interface ProductGroupsProps {
 }
 
 export default async function ProductGroups({ lang, dict }: ProductGroupsProps) {
-    let categories = [];
+    let categories: any[] = [];
     try {
         categories = await db.select().from(categoriesTable).orderBy(asc(categoriesTable.order));
     } catch (error) {

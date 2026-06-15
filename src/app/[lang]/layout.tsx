@@ -9,8 +9,9 @@ import { getDictionary } from '@/lib/dictionary';
 
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
-  const { lang } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang: rawLang } = await params;
+  const lang = (rawLang === 'en' ? 'en' : 'tr') as Locale;
   const settings = await getSettings();
   const dict = getDictionary(lang);
 
@@ -90,9 +91,10 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
-  const { lang } = await params;
+  const { lang: rawLang } = await params;
+  const lang = (rawLang === 'en' ? 'en' : 'tr') as Locale;
   const settings = await getSettings();
   const contactLocation = await getMainContactLocation();
   const dict = getDictionary(lang);
@@ -126,15 +128,15 @@ export default async function LocaleLayout({
             "address": {
               "@type": "PostalAddress",
               "streetAddress": contactLocation?.address || "",
-              "addressLocality": contactLocation?.city || "",
-              "postalCode": contactLocation?.postalCode || "",
+              "addressLocality": (contactLocation as any)?.city || "",
+              "postalCode": (contactLocation as any)?.postalCode || "",
               "addressCountry": "TR"
             },
             "sameAs": [
-              settings?.facebookUrl,
-              settings?.twitterUrl,
-              settings?.linkedinUrl,
-              settings?.instagramUrl
+              (settings?.socialMedia as any)?.facebook,
+              (settings?.socialMedia as any)?.twitter,
+              (settings?.socialMedia as any)?.linkedin,
+              (settings?.socialMedia as any)?.instagram
             ].filter(Boolean)
           })
         }}

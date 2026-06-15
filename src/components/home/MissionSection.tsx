@@ -4,7 +4,16 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Leaf, Smile, Radio, ArrowRight, CheckCircle2 } from 'lucide-react';
 
-const MissionSection = ({ cards = [] }: { cards?: any[] }) => {
+import { Locale } from '@/lib/i18n';
+import { Dictionary } from '@/lib/dictionary';
+
+interface MissionSectionProps {
+    cards?: any[];
+    lang?: Locale;
+    dict?: Dictionary;
+}
+
+const MissionSection = ({ cards = [], lang = 'tr', dict }: MissionSectionProps) => {
 
     const iconMap: any = {
         'Leaf': Leaf,
@@ -28,7 +37,7 @@ const MissionSection = ({ cards = [] }: { cards?: any[] }) => {
                         viewport={{ once: true }}
                         className="inline-block text-primary-600 font-bold tracking-wider uppercase text-sm mb-3"
                     >
-                        Değerlerimiz & Yaklaşımımız
+                        {lang === 'en' ? 'Our Values & Approach' : 'Değerlerimiz & Yaklaşımımız'}
                     </motion.span>
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
@@ -38,7 +47,7 @@ const MissionSection = ({ cards = [] }: { cards?: any[] }) => {
                         className="mb-6"
                     >
                         <h2 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
-                            Çevre Dostu Endüstriyel Kimya Çözümleri
+                            {lang === 'en' ? 'Eco-Friendly Industrial Chemical Solutions' : 'Çevre Dostu Endüstriyel Kimya Çözümleri'}
                         </h2>
                     </motion.div>
                     <motion.p
@@ -48,7 +57,9 @@ const MissionSection = ({ cards = [] }: { cards?: any[] }) => {
                         transition={{ delay: 0.2 }}
                         className="text-slate-600 text-lg leading-relaxed"
                     >
-                        Kalitemiz, sürdürülebilirlik anlayışımız ve inovasyona olan bağlılığımızla sektörde fark yaratmaya devam ediyoruz.
+                        {lang === 'en'
+                            ? 'We continue to make a difference in the sector with our quality, sustainability approach and commitment to innovation.'
+                            : 'Kalitemiz, sürdürülebilirlik anlayışımız ve inovasyona olan bağlılığımızla sektörde fark yaratmaya devam ediyoruz.'}
                     </motion.p>
                 </div>
 

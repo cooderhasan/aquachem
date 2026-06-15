@@ -18,9 +18,11 @@ interface ConditionalLayoutProps {
     children: React.ReactNode;
     settings?: any;
     contactLocation?: ContactLocation | null;
+    lang?: any;
+    dict?: any;
 }
 
-const ConditionalLayout = ({ children, settings, contactLocation }: ConditionalLayoutProps) => {
+const ConditionalLayout = ({ children, settings, contactLocation, lang, dict }: ConditionalLayoutProps) => {
     const pathname = usePathname();
     const isAuthPage = pathname?.startsWith('/admin') || pathname?.startsWith('/login');
 
@@ -29,9 +31,9 @@ const ConditionalLayout = ({ children, settings, contactLocation }: ConditionalL
 
     return (
         <>
-            {!isAuthPage && <Header settings={settings} contactLocation={contactLocation} />}
+            {!isAuthPage && <Header settings={settings} contactLocation={contactLocation} lang={lang || 'tr'} dict={dict || {} as any} />}
             {children}
-            {!isAuthPage && <Footer settings={settings} contactLocation={contactLocation} />}
+            {!isAuthPage && <Footer settings={settings} contactLocation={contactLocation} lang={lang || 'tr'} dict={dict || {} as any} />}
             {!isAuthPage && <WhatsAppButton phoneNumber={whatsappNumber} />}
         </>
     );

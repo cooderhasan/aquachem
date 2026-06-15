@@ -2,6 +2,9 @@
 
 import React from 'react';
 
+import { Locale } from '@/lib/i18n';
+import { Dictionary } from '@/lib/dictionary';
+
 interface Reference {
     id: number;
     title: string;
@@ -12,9 +15,11 @@ interface Reference {
 interface ReferencesCarouselProps {
     references: Reference[];
     settings?: any; // Settings prop eklendi
+    lang?: Locale;
+    dict?: Dictionary;
 }
 
-const ReferencesCarousel = ({ references, settings }: ReferencesCarouselProps) => {
+const ReferencesCarousel = ({ references, settings, lang = 'tr', dict }: ReferencesCarouselProps) => {
     // Referans yoksa bileşeni gösterme
     if (!references || references.length === 0) {
         return null;
@@ -27,10 +32,10 @@ const ReferencesCarousel = ({ references, settings }: ReferencesCarouselProps) =
         <section className="py-8 bg-slate-50 border-t border-slate-100">
             <div className="container-custom mb-8 text-center">
                 <span className="inline-block bg-white text-slate-600 text-sm font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider shadow-sm border border-slate-200">
-                    Referanslarımız
+                    {lang === 'en' ? 'Our References' : 'Referanslarımız'}
                 </span>
                 <h2 className="text-3xl font-bold text-slate-900">
-                    Referans Firmalarımız ve İş Ortaklarımız
+                    {lang === 'en' ? 'Our Reference Companies and Partners' : 'Referans Firmalarımız ve İş Ortaklarımız'}
                 </h2>
             </div>
 

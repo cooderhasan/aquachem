@@ -8,8 +8,8 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function ReferencesPage() {
-    let references = [];
-    let categories = [];
+    let references: any[] = [];
+    let categories: any[] = [];
     try {
         [references, categories] = await Promise.all([
             db.select().from(referencesTable).orderBy(asc(referencesTable.order)),

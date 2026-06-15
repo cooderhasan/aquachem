@@ -19,7 +19,7 @@ import * as http from 'http';
 dotenv.config();
 dotenv.config({ path: path.resolve(process.cwd(), '.env.production') });
 
-const DATABASE_URL = process.env.DATABASE_URL;
+const DATABASE_URL = process.env.DATABASE_URL as string;
 if (!DATABASE_URL) {
     console.error('❌ DATABASE_URL bulunamadı! .env dosyasını kontrol edin.');
     process.exit(1);

@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function HeroPage() {
-    let slides = [];
+    let slides: any[] = [];
     try {
         slides = await db.select().from(heroSlides).orderBy(desc(heroSlides.order), desc(heroSlides.id));
     } catch (error) {
