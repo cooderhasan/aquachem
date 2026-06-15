@@ -3,18 +3,38 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Loader2, CheckCircle2, AlertCircle, FileText, Phone, Mail, Building2, Package, ClipboardList } from 'lucide-react';
-import { submitQuoteRequest } from '@/app/quote/actions';
+import { submitQuoteRequest } from '@/app/[lang]/quote/actions';
+import { Dictionary } from '@/lib/dictionary';
 
 interface QuoteModalProps {
     isOpen: boolean;
     onClose: () => void;
     productName: string; // Ürün veya kategori adı
+    dict?: Dictionary;
 }
 
-export default function QuoteModal({ isOpen, onClose, productName }: QuoteModalProps) {
+export default function QuoteModal({ isOpen, onClose, productName, dict }: QuoteModalProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const t = dict?.quote || {
+        title: 'Teklif Talebi',
+        subtitle: 'Formu doldurun, en kısa sürede dönelim',
+        name: 'Ad Soyad',
+        company: 'Şirket Adı',
+        email: 'E-posta',
+        phone: 'Telefon',
+        quantityNote: 'Miktar / Açıklama',
+        quantityPlaceholder: 'İhtiyaç duyduğunuz miktar, kullanım alanı veya özel notlarınız...',
+        submit: 'Teklif Talebi Gönder',
+        submitting: 'Gönderiliyor...',
+        successTitle: 'Talebiniz Alındı!',
+        successMessage: 'En kısa sürede ekibimiz sizi arayacak veya e-posta ile dönüş yapacak.',
+        errorDefault: 'Bir hata oluştu.',
+        errorConnection: 'Bağlantı hatası. Lütfen tekrar deneyin.',
+        requiredNote: '* ile işaretli alanlar zorunludur. Bilgileriniz gizli tutulur.',
+    };
 
     // ESC ile kapat
     const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -46,11 +66,11 @@ export default function QuoteModal({ isOpen, onClose, productName }: QuoteModalP
                 setStatus('success');
             } else {
                 setStatus('error');
-                setErrorMessage(result.error || 'Bir hata oluştu.');
+                setErrorMessage(result.error || t.errorDefault);
             }
         } catch {
             setStatus('error');
-            setErrorMessage('Bağlantı hatası. Lütfen tekrar deneyin.');
+            setErrorMessage(t.errorConnection);
         } finally {
             setIsLoading(false);
         }
@@ -92,7 +112,7 @@ export default function QuoteModal({ isOpen, onClose, productName }: QuoteModalP
                                 <button
                                     onClick={handleClose}
                                     className="absolute top-4 right-4 p-2 rounded-full hover:bg-white/20 transition-colors"
-                                    aria-label="Kapat"
+                                    aria-label={dict?.common?.close || 'Kapat'}
                                 >
                                     <X size={20} />
                                 </button>
@@ -101,8 +121,8 @@ export default function QuoteModal({ isOpen, onClose, productName }: QuoteModalP
                                         <FileText size={22} />
                                     </div>
                                     <div>
-                                        <h2 className="text-xl font-bold">Teklif Talebi</h2>
-                                        <p className="text-primary-200 text-sm">Formu doldurun, en kısa sürede dönelim</p>
+                                        <h2 className="text-xl font-bold">{t.title}</h2>
+                                        <p className="text-primary-200 text-sm">{t.subtitle}</p>
                                     </div>
                                 </div>
                                 {/* Ürün badge */}
@@ -123,15 +143,15 @@ export default function QuoteModal({ isOpen, onClose, productName }: QuoteModalP
                                         <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                             <CheckCircle2 size={36} className="text-emerald-600" />
                                         </div>
-                                        <h3 className="text-xl font-bold text-slate-800 mb-2">Talebiniz Alındı!</h3>
+                                        <h3 className="text-xl font-bold text-slate-800 mb-2">{t.successTitle}</h3>
                                         <p className="text-slate-500 mb-6">
-                                            En kısa sürede ekibimiz sizi arayacak veya e-posta ile dönüş yapacak.
+                                            {t.successMessage}
                                         </p>
                                         <button
                                             onClick={handleClose}
                                             className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-semibold transition-colors"
                                         >
-                                            Tamam
+                                            {dict?.common?.ok || 'Tamam'}
                                         </button>
                                     </motion.div>
                                 ) : (
@@ -147,7 +167,7 @@ export default function QuoteModal({ isOpen, onClose, productName }: QuoteModalP
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             <div>
                                                 <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                                                    Ad Soyad <span className="text-red-500">*</span>
+                                                    {t.name} <span className="text-red-500">*</span>
                                                 </label>
                                                 <div className="relative">
                                                     <input
@@ -161,7 +181,7 @@ export default function QuoteModal({ isOpen, onClose, productName }: QuoteModalP
                                             </div>
                                             <div>
                                                 <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                                                    Şirket Adı
+                                                    {t.company}
                                                 </label>
                                                 <div className="relative">
                                                     <Building2 size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -179,7 +199,7 @@ export default function QuoteModal({ isOpen, onClose, productName }: QuoteModalP
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             <div>
                                                 <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                                                    E-posta <span className="text-red-500">*</span>
+                                                    {t.email} <span className="text-red-500">*</span>
                                                 </label>
                                                 <div className="relative">
                                                     <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -194,7 +214,7 @@ export default function QuoteModal({ isOpen, onClose, productName }: QuoteModalP
                                             </div>
                                             <div>
                                                 <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                                                    Telefon <span className="text-red-500">*</span>
+                                                    {t.phone} <span className="text-red-500">*</span>
                                                 </label>
                                                 <div className="relative">
                                                     <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -212,14 +232,14 @@ export default function QuoteModal({ isOpen, onClose, productName }: QuoteModalP
                                         {/* Miktar / Açıklama */}
                                         <div>
                                             <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                                                Miktar / Açıklama
+                                                {t.quantityNote}
                                             </label>
                                             <div className="relative">
                                                 <ClipboardList size={16} className="absolute left-3 top-3.5 text-slate-400" />
                                                 <textarea
                                                     name="quantity"
                                                     rows={3}
-                                                    placeholder="İhtiyaç duyduğunuz miktar, kullanım alanı veya özel notlarınız..."
+                                                    placeholder={t.quantityPlaceholder}
                                                     className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-slate-800 placeholder-slate-400 text-sm resize-none"
                                                 />
                                             </div>
@@ -232,14 +252,14 @@ export default function QuoteModal({ isOpen, onClose, productName }: QuoteModalP
                                             className="w-full bg-primary-600 hover:bg-primary-700 disabled:opacity-70 disabled:cursor-not-allowed text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors text-base mt-2"
                                         >
                                             {isLoading ? (
-                                                <><Loader2 size={18} className="animate-spin" /> Gönderiliyor...</>
+                                                <><Loader2 size={18} className="animate-spin" /> {t.submitting}</>
                                             ) : (
-                                                <><Send size={18} /> Teklif Talebi Gönder</>
+                                                <><Send size={18} /> {t.submit}</>
                                             )}
                                         </button>
 
                                         <p className="text-xs text-slate-400 text-center">
-                                            * ile işaretli alanlar zorunludur. Bilgileriniz gizli tutulur.
+                                            {t.requiredNote}
                                         </p>
                                     </form>
                                 )}

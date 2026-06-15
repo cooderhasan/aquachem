@@ -45,8 +45,10 @@ export const admins = pgTable('admins', {
 export const categories = pgTable('categories', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
+  titleEn: text('title_en'),
   slug: text('slug').notNull().unique(),
   description: text('description'),
+  descriptionEn: text('description_en'),
   image: text('image'),
   order: integer('order').default(0),
 });
@@ -55,13 +57,18 @@ export const products = pgTable('products', {
   id: serial('id').primaryKey(),
   categoryId: integer('category_id').references(() => categories.id, { onDelete: 'cascade' }),
   title: text('title').notNull(),
+  titleEn: text('title_en'),
   slug: text('slug').notNull().unique(),
   shortDescription: text('short_description'),
+  shortDescriptionEn: text('short_description_en'),
   description: text('description'),
+  descriptionEn: text('description_en'),
   usage: text('usage'),
+  usageEn: text('usage_en'),
   image: text('image'),
   images: text('images'), // Kept as text for simple JSON string storage if jsonb is overkill or for compatibility
   features: jsonb('features'), // Array of strings for product features
+  featuresEn: jsonb('features_en'), // Array of strings for product features in English
   isNew: boolean('is_new').default(false),
   createdAt: timestamp('created_at').defaultNow(),
 });
@@ -69,8 +76,10 @@ export const products = pgTable('products', {
 export const posts = pgTable('posts', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
+  titleEn: text('title_en'),
   slug: text('slug').notNull().unique(),
   content: text('content'),
+  contentEn: text('content_en'),
   image: text('image'),
   type: text('type').notNull().default('news'),
   createdAt: timestamp('created_at').defaultNow(),
@@ -96,7 +105,9 @@ export const certificates = pgTable('certificates', {
 export const settings = pgTable('settings', {
   id: serial('id').primaryKey(),
   siteTitle: text('site_title').notNull().default('Aquachems'),
+  siteTitleEn: text('site_title_en'),
   description: text('description'),
+  descriptionEn: text('description_en'),
   logo: text('logo'),
   favicon: text('favicon'),
   contactEmail: text('contact_email'),
@@ -104,14 +115,20 @@ export const settings = pgTable('settings', {
   address: text('address'),
   socialMedia: jsonb('social_media').default('{}'), // Store social links as JSON
   aboutUs: text('about_us'),
+  aboutUsEn: text('about_us_en'),
   mission: text('mission'),
+  missionEn: text('mission_en'),
   vision: text('vision'),
+  visionEn: text('vision_en'),
   humanPolicy: text('human_policy'),
+  humanPolicyEn: text('human_policy_en'),
   aboutImage: text('about_image'),
   catalogUrl: text('catalog_url'),
   // SEO Fields
   metaTitle: text('meta_title'),
+  metaTitleEn: text('meta_title_en'),
   metaDescription: text('meta_description'),
+  metaDescriptionEn: text('meta_description_en'),
   metaKeywords: text('meta_keywords'),
   ogImage: text('og_image'),
   whatsappNumber: text('whatsapp_number'),
@@ -128,12 +145,15 @@ export const settings = pgTable('settings', {
   heroOverlayOpacity: integer('hero_overlay_opacity').default(60), // Hero slider image opacity (0-100)
   heroGradientOpacity: integer('hero_gradient_opacity').default(80), // Hero slider gradient opacity (0-100)
   homeIntroTitle: text('home_intro_title'),
+  homeIntroTitleEn: text('home_intro_title_en'),
   homeIntroDescription: text('home_intro_description'),
+  homeIntroDescriptionEn: text('home_intro_description_en'),
   corporateStat1Value: text('corporate_stat1_value').default('15+'),
   corporateStat1Label: text('corporate_stat1_label').default('Yıllık Tecrübe'),
   corporateStat2Value: text('corporate_stat2_value').default('100+'),
   corporateStat2Label: text('corporate_stat2_label').default('Tamamlanan Proje'),
   siteSlogan: text('site_slogan').default('İnsanların yüzündeki gülümsemeyi görmek için çalışıyoruz'),
+  siteSloganEn: text('site_slogan_en').default("We work to see the smile on people's faces"),
   siteSloganFontSize: integer('site_slogan_font_size').default(10),
   homeSectionOrder: jsonb('home_section_order').default('[]'), // Array of section IDs in display order
 });

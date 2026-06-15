@@ -13,9 +13,12 @@ import { slugify } from '@/lib/utils';
 export async function createProduct(formData: FormData) {
     try {
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string || '';
         const categoryId = parseInt(formData.get('categoryId') as string);
         const description = formData.get('description') as string;
+        const descriptionEn = formData.get('descriptionEn') as string || '';
         const usage = formData.get('usage') as string;
+        const usageEn = formData.get('usageEn') as string || '';
         const image = formData.get('image') as string;
         const images = formData.get('images') as string;
 
@@ -24,10 +27,13 @@ export async function createProduct(formData: FormData) {
 
         await db.insert(products).values({
             title,
+            titleEn,
             slug,
             categoryId,
             description,
+            descriptionEn,
             usage,
+            usageEn,
             image,
             images,
         });
@@ -86,9 +92,12 @@ export async function updateProduct(formData: FormData) {
     try {
         const id = parseInt(formData.get('id') as string);
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string || '';
         const categoryId = parseInt(formData.get('categoryId') as string);
         const description = formData.get('description') as string;
+        const descriptionEn = formData.get('descriptionEn') as string || '';
         const usage = formData.get('usage') as string;
+        const usageEn = formData.get('usageEn') as string || '';
         const image = formData.get('image') as string;
         const images = formData.get('images') as string;
 
@@ -98,10 +107,13 @@ export async function updateProduct(formData: FormData) {
         await db.update(products)
             .set({
                 title,
+                titleEn,
                 slug,
                 categoryId,
                 description,
+                descriptionEn,
                 usage,
+                usageEn,
                 image,
                 images,
             })

@@ -18,8 +18,10 @@ export async function getCategories() {
 export async function createCategory(formData: FormData) {
     try {
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string || '';
         const image = formData.get('image') as string || '';
         const description = formData.get('description') as string || '';
+        const descriptionEn = formData.get('descriptionEn') as string || '';
 
         // Generating slug from title
         const slug = title.toLowerCase()
@@ -38,8 +40,10 @@ export async function createCategory(formData: FormData) {
 
         await db.insert(categories).values({
             title,
+            titleEn,
             slug,
             description,
+            descriptionEn,
             image,
             order: maxOrder,
         });
@@ -60,8 +64,10 @@ export async function updateCategory(formData: FormData) {
     try {
         const id = parseInt(formData.get('id') as string);
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string || '';
         const image = formData.get('image') as string || '';
         const description = formData.get('description') as string || '';
+        const descriptionEn = formData.get('descriptionEn') as string || '';
 
         // Generating slug from title
         const slug = title.toLowerCase()
@@ -77,8 +83,10 @@ export async function updateCategory(formData: FormData) {
         await db.update(categories)
             .set({
                 title,
+                titleEn,
                 slug,
                 description,
+                descriptionEn,
                 image,
             })
             .where(eq(categories.id, id));

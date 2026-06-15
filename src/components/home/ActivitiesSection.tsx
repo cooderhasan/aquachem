@@ -4,6 +4,9 @@ import React from 'react';
 import Link from 'next/link';
 import { CheckCircle2, FileDown, Newspaper } from 'lucide-react';
 
+import { Locale } from '@/lib/i18n';
+import { Dictionary } from '@/lib/dictionary';
+
 interface Activity {
     id: number;
     title: string;
@@ -14,9 +17,11 @@ interface ActivitiesSectionProps {
     activities: Activity[];
     posts?: any[];
     catalogUrl?: string | null;
+    lang: Locale;
+    dict: Dictionary;
 }
 
-const ActivitiesSection = ({ activities, posts = [], catalogUrl }: ActivitiesSectionProps) => {
+const ActivitiesSection = ({ activities, posts = [], catalogUrl, lang, dict }: ActivitiesSectionProps) => {
     // Filter active items if needed, or assume server returns all and we filter here
     const activeActivities = activities.filter(a => a.isActive !== false);
 
@@ -27,7 +32,9 @@ const ActivitiesSection = ({ activities, posts = [], catalogUrl }: ActivitiesSec
 
                     {/* Column 1: Faaliyet Alanlarımız (Wider - 2 cols on LG) */}
                     <div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-8 border border-slate-200">
-                        <h3 className="text-2xl font-bold text-slate-800 mb-6 border-b pb-4">Faaliyet Alanlarımız</h3>
+                        <h3 className="text-2xl font-bold text-slate-800 mb-6 border-b pb-4">
+                            {lang === 'en' ? 'Our Fields of Activity' : 'Faaliyet Alanlarımız'}
+                        </h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {activeActivities.length > 0 ? (
                                 activeActivities.map((item) => (
@@ -37,7 +44,9 @@ const ActivitiesSection = ({ activities, posts = [], catalogUrl }: ActivitiesSec
                                     </div>
                                 ))
                             ) : (
-                                <p className="text-slate-500 text-sm">Faaliyet alanı bulunamadı.</p>
+                                <p className="text-slate-500 text-sm">
+                                    {lang === 'en' ? 'No activity fields found.' : 'Faaliyet alanı bulunamadı.'}
+                                </p>
                             )}
                         </div>
                     </div>
@@ -46,29 +55,34 @@ const ActivitiesSection = ({ activities, posts = [], catalogUrl }: ActivitiesSec
                     <div className="lg:col-span-1 bg-white rounded-xl shadow-sm p-8 border border-slate-200">
                         <h3 className="text-2xl font-bold text-slate-800 mb-6 border-b pb-4 flex items-center gap-2">
                             <Newspaper size={24} className="text-primary-500" />
-                            Bizden Haberler
+                            {lang === 'en' ? 'Latest News' : 'Bizden Haberler'}
                         </h3>
                         <div className="space-y-4">
                             {posts && posts.length > 0 ? (
-                                posts.map((post: any) => (
-                                    <React.Fragment key={post.id}>
-                                        <Link href={`/news/${post.slug}`} className="group cursor-pointer block">
-                                            <span className="text-xs text-primary-500 font-bold block mb-1">
-                                                {new Date(post.createdAt).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
-                                            </span>
-                                            <p className="text-slate-700 font-medium group-hover:text-primary-600 transition-colors line-clamp-3">
-                                                {post.title}
-                                            </p>
-                                        </Link>
-                                        <hr className="border-slate-100 last:hidden" />
-                                    </React.Fragment>
-                                ))
+                                posts.map((post: any) => {
+                                    const postTitle = (lang === 'en' && post.titleEn) ? post.titleEn : post.title;
+                                    return (
+                                        <React.Fragment key={post.id}>
+                                            <Link href={`/${lang}/news/${post.slug}`} className="group cursor-pointer block">
+                                                <span className="text-xs text-primary-500 font-bold block mb-1">
+                                                    {new Date(post.createdAt).toLocaleDateString(lang === 'en' ? 'en-US' : 'tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                                </span>
+                                                <p className="text-slate-700 font-medium group-hover:text-primary-600 transition-colors line-clamp-3">
+                                                    {postTitle}
+                                                </p>
+                                            </Link>
+                                            <hr className="border-slate-100 last:hidden" />
+                                        </React.Fragment>
+                                    );
+                                })
                             ) : (
-                                <p className="text-slate-500 text-sm">Henüz haber eklenmemiş.</p>
+                                <p className="text-slate-500 text-sm">
+                                    {lang === 'en' ? 'No news added yet.' : 'Henüz haber eklenmemiş.'}
+                                </p>
                             )}
 
-                            <Link href="/news" className="inline-block mt-4 text-sm text-primary-600 font-bold hover:underline">
-                                Tüm Haberler &rarr;
+                            <Link href={`/${lang}/news`} className="inline-block mt-4 text-sm text-primary-600 font-bold hover:underline">
+                                {lang === 'en' ? 'All News →' : 'Tüm Haberler →'}
                             </Link>
                         </div>
                     </div>
@@ -78,9 +92,13 @@ const ActivitiesSection = ({ activities, posts = [], catalogUrl }: ActivitiesSec
                         <div className="bg-white/10 p-4 rounded-full mb-6">
                             <FileDown size={48} />
                         </div>
-                        <h3 className="text-2xl font-bold mb-4">E-Katalog</h3>
+                        <h3 className="text-2xl font-bold mb-4">
+                            {lang === 'en' ? 'E-Catalog' : 'E-Katalog'}
+                        </h3>
                         <p className="text-primary-100 mb-8 text-sm">
-                            Güncel ürün kataloğumuzu PDF formatında cihazınıza indirebilirsiniz.
+                            {lang === 'en' 
+                                ? 'You can download our current product catalog to your device in PDF format.' 
+                                : 'Güncel ürün kataloğumuzu PDF formatında cihazınıza indirebilirsiniz.'}
                         </p>
                         {catalogUrl ? (
                             <a
@@ -89,11 +107,11 @@ const ActivitiesSection = ({ activities, posts = [], catalogUrl }: ActivitiesSec
                                 rel="noopener noreferrer"
                                 className="bg-white text-primary-600 px-6 py-3 rounded-full font-bold hover:bg-primary-50 transition-colors w-full inline-block"
                             >
-                                Kataloğu İndir
+                                {lang === 'en' ? 'Download Catalog' : 'Kataloğu İndir'}
                             </a>
                         ) : (
                             <button className="bg-white/50 text-white/50 px-6 py-3 rounded-full font-bold cursor-not-allowed w-full">
-                                Katalog Bulunamadı
+                                {lang === 'en' ? 'Catalog Not Found' : 'Katalog Bulunamadı'}
                             </button>
                         )}
                     </div>

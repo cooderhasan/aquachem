@@ -7,8 +7,18 @@ import { Menu, X, Phone, Droplets, Mail, MapPin, Facebook, Instagram, Linkedin, 
 import { motion, AnimatePresence } from 'framer-motion';
 import SearchModal from '@/components/ui/SearchModal';
 import QuoteModal from '@/components/shared/QuoteModal';
+import LanguageSwitcher from '@/components/ui/LanguageSwitcher';
+import { Locale } from '@/lib/i18n';
+import { Dictionary } from '@/lib/dictionary';
 
-const Header = ({ settings, contactLocation }: { settings?: any; contactLocation?: any }) => {
+interface HeaderProps {
+    settings?: any;
+    contactLocation?: any;
+    lang: Locale;
+    dict: Dictionary;
+}
+
+const Header = ({ settings, contactLocation, lang, dict }: HeaderProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [isQuoteOpen, setIsQuoteOpen] = useState(false);
@@ -25,17 +35,40 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
     }, []);
 
     const defaultNavigation = [
-        { name: 'Ana Sayfa', href: '/' },
-        { name: 'Ürünler', href: '/products' },
-        { name: 'Kurumsal', href: '/corporate' },
-        { name: 'Referanslar', href: '/references' },
-        { name: 'Belgelerimiz', href: '/certificates' },
-        { name: 'İletişim', href: '/contact' },
+        { name: dict.nav.home, href: `/${lang}` },
+        { name: dict.nav.products, href: `/${lang}/products` },
+        { name: dict.nav.corporate, href: `/${lang}/corporate` },
+        { name: dict.nav.references, href: `/${lang}/references` },
+        { name: dict.nav.certificates, href: `/${lang}/certificates` },
+        { name: dict.nav.contact, href: `/${lang}/contact` },
     ];
 
+    const localizeMenuItem = (item: any) => {
+        const hrefWithoutPrefix = item.href.replace(/^\/(tr|en)/, '') || '/';
+        const key = hrefWithoutPrefix === '/' ? 'home' : hrefWithoutPrefix.replace(/^\//, '');
+        
+        let translatedName = item.name;
+        // Normalize humanResources keys, etc.
+        let dictKey = key;
+        if (key === 'human-resources') dictKey = 'humanResources';
+
+        if (dictKey in dict.nav) {
+            translatedName = dict.nav[dictKey as keyof typeof dict.nav];
+        }
+        
+        return {
+            name: translatedName,
+            href: `/${lang}${hrefWithoutPrefix === '/' ? '' : hrefWithoutPrefix}`
+        };
+    };
+
     const navigation: any[] = (settings?.menuItems && settings.menuItems.length > 0)
-        ? settings.menuItems.filter((item: any) => item.href !== '/certificates')
-        : defaultNavigation.filter((item) => item.href !== '/certificates');
+        ? settings.menuItems
+            .filter((item: any) => item.href !== '/certificates')
+            .map(localizeMenuItem)
+        : defaultNavigation
+            .filter((item) => item.href !== `/${lang}/certificates`)
+            .map(localizeMenuItem);
 
     return (
         <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
@@ -64,13 +97,10 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                                     if (lower.includes('istanbul') || lower.includes('istanbul')) return 'İstanbul, Türkiye';
                                     if (lower.includes('ankara')) return 'Ankara, Türkiye';
 
-                                    // Fallback: try to get the last part after a slash (District / City format)
                                     if (addr.includes('/')) {
                                         return addr.split('/').pop()?.trim() + ', Türkiye';
                                     }
 
-                                    // If simplified mode requested but no city found, maybe just show first 2 words or full
-                                    // User said "sadece Konya yazsa yeter", so let's try to be short.
                                     return 'Türkiye';
                                 })()}
                             </span>
@@ -89,8 +119,7 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
             >
                 <div className="container-custom flex justify-between items-center">
                     {/* Logo */}
-                    {/* Logo */}
-                    <Link href="/" className="flex items-center gap-3 group">
+                    <Link href={`/${lang}`} className="flex items-center gap-3 group">
                         {settings?.logo ? (
                             <div className="flex flex-col items-start">
                                 <div
@@ -99,20 +128,20 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                                 >
                                     <img
                                         src={settings.logo}
-                                        alt={settings.siteTitle || 'Logo'}
+                                        alt={(lang === 'en' ? settings?.siteTitleEn : settings?.siteTitle) || settings?.siteTitle || 'Logo'}
                                         className="h-full w-auto object-contain"
                                     />
                                 </div>
-                                {settings?.siteSlogan && (
-                                    <span 
-                                        style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize}px` : '10px' }}
-                                        className={`text-slate-500 font-medium tracking-wider italic font-serif transition-all duration-300 ${
-                                            scrolled ? 'max-h-0 opacity-0 overflow-hidden mt-0' : 'max-h-8 opacity-100 mt-1'
-                                        } hidden sm:inline-block`}
-                                    >
-                                        {settings.siteSlogan}
-                                    </span>
-                                )}
+                                {((lang === 'en' ? settings?.siteSloganEn : settings?.siteSlogan) || settings?.siteSlogan) && (
+                                     <span 
+                                         style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize}px` : '10px' }}
+                                         className={`text-slate-500 font-medium tracking-wider italic font-serif transition-all duration-300 ${
+                                             scrolled ? 'max-h-0 opacity-0 overflow-hidden mt-0' : 'max-h-8 opacity-100 mt-1'
+                                         } hidden sm:inline-block`}
+                                     >
+                                         {(lang === 'en' ? settings?.siteSloganEn : settings?.siteSlogan) || settings?.siteSlogan}
+                                     </span>
+                                 )}
                             </div>
                         ) : (
                             <>
@@ -124,13 +153,13 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                                 </div>
                                 <div className="flex flex-col">
                                     <span className={`font-bold text-slate-900 leading-none tracking-tight transition-all ${scrolled ? 'text-xl' : 'text-2xl'}`}>
-                                        {settings?.siteTitle || 'AQUACHEMS'}
+                                        {(lang === 'en' ? settings?.siteTitleEn : settings?.siteTitle) || settings?.siteTitle || 'AQUACHEMS'}
                                     </span>
                                     <span 
                                         style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize}px` : '10px' }}
                                         className="text-slate-500 font-medium tracking-wider italic font-serif mt-1"
                                     >
-                                        {settings?.siteSlogan || 'Kimya & İnovasyon'}
+                                        {(lang === 'en' ? settings?.siteSloganEn : settings?.siteSlogan) || settings?.siteSlogan || (lang === 'en' ? 'Chemistry & Innovation' : 'Kimya & İnovasyon')}
                                     </span>
                                 </div>
                             </>
@@ -164,10 +193,13 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                         <button
                             onClick={() => setIsSearchOpen(true)}
                             className="text-slate-600 hover:text-primary-600 transition-colors p-2 rounded-full hover:bg-slate-50"
-                            aria-label="Arama Yap"
+                            aria-label={dict.header.search}
                         >
                             <Search size={24} />
                         </button>
+
+                        {/* Language Switcher */}
+                        <LanguageSwitcher currentLocale={lang} />
 
                         <button
                             onClick={() => setIsQuoteOpen(true)}
@@ -179,16 +211,17 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                                 }
                             `}
                         >
-                            Teklif Al
+                            {dict.header.getQuote}
                         </button>
                     </nav>
 
                     {/* Mobile Menu Button */}
                     <div className="flex items-center gap-2 xl:hidden">
+                        <LanguageSwitcher currentLocale={lang} />
                         <button
                             onClick={() => setIsSearchOpen(true)}
                             className="text-slate-600 hover:text-primary-600 transition-colors p-2"
-                            aria-label="Arama Yap"
+                            aria-label={dict.header.search}
                         >
                             <Search size={24} />
                         </button>
@@ -229,7 +262,7 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                                         setIsQuoteOpen(true);
                                     }}
                                 >
-                                    Teklif İsteyin
+                                    {dict.header.getQuoteMobile}
                                 </button>
 
                                 <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col gap-4 text-slate-500 text-sm font-medium">
@@ -259,6 +292,7 @@ const Header = ({ settings, contactLocation }: { settings?: any; contactLocation
                 isOpen={isQuoteOpen}
                 onClose={() => setIsQuoteOpen(false)}
                 productName="Genel Bilgi / Teklif"
+                dict={dict}
             />
         </div >
     );

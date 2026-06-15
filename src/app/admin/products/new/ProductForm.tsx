@@ -17,9 +17,12 @@ interface Category {
 interface Product {
     id: number;
     title: string;
+    titleEn: string | null;
     categoryId: number | null;
     description: string | null;
+    descriptionEn: string | null;
     usage: string | null;
+    usageEn: string | null;
     slug: string;
     image: string | null;
     images: string | null;
@@ -104,7 +107,7 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
                 <form action={clientAction} className="space-y-6">
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-2">Ürün Adı</label>
                             <input
@@ -112,6 +115,15 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
                                 type="text"
                                 required
                                 defaultValue={product?.title}
+                                className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-500 mb-2">Ürün Adı (İngilizce)</label>
+                            <input
+                                name="titleEn"
+                                type="text"
+                                defaultValue={product?.titleEn || ''}
                                 className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                             />
                         </div>
@@ -157,12 +169,32 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
                     </div>
 
                     <div>
+                        <label className="block text-sm font-medium text-slate-500 mb-2">Kullanıldığı Yerler (İngilizce)</label>
+                        <textarea
+                            name="descriptionEn"
+                            defaultValue={product?.descriptionEn || ''}
+                            className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none h-32"
+                            placeholder="Write product features/usage areas here..."
+                        />
+                    </div>
+
+                    <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">Kullanım Şekli</label>
                         <textarea
                             name="usage"
                             defaultValue={product?.usage || ''}
                             className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none h-24"
                             placeholder="Örn: Otomotiv, Tekstil, Gıda sanayi..."
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-slate-500 mb-2">Kullanım Şekli (İngilizce)</label>
+                        <textarea
+                            name="usageEn"
+                            defaultValue={product?.usageEn || ''}
+                            className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none h-24"
+                            placeholder="E.g., Automotive, Textile, Food industry..."
                         />
                     </div>
 

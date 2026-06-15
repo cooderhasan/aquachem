@@ -25,8 +25,10 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
             title="İçeriği Düzenle"
             initialData={{
                 title: post.title,
+                titleEn: post.titleEn,
                 type: post.type || 'news',
                 content: post.content || '',
+                contentEn: post.contentEn,
                 image: post.image || ''
             }}
             onSubmit={handleSubmit}

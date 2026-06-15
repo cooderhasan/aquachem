@@ -27,9 +27,12 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
     const normalizedProduct = {
         id: product.id,
         title: product.title,
+        titleEn: product.titleEn,
         categoryId: product.categoryId,
         description: product.description,
+        descriptionEn: product.descriptionEn,
         usage: (product as any).usage || (product as any).usageArea || '',
+        usageEn: product.usageEn,
         slug: product.slug,
         image: product.image,
         images: (product as any).images || null

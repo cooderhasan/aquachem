@@ -18,22 +18,31 @@ export async function getSettings() {
 export async function updateSettings(formData: FormData) {
     try {
         const title = formData.get('siteTitle') as string;
+        const siteTitleEn = formData.get('siteTitleEn') as string;
         const description = formData.get('description') as string;
+        const descriptionEn = formData.get('descriptionEn') as string;
         const aboutUs = formData.get('aboutUs') as string;
+        const aboutUsEn = formData.get('aboutUsEn') as string;
         const mission = formData.get('mission') as string;
+        const missionEn = formData.get('missionEn') as string;
         const vision = formData.get('vision') as string;
+        const visionEn = formData.get('visionEn') as string;
         const humanPolicy = formData.get('humanPolicy') as string;
+        const humanPolicyEn = formData.get('humanPolicyEn') as string;
         const aboutUsFontSize = formData.get('aboutUsFontSize') as string;
         const aboutUsDarkness = formData.get('aboutUsDarkness') as string;
 
         const homeIntroTitle = formData.get('homeIntroTitle') as string;
+        const homeIntroTitleEn = formData.get('homeIntroTitleEn') as string;
         const homeIntroDescription = formData.get('homeIntroDescription') as string;
+        const homeIntroDescriptionEn = formData.get('homeIntroDescriptionEn') as string;
 
         const corporateStat1Value = formData.get('corporateStat1Value') as string;
         const corporateStat1Label = formData.get('corporateStat1Label') as string;
         const corporateStat2Value = formData.get('corporateStat2Value') as string;
         const corporateStat2Label = formData.get('corporateStat2Label') as string;
         const siteSlogan = formData.get('siteSlogan') as string;
+        const siteSloganEn = formData.get('siteSloganEn') as string;
         const siteSloganFontSize = parseInt(formData.get('siteSloganFontSize') as string) || 10;
 
         // Check if settings exist
@@ -55,7 +64,9 @@ export async function updateSettings(formData: FormData) {
 
         // SEO fields
         const metaTitle = formData.get('metaTitle') as string;
+        const metaTitleEn = formData.get('metaTitleEn') as string;
         const metaDescription = formData.get('metaDescription') as string;
+        const metaDescriptionEn = formData.get('metaDescriptionEn') as string;
         const metaKeywords = formData.get('metaKeywords') as string;
         const ogImage = formData.get('ogImage') as string;
         const whatsappNumber = formData.get('whatsappNumber') as string;
@@ -92,21 +103,29 @@ export async function updateSettings(formData: FormData) {
         if (currentSettings) {
             await db.update(settings).set({
                 siteTitle: title,
+                siteTitleEn,
                 description,
+                descriptionEn,
                 logo: logo || currentSettings.logo,
                 favicon: favicon || currentSettings.favicon,
                 aboutImage: aboutImage || currentSettings.aboutImage,
                 catalogUrl: catalogUrl || currentSettings.catalogUrl,
                 aboutUs,
+                aboutUsEn,
                 mission,
+                missionEn,
                 vision,
+                visionEn,
                 humanPolicy,
+                humanPolicyEn,
                 aboutUsFontSize,
                 aboutUsDarkness,
                 socialMedia,
                 // SEO fields
                 metaTitle: metaTitle || currentSettings.metaTitle,
+                metaTitleEn: metaTitleEn || currentSettings.metaTitleEn,
                 metaDescription: metaDescription || currentSettings.metaDescription,
+                metaDescriptionEn: metaDescriptionEn || currentSettings.metaDescriptionEn,
                 metaKeywords: metaKeywords || currentSettings.metaKeywords,
                 ogImage: ogImage || currentSettings.ogImage,
                 whatsappNumber: whatsappNumber || currentSettings.whatsappNumber,
@@ -118,37 +137,47 @@ export async function updateSettings(formData: FormData) {
 
                 referencesScrollSpeed: referencesScrollSpeed || currentSettings.referencesScrollSpeed,
                 referenceLogoHeight: parseInt(formData.get('referenceLogoHeight') as string) || 100,
-                referencesScrollSpeed: referencesScrollSpeed || currentSettings.referencesScrollSpeed,
                 heroOverlayOpacity: parseInt(formData.get('heroOverlayOpacity') as string) || 60,
                 heroGradientOpacity: parseInt(formData.get('heroGradientOpacity') as string) || 80,
                 menuItems,
                 homeIntroTitle,
+                homeIntroTitleEn,
                 homeIntroDescription,
+                homeIntroDescriptionEn,
                 corporateStat1Value,
                 corporateStat1Label,
                 corporateStat2Value,
                 corporateStat2Label,
                 siteSlogan,
+                siteSloganEn,
                 siteSloganFontSize,
                 homeSectionOrder,
             }).where(eq(settings.id, currentSettings.id));
         } else {
             await db.insert(settings).values({
                 siteTitle: title,
+                siteTitleEn,
                 description,
+                descriptionEn,
                 favicon,
                 aboutImage,
                 aboutUs,
+                aboutUsEn,
                 mission,
+                missionEn,
                 vision,
+                visionEn,
                 humanPolicy,
+                humanPolicyEn,
                 aboutUsFontSize,
                 aboutUsDarkness,
                 catalogUrl,
                 socialMedia,
                 // SEO fields
                 metaTitle,
+                metaTitleEn,
                 metaDescription,
+                metaDescriptionEn,
                 metaKeywords,
                 ogImage,
                 whatsappNumber,
@@ -162,12 +191,15 @@ export async function updateSettings(formData: FormData) {
                 referenceLogoHeight: parseInt(formData.get('referenceLogoHeight') as string) || 100,
                 menuItems,
                 homeIntroTitle,
+                homeIntroTitleEn,
                 homeIntroDescription,
+                homeIntroDescriptionEn,
                 corporateStat1Value,
                 corporateStat1Label,
                 corporateStat2Value,
                 corporateStat2Label,
                 siteSlogan,
+                siteSloganEn,
                 siteSloganFontSize,
                 homeSectionOrder,
             });

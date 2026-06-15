@@ -9,8 +9,10 @@ import toast from 'react-hot-toast';
 interface PostFormProps {
     initialData?: {
         title: string;
+        titleEn?: string | null;
         type: string;
         content: string;
+        contentEn?: string | null;
         image: string;
     };
     onSubmit: (formData: FormData) => Promise<{ success: boolean; error?: string }>;
@@ -22,8 +24,10 @@ export default function PostForm({ initialData, onSubmit, title }: PostFormProps
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         title: initialData?.title || '',
+        titleEn: initialData?.titleEn || '',
         type: initialData?.type || 'news',
         content: initialData?.content || '',
+        contentEn: initialData?.contentEn || '',
         image: initialData?.image || ''
     });
     const [uploading, setUploading] = useState(false);
@@ -64,8 +68,10 @@ export default function PostForm({ initialData, onSubmit, title }: PostFormProps
         try {
             const submitData = new FormData();
             submitData.append('title', formData.title);
+            submitData.append('titleEn', formData.titleEn);
             submitData.append('type', formData.type);
             submitData.append('content', formData.content);
+            submitData.append('contentEn', formData.contentEn);
             submitData.append('image', formData.image);
 
             const result = await onSubmit(submitData);
@@ -98,7 +104,7 @@ export default function PostForm({ initialData, onSubmit, title }: PostFormProps
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-2">Başlık</label>
                             <input
@@ -107,6 +113,15 @@ export default function PostForm({ initialData, onSubmit, title }: PostFormProps
                                 className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                                 value={formData.title}
                                 onChange={e => setFormData({ ...formData, title: e.target.value })}
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-500 mb-2">Başlık (İngilizce)</label>
+                            <input
+                                type="text"
+                                className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                                value={formData.titleEn}
+                                onChange={e => setFormData({ ...formData, titleEn: e.target.value })}
                             />
                         </div>
                         <div>
@@ -159,6 +174,16 @@ export default function PostForm({ initialData, onSubmit, title }: PostFormProps
                             placeholder="Haber içeriğini buraya yazın..."
                             value={formData.content}
                             onChange={e => setFormData({ ...formData, content: e.target.value })}
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-slate-500 mb-2">İçerik (İngilizce)</label>
+                        <textarea
+                            className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none h-48"
+                            placeholder="Write news content here..."
+                            value={formData.contentEn}
+                            onChange={e => setFormData({ ...formData, contentEn: e.target.value })}
                         />
                     </div>
 

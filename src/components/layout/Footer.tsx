@@ -3,6 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { Droplets, MapPin, Phone, Mail, Instagram, Linkedin, Facebook, Globe } from 'lucide-react';
+import { Locale } from '@/lib/i18n';
+import { Dictionary } from '@/lib/dictionary';
 
 interface ContactLocation {
     id: number;
@@ -12,7 +14,14 @@ interface ContactLocation {
     email: string | null;
 }
 
-const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation?: ContactLocation | null }) => {
+interface FooterProps {
+    settings?: any;
+    contactLocation?: ContactLocation | null;
+    lang: Locale;
+    dict: Dictionary;
+}
+
+const Footer = ({ settings, contactLocation, lang, dict }: FooterProps) => {
     return (
         <footer
             style={{ transform: 'translateZ(0)' }}
@@ -22,7 +31,7 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-16">
                     {/* Brand Info */}
                     <div className="col-span-2 lg:col-span-1 space-y-6">
-                        <Link href="/" className="flex flex-col items-start gap-3 group">
+                        <Link href={`/${lang}`} className="flex flex-col items-start gap-3 group">
                             {settings?.footerLogo ? (
                                 <div className="flex flex-col items-start">
                                     <img
@@ -58,7 +67,7 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
                             )}
                         </Link>
                         <p className="text-slate-400 leading-relaxed text-sm">
-                            {settings?.description || 'Endüstriyel temizlik ve hijyen çözümlerinde yenilikçi yaklaşımlarımızla, işletmenizin verimliliğini artırıyor ve sürdürülebilir bir gelecek için çalışıyoruz.'}
+                            {settings?.description || dict.footer.description}
                         </p>
                         <div className="flex gap-4 pt-2">
                             <div className="flex gap-4 pt-2">
@@ -89,33 +98,33 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
                     {/* Quick Links */}
                     <div>
                         <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
-                            <Globe size={16} className="text-primary-500" /> Hızlı Erişim
+                            <Globe size={16} className="text-primary-500" /> {dict.footer.quickLinks}
                         </h3>
                         <ul className="space-y-3 text-sm">
-                            <li><Link href="/" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Ana Sayfa</Link></li>
-                            <li><Link href="/corporate" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Kurumsal</Link></li>
-                            <li><Link href="/products" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Ürünlerimiz</Link></li>
-                            <li><Link href="/references" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Referanslarımız</Link></li>
-                            <li><Link href="/human-resources" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">İnsan Kaynakları</Link></li>
-                            <li><Link href="/contact" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">İletişim</Link></li>
+                            <li><Link href={`/${lang}`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{dict.nav.home}</Link></li>
+                            <li><Link href={`/${lang}/corporate`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{dict.nav.corporate}</Link></li>
+                            <li><Link href={`/${lang}/products`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{dict.nav.products}</Link></li>
+                            <li><Link href={`/${lang}/references`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{dict.nav.references}</Link></li>
+                            <li><Link href={`/${lang}/human-resources`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{dict.nav.humanResources}</Link></li>
+                            <li><Link href={`/${lang}/contact`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{dict.nav.contact}</Link></li>
                         </ul>
                     </div>
 
                     {/* Product Groups */}
                     <div>
-                        <h3 className="text-white font-bold text-lg mb-6">Ürün Grupları</h3>
+                        <h3 className="text-white font-bold text-lg mb-6">{dict.footer.productGroups}</h3>
                         <ul className="space-y-3 text-sm">
-                            <li><Link href="/products/genel-temizlik" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Genel Temizlik</Link></li>
-                            <li><Link href="/products/likit-cilt-temizleme" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Likit Cilt Temizleme</Link></li>
-                            <li><Link href="/products/dezenfektan-grubu" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Dezenfektan Grubu</Link></li>
-                            <li><Link href="/products/oto-bakim-grubu" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Oto Bakım Grubu</Link></li>
-                            <li><Link href="/products/teknik-grup" className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Teknik Grup</Link></li>
+                            <li><Link href={`/${lang}/products/genel-temizlik`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Genel Temizlik</Link></li>
+                            <li><Link href={`/${lang}/products/likit-cilt-temizleme`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Likit Cilt Temizleme</Link></li>
+                            <li><Link href={`/${lang}/products/dezenfektan-grubu`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Dezenfektan Grubu</Link></li>
+                            <li><Link href={`/${lang}/products/oto-bakim-grubu`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Oto Bakım Grubu</Link></li>
+                            <li><Link href={`/${lang}/products/teknik-grup`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Teknik Grup</Link></li>
                         </ul>
                     </div>
 
                     {/* Contact Info */}
                     <div className="col-span-2 lg:col-span-1">
-                        <h3 className="text-white font-bold text-lg mb-6">İletişim</h3>
+                        <h3 className="text-white font-bold text-lg mb-6">{dict.footer.contact}</h3>
                         <ul className="space-y-4 text-sm">
                             <li className="flex items-start gap-3">
                                 <div className="p-2 bg-slate-800 rounded-lg text-primary-500 shrink-0">
@@ -140,11 +149,11 @@ const Footer = ({ settings, contactLocation }: { settings?: any; contactLocation
                 </div>
 
                 <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
-                    <p>&copy; {new Date().getFullYear()} Aquachems Kimya. Tüm hakları saklıdır. | Coded by <a href="https://www.hasandurmus.com" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-300 transition-colors">Hasan Durmuş</a></p>
+                    <p>&copy; {new Date().getFullYear()} Aquachems Kimya. {dict.footer.rights} | {dict.footer.codedBy} <a href="https://www.hasandurmus.com" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-300 transition-colors">Hasan Durmuş</a></p>
                     <div className="flex gap-6">
-                        <a href="/terms" className="hover:text-slate-300 transition-colors">Kullanım Şartları</a>
-                        <a href="/privacy" className="hover:text-slate-300 transition-colors">Gizlilik Politikası</a>
-                        <a href="/cookies" className="hover:text-slate-300 transition-colors">Çerez Politikası</a>
+                        <a href={`/${lang}/terms`} className="hover:text-slate-300 transition-colors">{dict.footer.termsOfUse}</a>
+                        <a href={`/${lang}/privacy`} className="hover:text-slate-300 transition-colors">{dict.footer.privacyPolicy}</a>
+                        <a href={`/${lang}/cookies`} className="hover:text-slate-300 transition-colors">{dict.footer.cookiePolicy}</a>
                     </div>
                 </div>
             </div>

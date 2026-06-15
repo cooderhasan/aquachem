@@ -10,8 +10,10 @@ import { toast } from 'sonner';
 interface Category {
     id: number;
     title: string;
+    titleEn: string | null;
     slug: string;
     description: string | null;
+    descriptionEn: string | null;
     image: string | null;
     order: number | null;
 }
@@ -26,11 +28,11 @@ export default function CategoriesClient({ initialCategories }: CategoriesClient
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-    const [formData, setFormData] = useState({ title: '', image: '', description: '' });
+    const [formData, setFormData] = useState({ title: '', titleEn: '', image: '', description: '', descriptionEn: '' });
 
     const openAddModal = () => {
         setEditingCategory(null);
-        setFormData({ title: '', image: '', description: '' });
+        setFormData({ title: '', titleEn: '', image: '', description: '', descriptionEn: '' });
         setIsModalOpen(true);
     };
 
@@ -38,8 +40,10 @@ export default function CategoriesClient({ initialCategories }: CategoriesClient
         setEditingCategory(category);
         setFormData({
             title: category.title,
+            titleEn: category.titleEn || '',
             image: category.image || '',
-            description: category.description || ''
+            description: category.description || '',
+            descriptionEn: category.descriptionEn || ''
         });
         setIsModalOpen(true);
     };
@@ -50,8 +54,10 @@ export default function CategoriesClient({ initialCategories }: CategoriesClient
 
         const data = new FormData();
         data.append('title', formData.title);
+        data.append('titleEn', formData.titleEn);
         data.append('image', formData.image);
         data.append('description', formData.description);
+        data.append('descriptionEn', formData.descriptionEn);
 
         try {
             if (editingCategory) {
@@ -189,6 +195,16 @@ export default function CategoriesClient({ initialCategories }: CategoriesClient
                                 />
                             </div>
                             <div>
+                                <label className="block text-sm font-medium mb-1 text-slate-500">Kategori Adı (İngilizce)</label>
+                                <input
+                                    type="text"
+                                    value={formData.titleEn}
+                                    onChange={e => setFormData({ ...formData, titleEn: e.target.value })}
+                                    className="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                    placeholder="Örn: General Cleaning"
+                                />
+                            </div>
+                            <div>
                                 <label className="block text-sm font-medium mb-2">Kategori Görseli</label>
                                 <ImageUpload
                                     value={formData.image}
@@ -206,6 +222,16 @@ export default function CategoriesClient({ initialCategories }: CategoriesClient
                                     className="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                     rows={3}
                                     placeholder="Kategori açıklaması..."
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium mb-1 text-slate-500">Açıklama (İngilizce - Opsiyonel)</label>
+                                <textarea
+                                    value={formData.descriptionEn}
+                                    onChange={e => setFormData({ ...formData, descriptionEn: e.target.value })}
+                                    className="w-full border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                    rows={3}
+                                    placeholder="Category description..."
                                 />
                             </div>
                             <div className="flex gap-2 justify-end mt-6">

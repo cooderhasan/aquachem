@@ -1,26 +1,25 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { decrypt } from '@/lib/auth';
+import { locales, defaultLocale } from '@/lib/i18n';
 
 export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
 
-    // Redirect /uploads/* to /api/files/* for file serving in standalone mode
+    // 1. Redirect /uploads/* to /api/files/* for file serving in standalone mode
     if (path.startsWith('/uploads/')) {
         const fileName = path.replace('/uploads/', '');
         return NextResponse.redirect(new URL(`/api/files/${fileName}`, request.url));
     }
 
-    // Protect /admin routes
+    // 2. Protect /admin routes
     if (path.startsWith('/admin') && !path.startsWith('/admin/login')) {
         const session = request.cookies.get('session')?.value;
 
-        // If no session, redirect to login
         if (!session) {
             return NextResponse.redirect(new URL('/admin/login', request.url));
         }
 
-        // If session exists but invalid (decrypt throws), redirect to login
         try {
             await decrypt(session);
         } catch (e) {
@@ -28,10 +27,40 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-    return NextResponse.next();
+    // 3. Skip locale handling for admin, api, _next, static files
+    if (
+        path.startsWith('/admin') ||
+        path.startsWith('/api') ||
+        path.startsWith('/_next') ||
+        path.includes('.') // static files like favicon.ico, robots.txt etc.
+    ) {
+        return NextResponse.next();
+    }
+
+    // 4. Check if the pathname already has a supported locale
+    const pathLocale = locales.find(
+        (locale) => path === `/${locale}` || path.startsWith(`/${locale}/`)
+    );
+
+    if (pathLocale) {
+        // Already has a valid locale, continue
+        return NextResponse.next();
+    }
+
+    // 5. No locale in path — redirect to default locale (tr)
+    // e.g., / → /tr, /products → /tr/products
+    const newPath = `/${defaultLocale}${path === '/' ? '' : path}`;
+    return NextResponse.redirect(new URL(newPath, request.url));
 }
 
 export const config = {
-    matcher: ['/admin/:path*', '/uploads/:path*'],
+    matcher: [
+        /*
+         * Match all request paths except for:
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico (favicon file)
+         */
+        '/((?!_next/static|_next/image|favicon.ico).*)',
+    ],
 };
-

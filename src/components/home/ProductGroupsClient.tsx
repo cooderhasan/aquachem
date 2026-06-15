@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, Package } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
+import { Locale } from '@/lib/i18n';
+import { Dictionary } from '@/lib/dictionary';
 
 interface Category {
     id: number;
@@ -18,9 +20,11 @@ interface Category {
 
 interface ProductGroupsClientProps {
     categories: Category[];
+    lang: Locale;
+    dict: Dictionary;
 }
 
-export default function ProductGroupsClient({ categories }: ProductGroupsClientProps) {
+export default function ProductGroupsClient({ categories, lang, dict }: ProductGroupsClientProps) {
     // Helper to get icon component dynamically
     const getIcon = (iconName: string) => {
         const Icon = (LucideIcons as any)[iconName] || Package;
@@ -38,10 +42,16 @@ export default function ProductGroupsClient({ categories }: ProductGroupsClientP
         <section className="py-20 bg-slate-50">
             <div className="container-custom">
                 <div className="text-center mb-16">
-                    <span className="inline-block bg-primary-100 text-primary-700 text-sm font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider">Kapsamlı Çözümler</span>
-                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Endüstriyel Temizlik Kimyasalları Ürün Grupları</h2>
+                    <span className="inline-block bg-primary-100 text-primary-700 text-sm font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider">
+                        {lang === 'en' ? 'Comprehensive Solutions' : 'Kapsamlı Çözümler'}
+                    </span>
+                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                        {lang === 'en' ? 'Industrial Cleaning Chemicals Product Groups' : 'Endüstriyel Temizlik Kimyasalları Ürün Grupları'}
+                    </h2>
                     <p className="text-slate-600 max-w-2xl mx-auto text-lg">
-                        Endüstriyel ve bireysel ihtiyaçlarınız için özel olarak formüle edilmiş geniş ürün yelpazemiz.
+                        {lang === 'en' 
+                            ? 'Our wide range of products specially formulated for your industrial and individual needs.' 
+                            : 'Endüstriyel ve bireysel ihtiyaçlarınız için özel olarak formüle edilmiş geniş ürün yelpazemiz.'}
                     </p>
                 </div>
 
@@ -59,7 +69,7 @@ export default function ProductGroupsClient({ categories }: ProductGroupsClientP
                                 transition={{ delay: index * 0.05 }}
                                 whileHover={{ y: -5 }}
                             >
-                                <Link href={`/products/${cat.slug}`} className="group block h-full">
+                                <Link href={`/${lang}/products/${cat.slug}`} className="group block h-full">
                                     <div className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 h-full border border-slate-100 overflow-hidden flex flex-col">
 
                                         {/* Image Area */}
@@ -92,7 +102,7 @@ export default function ProductGroupsClient({ categories }: ProductGroupsClientP
                                             </h3>
 
                                             <div className="flex items-center text-sm font-medium text-slate-400 transition-colors mt-4">
-                                                <span>Ürünleri İncele</span>
+                                                <span>{dict.products.browseProducts}</span>
                                                 <ArrowRight size={16} className="ml-2 transform group-hover:translate-x-1 transition-transform" />
                                             </div>
                                         </div>

@@ -9,12 +9,15 @@ import { revalidatePath } from 'next/cache';
 export async function createPost(formData: FormData) {
     try {
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string || '';
         const content = formData.get('content') as string;
+        const contentEn = formData.get('contentEn') as string || '';
         const type = formData.get('type') as string || 'news';
         const image = formData.get('image') as string;
 
         await db.insert(posts).values({
             title,
+            titleEn,
             slug: title
                 .toLowerCase()
                 .replace(/ğ/g, 'g')
@@ -27,6 +30,7 @@ export async function createPost(formData: FormData) {
                 .replace(/-+/g, '-')
                 .replace(/^-|-$/g, ''),
             content,
+            contentEn,
             type,
             image,
         });
@@ -43,13 +47,16 @@ export async function createPost(formData: FormData) {
 export async function updatePost(id: number, formData: FormData) {
     try {
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string || '';
         const content = formData.get('content') as string;
+        const contentEn = formData.get('contentEn') as string || '';
         const type = formData.get('type') as string;
         const image = formData.get('image') as string;
 
         await db.update(posts)
             .set({
                 title,
+                titleEn,
                 slug: title
                     .toLowerCase()
                     .replace(/ğ/g, 'g')
@@ -62,6 +69,7 @@ export async function updatePost(id: number, formData: FormData) {
                     .replace(/-+/g, '-')
                     .replace(/^-|-$/g, ''),
                 content,
+                contentEn,
                 type,
                 image,
             })

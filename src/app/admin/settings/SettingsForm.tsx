@@ -152,6 +152,15 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                 />
                             </div>
                             <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Site Başlığı (İngilizce)</label>
+                                <input
+                                    type="text"
+                                    name="siteTitleEn"
+                                    defaultValue={initialSettings?.siteTitleEn || ''}
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                            </div>
+                            <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1">Site Açıklaması</label>
                                 <input
                                     type="text"
@@ -160,7 +169,16 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                     className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 />
                             </div>
-                            <div className="md:col-span-2">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Site Açıklaması (İngilizce)</label>
+                                <input
+                                    type="text"
+                                    name="descriptionEn"
+                                    defaultValue={initialSettings?.descriptionEn || ''}
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                            </div>
+                            <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1">Site Sloganı</label>
                                 <input
                                     type="text"
@@ -170,29 +188,63 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                     className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 />
                             </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Site Sloganı (İngilizce)</label>
+                                <input
+                                    type="text"
+                                    name="siteSloganEn"
+                                    defaultValue={initialSettings?.siteSloganEn || ''}
+                                    placeholder="We work to see the smile on people's faces"
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                            </div>
                         </div>
 
                         <div className="border-t pt-6">
                             <h3 className="text-md font-bold text-slate-800 mb-4">Ana Sayfa Tanıtım Bölümü</h3>
-                            <div>
-                                <label htmlFor="homeIntroTitle" className="block text-sm font-medium text-slate-700 mb-1">Tanıtım Başlığı</label>
-                                <input
-                                    type="text"
-                                    id="homeIntroTitle"
-                                    name="homeIntroTitle"
-                                    defaultValue={initialSettings?.homeIntroTitle || ''}
-                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label htmlFor="homeIntroTitle" className="block text-sm font-medium text-slate-700 mb-1">Tanıtım Başlığı</label>
+                                    <input
+                                        type="text"
+                                        id="homeIntroTitle"
+                                        name="homeIntroTitle"
+                                        defaultValue={initialSettings?.homeIntroTitle || ''}
+                                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="homeIntroTitleEn" className="block text-sm font-medium text-slate-700 mb-1">Tanıtım Başlığı (İngilizce)</label>
+                                    <input
+                                        type="text"
+                                        id="homeIntroTitleEn"
+                                        name="homeIntroTitleEn"
+                                        defaultValue={initialSettings?.homeIntroTitleEn || ''}
+                                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                    />
+                                </div>
                             </div>
-                            <div className="mt-4">
-                                <label htmlFor="homeIntroDescription" className="block text-sm font-medium text-slate-700 mb-1">Tanıtım Açıklaması</label>
-                                <textarea
-                                    id="homeIntroDescription"
-                                    name="homeIntroDescription"
-                                    rows={4}
-                                    defaultValue={initialSettings?.homeIntroDescription || ''}
-                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                                ></textarea>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                                <div>
+                                    <label htmlFor="homeIntroDescription" className="block text-sm font-medium text-slate-700 mb-1">Tanıtım Açıklaması</label>
+                                    <textarea
+                                        id="homeIntroDescription"
+                                        name="homeIntroDescription"
+                                        rows={4}
+                                        defaultValue={initialSettings?.homeIntroDescription || ''}
+                                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label htmlFor="homeIntroDescriptionEn" className="block text-sm font-medium text-slate-700 mb-1">Tanıtım Açıklaması (İngilizce)</label>
+                                    <textarea
+                                        id="homeIntroDescriptionEn"
+                                        name="homeIntroDescriptionEn"
+                                        rows={4}
+                                        defaultValue={initialSettings?.homeIntroDescriptionEn || ''}
+                                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                    ></textarea>
+                                </div>
                             </div>
                         </div>
 
@@ -306,6 +358,15 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                     className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 ></textarea>
                             </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Hakkımızda (İngilizce)</label>
+                                <textarea
+                                    name="aboutUsEn"
+                                    rows={5}
+                                    defaultValue={initialSettings?.aboutUsEn || ''}
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                ></textarea>
+                            </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
                                 <div>
@@ -347,11 +408,29 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                     ></textarea>
                                 </div>
                                 <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Misyonumuz (İngilizce)</label>
+                                    <textarea
+                                        name="missionEn"
+                                        rows={4}
+                                        defaultValue={initialSettings?.missionEn || ''}
+                                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                    ></textarea>
+                                </div>
+                                <div>
                                     <label className="block text-sm font-medium text-slate-700 mb-1">Vizyonumuz</label>
                                     <textarea
                                         name="vision"
                                         rows={4}
                                         defaultValue={initialSettings?.vision || ''}
+                                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">Vizyonumuz (İngilizce)</label>
+                                    <textarea
+                                        name="visionEn"
+                                        rows={4}
+                                        defaultValue={initialSettings?.visionEn || ''}
                                         className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                                     ></textarea>
                                 </div>
@@ -363,6 +442,15 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                     name="humanPolicy"
                                     rows={3}
                                     defaultValue={initialSettings?.humanPolicy || ''}
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                ></textarea>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">İnsan Politikamız (İngilizce)</label>
+                                <textarea
+                                    name="humanPolicyEn"
+                                    rows={3}
+                                    defaultValue={initialSettings?.humanPolicyEn || ''}
                                     className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 ></textarea>
                             </div>
@@ -758,6 +846,17 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                             </div>
 
                             <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Meta Başlık (Title Tag - İngilizce)</label>
+                                <input
+                                    type="text"
+                                    name="metaTitleEn"
+                                    defaultValue={initialSettings?.metaTitleEn || ''}
+                                    placeholder="Aquachems - Respectful Production for People and Nature"
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
+                            </div>
+
+                            <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1">Meta Açıklama (Description)</label>
                                 <textarea
                                     name="metaDescription"
@@ -767,6 +866,17 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                     className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                                 />
                                 <p className="text-xs text-slate-500 mt-1">Google'da görünecek açıklama (150-160 karakter)</p>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Meta Açıklama (Description - İngilizce)</label>
+                                <textarea
+                                    name="metaDescriptionEn"
+                                    rows={3}
+                                    defaultValue={initialSettings?.metaDescriptionEn || ''}
+                                    placeholder="Site description in English..."
+                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                                />
                             </div>
 
                             <div>
