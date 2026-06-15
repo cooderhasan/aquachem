@@ -53,6 +53,10 @@ export async function GET(request: NextRequest) {
     await db.execute(sql`ALTER TABLE "posts" ADD COLUMN IF NOT EXISTS "title_en" text`);
     await db.execute(sql`ALTER TABLE "posts" ADD COLUMN IF NOT EXISTS "content_en" text`);
 
+    // Hero Slides English columns
+    await db.execute(sql`ALTER TABLE "hero_slides" ADD COLUMN IF NOT EXISTS "title_en" text`);
+    await db.execute(sql`ALTER TABLE "hero_slides" ADD COLUMN IF NOT EXISTS "description_en" text`);
+
     return NextResponse.json({
       success: true,
       message: 'Tablo şeması başarıyla güncellendi!'

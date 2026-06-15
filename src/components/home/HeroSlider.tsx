@@ -84,34 +84,36 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
 
                     {/* Content */}
                     <div className="absolute inset-0 flex items-center z-10">
-                        <div className="container-custom text-white max-w-3xl">
-                            <motion.h1
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.2, duration: 0.5 }}
-                                className="text-4xl md:text-6xl font-bold mb-6 tracking-tight leading-tight text-white"
-                            >
-                                {slides[current].title}
-                            </motion.h1>
-                            {slides[current].description && (
-                                <motion.p
+                        <div className="container-custom w-full text-white">
+                            <div className="max-w-3xl">
+                                <motion.h1
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
-                                    transition={{ delay: 0.4, duration: 0.5 }}
-                                    className="text-lg md:text-xl text-slate-300 mb-8 leading-relaxed font-light"
+                                    transition={{ delay: 0.2, duration: 0.5 }}
+                                    className="text-4xl md:text-6xl font-bold mb-6 tracking-tight leading-tight text-white drop-shadow-md"
                                 >
-                                    {slides[current].description}
-                                </motion.p>
-                            )}
-                            <motion.a
-                                href={slides[current].link || '#'}
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.6, duration: 0.5 }}
-                                className="inline-block bg-primary-600 hover:bg-primary-700 text-white px-8 py-3.5 rounded-full font-medium transition-colors shadow-lg hover:shadow-primary-500/50"
-                            >
-                                {getTranslatedButtonText(slides[current].buttonText)}
-                            </motion.a>
+                                    {lang === 'en' && slides[current].titleEn ? slides[current].titleEn : slides[current].title}
+                                </motion.h1>
+                                {(lang === 'en' && slides[current].descriptionEn ? slides[current].descriptionEn : slides[current].description) && (
+                                    <motion.p
+                                        initial={{ y: 20, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        transition={{ delay: 0.4, duration: 0.5 }}
+                                        className="text-xl md:text-2xl text-slate-100 mb-8 leading-relaxed font-normal drop-shadow-md"
+                                    >
+                                        {lang === 'en' && slides[current].descriptionEn ? slides[current].descriptionEn : slides[current].description}
+                                    </motion.p>
+                                )}
+                                <motion.a
+                                    href={slides[current].link || '#'}
+                                    initial={{ y: 20, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ delay: 0.6, duration: 0.5 }}
+                                    className="inline-block bg-primary-600 hover:bg-primary-700 text-white px-8 py-3.5 rounded-full font-medium transition-colors shadow-lg hover:shadow-primary-500/50"
+                                >
+                                    {getTranslatedButtonText(slides[current].buttonText)}
+                                </motion.a>
+                            </div>
                         </div>
                     </div>
                 </motion.div>

@@ -64,7 +64,7 @@ export default function HeroForm({ slide }: HeroFormProps) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">Başlık</label>
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Başlık (TR)</label>
                             <input
                                 name="title"
                                 type="text"
@@ -74,22 +74,43 @@ export default function HeroForm({ slide }: HeroFormProps) {
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">Sıra (Order)</label>
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Başlık (EN)</label>
                             <input
-                                name="order"
-                                type="number"
-                                defaultValue={slide?.order || 0}
+                                name="titleEn"
+                                type="text"
+                                defaultValue={slide?.titleEn || ''}
+                                className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Açıklama (TR)</label>
+                            <textarea
+                                name="description"
+                                rows={3}
+                                defaultValue={slide?.description || ''}
+                                className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 mb-2">Açıklama (EN)</label>
+                            <textarea
+                                name="descriptionEn"
+                                rows={3}
+                                defaultValue={slide?.descriptionEn || ''}
                                 className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">Açıklama</label>
-                        <textarea
-                            name="description"
-                            rows={3}
-                            defaultValue={slide?.description || ''}
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Sıra (Order)</label>
+                        <input
+                            name="order"
+                            type="number"
+                            defaultValue={slide?.order || 0}
                             className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none"
                         />
                     </div>

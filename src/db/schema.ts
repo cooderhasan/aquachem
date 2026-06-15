@@ -179,7 +179,9 @@ export const activityItems = pgTable('activity_items', {
 export const heroSlides = pgTable('hero_slides', {
   id: serial('id').primaryKey(),
   title: text('title').notNull(),
+  titleEn: text('title_en'),
   description: text('description'),
+  descriptionEn: text('description_en'),
   image: text('image').notNull(),
   link: text('link'),
   buttonText: text('button_text'),

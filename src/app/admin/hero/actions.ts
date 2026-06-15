@@ -29,7 +29,9 @@ export async function getHeroSlide(id: number) {
 export async function createHeroSlide(formData: FormData) {
     try {
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string;
         const description = formData.get('description') as string;
+        const descriptionEn = formData.get('descriptionEn') as string;
         const image = formData.get('image') as string;
         const link = formData.get('link') as string;
         const buttonText = formData.get('buttonText') as string;
@@ -38,7 +40,9 @@ export async function createHeroSlide(formData: FormData) {
 
         await db.insert(heroSlides).values({
             title,
+            titleEn,
             description,
+            descriptionEn,
             image,
             link,
             buttonText,
@@ -59,7 +63,9 @@ export async function updateHeroSlide(formData: FormData) {
     try {
         const id = parseInt(formData.get('id') as string);
         const title = formData.get('title') as string;
+        const titleEn = formData.get('titleEn') as string;
         const description = formData.get('description') as string;
+        const descriptionEn = formData.get('descriptionEn') as string;
         const image = formData.get('image') as string;
         const link = formData.get('link') as string;
         const buttonText = formData.get('buttonText') as string;
@@ -68,7 +74,9 @@ export async function updateHeroSlide(formData: FormData) {
 
         await db.update(heroSlides).set({
             title,
+            titleEn,
             description,
+            descriptionEn,
             image,
             link,
             buttonText,
