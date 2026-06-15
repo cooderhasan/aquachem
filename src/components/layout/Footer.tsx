@@ -114,11 +114,11 @@ const Footer = ({ settings, contactLocation, lang, dict }: FooterProps) => {
                     <div>
                         <h3 className="text-white font-bold text-lg mb-6">{dict.footer.productGroups}</h3>
                         <ul className="space-y-3 text-sm">
-                            <li><Link href={`/${lang}/products/genel-temizlik`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Genel Temizlik</Link></li>
-                            <li><Link href={`/${lang}/products/likit-cilt-temizleme`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Likit Cilt Temizleme</Link></li>
-                            <li><Link href={`/${lang}/products/dezenfektan-grubu`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Dezenfektan Grubu</Link></li>
-                            <li><Link href={`/${lang}/products/oto-bakim-grubu`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Oto Bakım Grubu</Link></li>
-                            <li><Link href={`/${lang}/products/teknik-grup`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">Teknik Grup</Link></li>
+                            <li><Link href={`/${lang}/products/genel-temizlik`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{lang === 'en' ? 'General Cleaning' : 'Genel Temizlik'}</Link></li>
+                            <li><Link href={`/${lang}/products/likit-cilt-temizleme`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{lang === 'en' ? 'Liquid Skin Cleaning' : 'Likit Cilt Temizleme'}</Link></li>
+                            <li><Link href={`/${lang}/products/dezenfektan-grubu`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{lang === 'en' ? 'Disinfectant Group' : 'Dezenfektan Grubu'}</Link></li>
+                            <li><Link href={`/${lang}/products/oto-bakim-grubu`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{lang === 'en' ? 'Auto Care Group' : 'Oto Bakım Grubu'}</Link></li>
+                            <li><Link href={`/${lang}/products/teknik-grup`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{lang === 'en' ? 'Technical Group' : 'Teknik Grup'}</Link></li>
                         </ul>
                     </div>
 
