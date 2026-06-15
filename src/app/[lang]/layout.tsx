@@ -34,6 +34,11 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     },
     description,
     keywords,
+    icons: {
+      icon: settings?.favicon || '/favicon.ico',
+      shortcut: settings?.favicon || '/favicon.ico',
+      apple: settings?.favicon || '/favicon.ico',
+    },
     authors: [{ name: 'Aquachems' }],
     creator: 'Aquachems',
     publisher: 'Aquachems',
