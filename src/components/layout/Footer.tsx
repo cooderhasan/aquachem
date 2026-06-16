@@ -9,7 +9,9 @@ import { Dictionary } from '@/lib/dictionary';
 interface ContactLocation {
     id: number;
     title: string;
+    titleEn?: string | null;
     address: string;
+    addressEn?: string | null;
     phone: string | null;
     email: string | null;
 }
@@ -22,6 +24,10 @@ interface FooterProps {
 }
 
 const Footer = ({ settings, contactLocation, lang, dict }: FooterProps) => {
+    const slogan = lang === 'en' ? (settings?.siteSloganEn || settings?.siteSlogan) : settings?.siteSlogan;
+    const description = lang === 'en' ? (settings?.descriptionEn || settings?.description) : settings?.description;
+    const address = lang === 'en' ? (contactLocation?.addressEn || contactLocation?.address) : contactLocation?.address;
+
     return (
         <footer
             style={{ transform: 'translateZ(0)' }}
@@ -40,12 +46,12 @@ const Footer = ({ settings, contactLocation, lang, dict }: FooterProps) => {
                                         style={{ marginTop: settings?.footerLogoPadding ? `${settings.footerLogoPadding}px` : undefined }}
                                         className="h-16 w-auto object-contain"
                                     />
-                                    {settings?.siteSlogan && (
+                                    {slogan && (
                                         <p 
                                             style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize + 2}px` : '12px' }}
                                             className="text-primary-400 font-medium tracking-wider italic font-serif mt-2"
                                         >
-                                            {settings.siteSlogan}
+                                            {slogan}
                                         </p>
                                     )}
                                 </div>
@@ -60,14 +66,14 @@ const Footer = ({ settings, contactLocation, lang, dict }: FooterProps) => {
                                             style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize}px` : '10px' }}
                                             className="text-primary-400 font-medium tracking-wider italic font-serif mt-1"
                                         >
-                                            {settings?.siteSlogan || 'Kimya & İnovasyon'}
+                                            {slogan || (lang === 'en' ? 'Chemistry & Innovation' : 'Kimya & İnovasyon')}
                                         </span>
                                     </div>
                                 </div>
                             )}
                         </Link>
                         <p className="text-slate-400 leading-relaxed text-sm">
-                            {settings?.description || dict.footer.description}
+                            {description || dict.footer.description}
                         </p>
                         <div className="flex gap-4 pt-2">
                             <div className="flex gap-4 pt-2">
@@ -130,7 +136,7 @@ const Footer = ({ settings, contactLocation, lang, dict }: FooterProps) => {
                                 <div className="p-2 bg-slate-800 rounded-lg text-primary-500 shrink-0">
                                     <MapPin size={18} />
                                 </div>
-                                <span className="leading-relaxed">{contactLocation?.address || 'İkitelli OSB Mah. Giyim Sanatkarları 3. Ada C Blok No:57 Başakşehir / İstanbul'}</span>
+                                <span className="leading-relaxed">{address || 'İkitelli OSB Mah. Giyim Sanatkarları 3. Ada C Blok No:57 Başakşehir / İstanbul'}</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <div className="p-2 bg-slate-800 rounded-lg text-primary-500 shrink-0">
