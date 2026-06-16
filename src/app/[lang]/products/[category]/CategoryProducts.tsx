@@ -107,20 +107,20 @@ export default function CategoryProducts({ products, categorySlug, categoryTitle
                                 </p>
 
                                 {/* İki buton: Detay + Teklif Al */}
-                                <div className="flex gap-2 mt-auto">
+                                <div className="flex items-stretch gap-2 mt-auto">
                                     <Link
                                         href={`/${lang}/products/${categorySlug}/${product.slug}`}
-                                        className="flex-1 bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-800 text-sm py-2 px-3 rounded-lg font-medium text-center flex items-center justify-center gap-1 transition-colors"
+                                        className="flex-1 bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-800 text-xs sm:text-sm py-2 px-2 sm:px-3 rounded-lg font-medium text-center flex items-center justify-center gap-1 transition-colors"
                                     >
                                         <span>{lang === 'en' ? 'Explore' : 'İncele'}</span>
-                                        <ArrowRight size={14} />
+                                        <ArrowRight size={14} className="shrink-0" />
                                     </Link>
                                     <button
                                         onClick={() => openQuote(title)}
-                                        className="flex-1 bg-primary-600 hover:bg-primary-700 text-white text-sm py-2 px-3 rounded-lg font-medium flex items-center justify-center gap-1 transition-colors active:scale-95"
+                                        className="flex-1 bg-primary-600 hover:bg-primary-700 text-white text-xs sm:text-sm py-2 px-2 sm:px-3 rounded-lg font-medium flex items-center justify-center gap-1 transition-colors active:scale-95"
                                     >
-                                        <FileText size={14} />
-                                        <span>{dict.header.getQuote}</span>
+                                        <FileText size={14} className="shrink-0" />
+                                        <span className="whitespace-nowrap">{lang === 'en' ? 'Get Quote' : 'Teklif Al'}</span>
                                     </button>
                                 </div>
                             </div>
