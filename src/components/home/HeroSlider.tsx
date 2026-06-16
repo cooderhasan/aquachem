@@ -83,7 +83,7 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
                     </div>
 
                     {/* Content */}
-                    <div className="absolute inset-0 flex items-start pt-[140px] md:pt-[200px] z-10">
+                    <div className="absolute inset-0 flex items-start pt-[180px] md:pt-[220px] z-10">
                         <div className="container-custom w-full text-white">
                             <div className="max-w-3xl">
                                 <motion.h1
