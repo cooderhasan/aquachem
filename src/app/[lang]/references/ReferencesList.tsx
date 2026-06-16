@@ -9,6 +9,7 @@ import { Dictionary } from '@/lib/dictionary';
 interface Category {
     id: number;
     title: string;
+    titleEn?: string | null;
     description: string | null;
     image: string | null;
     slug: string;
@@ -50,18 +51,21 @@ export default function ReferencesList({ references, categories, lang, dict }: R
                     <Filter size={18} />
                     <span>{lang === 'en' ? 'All' : 'Tümü'}</span>
                 </button>
-                {categories.map((cat) => (
-                    <button
-                        key={cat.id}
-                        onClick={() => setSelectedCategory(cat.id)}
-                        className={`px-5 py-3 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${selectedCategory === cat.id
-                            ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/20 scale-105'
-                            : 'bg-white text-slate-500 hover:bg-slate-50 border border-slate-200 hover:border-primary-200 hover:text-primary-600'
-                            }`}
-                    >
-                        <span>{cat.title}</span>
-                    </button>
-                ))}
+                {categories.map((cat) => {
+                    const catTitle = (lang === 'en' && cat.titleEn) ? cat.titleEn : cat.title;
+                    return (
+                        <button
+                            key={cat.id}
+                            onClick={() => setSelectedCategory(cat.id)}
+                            className={`px-5 py-3 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${selectedCategory === cat.id
+                                ? 'bg-primary-600 text-white shadow-lg shadow-primary-500/20 scale-105'
+                                : 'bg-white text-slate-500 hover:bg-slate-50 border border-slate-200 hover:border-primary-200 hover:text-primary-600'
+                                }`}
+                        >
+                            <span>{catTitle}</span>
+                        </button>
+                    );
+                })}
             </div>
 
             {/* References Grid */}
@@ -91,7 +95,11 @@ export default function ReferencesList({ references, categories, lang, dict }: R
                                     </div>
                                     {/* Optional: Show category name on hover */}
                                     <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white text-[10px] px-2 py-1 rounded-md shadow-sm text-slate-500 border border-slate-100">
-                                        {categories.find(c => c.id === ref.categoryId)?.title}
+                                        {(() => {
+                                            const c = categories.find(c => c.id === ref.categoryId);
+                                            if (!c) return '';
+                                            return (lang === 'en' && c.titleEn) ? c.titleEn : c.title;
+                                        })()}
                                     </div>
                                 </motion.div>
                             ))}
