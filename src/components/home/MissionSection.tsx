@@ -11,9 +11,11 @@ interface MissionSectionProps {
     cards?: any[];
     lang?: Locale;
     dict?: Dictionary;
+    settings?: any;
 }
 
-const MissionSection = ({ cards = [], lang = 'tr', dict }: MissionSectionProps) => {
+const MissionSection = ({ cards = [], lang = 'tr', dict, settings }: MissionSectionProps) => {
+    const slogan = lang === 'en' ? (settings?.siteSloganEn || settings?.siteSlogan) : settings?.siteSlogan;
 
     const iconMap: any = {
         'Leaf': Leaf,
@@ -39,6 +41,18 @@ const MissionSection = ({ cards = [], lang = 'tr', dict }: MissionSectionProps) 
                     >
                         {lang === 'en' ? 'Our Values & Approach' : 'Değerlerimiz & Yaklaşımımız'}
                     </motion.span>
+                    {slogan && (
+                        <motion.p
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.05 }}
+                            style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize}px` : undefined }}
+                            className="text-primary-700/80 italic font-medium max-w-2xl mx-auto mb-4 font-[family-name:var(--font-playfair)]"
+                        >
+                            "{slogan}"
+                        </motion.p>
+                    )}
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}

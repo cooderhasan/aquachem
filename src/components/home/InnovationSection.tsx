@@ -21,9 +21,11 @@ interface InnovationSectionProps {
     items: InnovationItem[];
     lang?: Locale;
     dict?: Dictionary;
+    settings?: any;
 }
 
-const InnovationSection = ({ items, lang = 'tr', dict }: InnovationSectionProps) => {
+const InnovationSection = ({ items, lang = 'tr', dict, settings }: InnovationSectionProps) => {
+    const slogan = lang === 'en' ? (settings?.siteSloganEn || settings?.siteSlogan) : settings?.siteSlogan;
     // Icons map based on index or title keywords if we wanted dynamic icons, 
     // but for now we cycle through base icons or map specific ones.
     // Since admin doesn't select icon yet, we preserve the design's 3 distinct styles by index.
@@ -42,6 +44,14 @@ const InnovationSection = ({ items, lang = 'tr', dict }: InnovationSectionProps)
                     <span className="inline-block bg-white text-primary-700 text-sm font-bold px-6 py-2 rounded-full mb-6 uppercase tracking-wider shadow-sm border border-slate-100">
                         {lang === 'en' ? 'Continuous Development' : 'Sürekli Gelişim'}
                     </span>
+                    {slogan && (
+                        <p 
+                            style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize}px` : undefined }}
+                            className="text-primary-700/80 italic font-medium max-w-2xl mx-auto mb-6 font-[family-name:var(--font-playfair)]"
+                        >
+                            "{slogan}"
+                        </p>
+                    )}
                     <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">
                         {lang === 'en' ? (
                             <>Industrial Chemistry <span className="text-primary-600">R&D Studies</span></>

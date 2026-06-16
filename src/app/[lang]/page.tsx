@@ -41,8 +41,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
   const sectionComponents: Record<string, React.ReactNode> = {
     products: <ProductGroups key="products" lang={lang} dict={dict} />,
-    mission: <MissionSection key="mission" cards={missionCards} lang={lang} dict={dict} />,
-    innovation: <InnovationSection key="innovation" items={innovationItems} lang={lang} dict={dict} />,
+    mission: <MissionSection key="mission" cards={missionCards} lang={lang} dict={dict} settings={settings} />,
+    innovation: <InnovationSection key="innovation" items={innovationItems} lang={lang} dict={dict} settings={settings} />,
     activities: <ActivitiesSection key="activities" activities={activities} posts={posts} catalogUrl={settings?.catalogUrl} lang={lang} dict={dict} />,
     stats: <StatsSection key="stats" stats={stats} lang={lang} dict={dict} />,
     references: <ReferencesCarousel key="references" references={references || []} settings={settings} lang={lang} dict={dict} />,

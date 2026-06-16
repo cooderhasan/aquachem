@@ -17,6 +17,7 @@
 
   --font-sans: var(--font-inter), sans-serif;
   --font-ubuntu: var(--font-ubuntu), sans-serif;
+  --font-playfair: var(--font-playfair), serif;
 }
 
 :root {

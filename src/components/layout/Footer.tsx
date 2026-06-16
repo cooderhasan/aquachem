@@ -47,14 +47,6 @@ const Footer = ({ settings, contactLocation, lang, dict }: FooterProps) => {
                                         style={{ marginTop: settings?.footerLogoPadding ? `${settings.footerLogoPadding}px` : undefined }}
                                         className="h-16 w-auto object-contain"
                                     />
-                                    {slogan && (
-                                        <p 
-                                            style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize + 2}px` : '12px' }}
-                                            className="text-primary-400 font-medium tracking-wider italic font-serif mt-2"
-                                        >
-                                            {slogan}
-                                        </p>
-                                    )}
                                 </div>
                             ) : (
                                 <div className="flex items-center gap-3">
@@ -63,12 +55,6 @@ const Footer = ({ settings, contactLocation, lang, dict }: FooterProps) => {
                                     </div>
                                     <div className="flex flex-col">
                                         <span className="text-2xl font-bold text-white leading-none tracking-tight">AQUACHEMS</span>
-                                        <span 
-                                            style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize}px` : '10px' }}
-                                            className="text-primary-400 font-medium tracking-wider italic font-serif mt-1"
-                                        >
-                                            {slogan || (lang === 'en' ? 'Chemistry & Innovation' : 'Kimya & İnovasyon')}
-                                        </span>
                                     </div>
                                 </div>
                             )}

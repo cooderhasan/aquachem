@@ -133,16 +133,6 @@ const Header = ({ settings, contactLocation, lang, dict }: HeaderProps) => {
                                         className="h-full w-auto object-contain"
                                     />
                                 </div>
-                                {((lang === 'en' ? settings?.siteSloganEn : settings?.siteSlogan) || settings?.siteSlogan) && (
-                                     <span 
-                                         style={{ fontSize: settings?.siteSloganFontSize ? `${settings.siteSloganFontSize}px` : '10px' }}
-                                         className={`text-slate-500 font-medium tracking-wider italic font-serif transition-all duration-300 ${
-                                             scrolled ? 'max-h-0 opacity-0 overflow-hidden mt-0' : 'max-h-8 opacity-100 mt-1'
-                                         } hidden sm:inline-block`}
-                                     >
-                                         {(lang === 'en' ? settings?.siteSloganEn : settings?.siteSlogan) || settings?.siteSlogan}
-                                     </span>
-                                 )}
                             </div>
                         ) : (
                             <>
