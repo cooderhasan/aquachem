@@ -28,6 +28,7 @@ export interface SectionItem {
 }
 
 export const ALL_SECTIONS: SectionItem[] = [
+    { id: 'intro', name: 'Tanıtım Bölümü', description: 'Giriş/Tanıtım başlığı ve açıklaması', icon: '📝' },
     { id: 'products', name: 'Ürün Grupları', description: 'Endüstriyel kimyasal ürün grupları', icon: '🧪' },
     { id: 'mission', name: 'Değerlerimiz & Yaklaşımımız', description: 'Çevre bilinci, insan odaklı, inovatif üretim kartları', icon: '💚' },
     { id: 'innovation', name: 'İnovatif Üretim', description: 'Ar-Ge ve inovasyon bölümü', icon: '💡' },
