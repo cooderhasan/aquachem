@@ -37,6 +37,8 @@ export async function GET(request: NextRequest) {
     await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "home_intro_title_en" text`);
     await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "home_intro_description_en" text`);
     await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "site_slogan_en" text DEFAULT 'We work to see the smile on people''s faces'`);
+    await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "logo_en" text`);
+    await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "footer_logo_en" text`);
 
     // Categories English columns
     await db.execute(sql`ALTER TABLE "categories" ADD COLUMN IF NOT EXISTS "title_en" text`);
