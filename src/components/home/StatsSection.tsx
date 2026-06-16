@@ -23,11 +23,12 @@ interface StatsSectionProps {
 const getTranslatedLabel = (label: string, lang?: string) => {
     if (lang !== 'en') return label;
     const lower = label.toLowerCase().trim();
-    if (lower.includes('tecrübe') || lower.includes('experience')) return 'Years of Experience';
+    if (lower.includes('tecrübe') || lower.includes('deneyim') || lower.includes('experience') || lower.includes('yıl')) return 'Years of Experience';
     if (lower.includes('müşteri') || lower.includes('customer')) return 'Happy Customers';
     if (lower.includes('ürün') || lower.includes('product')) return 'Product Types';
     if (lower.includes('ülke') || lower.includes('countr')) return 'Countries';
     if (lower.includes('proje') || lower.includes('project')) return 'Completed Projects';
+    if (lower.includes('belge') || lower.includes('sertifika') || lower.includes('certificate') || lower.includes('kalite') || lower.includes('award')) return 'Quality Certificates';
     return label;
 };
 
