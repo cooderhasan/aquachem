@@ -131,9 +131,13 @@ export interface Dictionary {
         title: string;
         subtitle: string;
         name: string;
+        namePlaceholder: string;
         company: string;
+        companyPlaceholder: string;
         email: string;
+        emailPlaceholder: string;
         phone: string;
+        phonePlaceholder: string;
         quantityNote: string;
         quantityPlaceholder: string;
         submit: string;
@@ -273,9 +277,13 @@ const dictionaries: Record<Locale, Dictionary> = {
             title: 'Teklif Talebi',
             subtitle: 'Formu doldurun, en kısa sürede dönelim',
             name: 'Ad Soyad',
+            namePlaceholder: 'Ahmet Yılmaz',
             company: 'Şirket Adı',
+            companyPlaceholder: 'Firma Adı A.Ş.',
             email: 'E-posta',
+            emailPlaceholder: 'ahmet@firma.com',
             phone: 'Telefon',
+            phonePlaceholder: '0532 000 00 00',
             quantityNote: 'Miktar / Açıklama',
             quantityPlaceholder: 'İhtiyaç duyduğunuz miktar, kullanım alanı veya özel notlarınız...',
             submit: 'Teklif Talebi Gönder',
@@ -410,9 +418,13 @@ const dictionaries: Record<Locale, Dictionary> = {
             title: 'Quote Request',
             subtitle: 'Fill out the form and we will get back to you soon',
             name: 'Full Name',
+            namePlaceholder: 'John Doe',
             company: 'Company Name',
+            companyPlaceholder: 'Company Name Inc.',
             email: 'Email',
+            emailPlaceholder: 'john@company.com',
             phone: 'Phone',
+            phonePlaceholder: '+1 (555) 000-0000',
             quantityNote: 'Quantity / Description',
             quantityPlaceholder: 'Required quantity, usage area or special notes...',
             submit: 'Send Quote Request',

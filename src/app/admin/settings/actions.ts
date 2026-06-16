@@ -58,6 +58,7 @@ export async function updateSettings(formData: FormData) {
         };
 
         const logo = formData.get('logo') as string;
+        const logoEn = formData.get('logoEn') as string;
         const favicon = formData.get('favicon') as string;
         const aboutImage = formData.get('aboutImage') as string;
         const catalogUrl = formData.get('catalogUrl') as string;
@@ -71,6 +72,7 @@ export async function updateSettings(formData: FormData) {
         const ogImage = formData.get('ogImage') as string;
         const whatsappNumber = formData.get('whatsappNumber') as string;
         const footerLogo = formData.get('footerLogo') as string;
+        const footerLogoEn = formData.get('footerLogoEn') as string;
         const logoHeight = parseInt(formData.get('logoHeight') as string) || 48;
         const menuFontSize = parseInt(formData.get('menuFontSize') as string) || 14;
         const headerPadding = parseInt(formData.get('headerPadding') as string) || 20;
@@ -107,6 +109,7 @@ export async function updateSettings(formData: FormData) {
                 description,
                 descriptionEn,
                 logo: logo || currentSettings.logo,
+                logoEn: logoEn || currentSettings.logoEn,
                 favicon: favicon || currentSettings.favicon,
                 aboutImage: aboutImage || currentSettings.aboutImage,
                 catalogUrl: catalogUrl || currentSettings.catalogUrl,
@@ -130,6 +133,7 @@ export async function updateSettings(formData: FormData) {
                 ogImage: ogImage || currentSettings.ogImage,
                 whatsappNumber: whatsappNumber || currentSettings.whatsappNumber,
                 footerLogo: footerLogo || currentSettings.footerLogo,
+                footerLogoEn: footerLogoEn || currentSettings.footerLogoEn,
                 logoHeight: logoHeight || currentSettings.logoHeight,
                 menuFontSize: menuFontSize || currentSettings.menuFontSize,
                 headerPadding: headerPadding || currentSettings.headerPadding,
@@ -181,7 +185,10 @@ export async function updateSettings(formData: FormData) {
                 metaKeywords,
                 ogImage,
                 whatsappNumber,
+                logo,
+                logoEn,
                 footerLogo,
+                footerLogoEn,
                 logoHeight,
                 menuFontSize,
                 headerPadding,

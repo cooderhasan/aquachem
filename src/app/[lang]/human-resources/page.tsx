@@ -192,7 +192,7 @@ export default function HumanResourcesPage() {
                                         type="email"
                                         required
                                         className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
-                                        placeholder="ornek@email.com"
+                                        placeholder={lang === 'en' ? 'example@email.com' : 'ornek@email.com'}
                                     />
                                 </div>
 

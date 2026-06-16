@@ -3,6 +3,33 @@ import type { NextRequest } from 'next/server';
 import { decrypt } from '@/lib/auth';
 import { locales, defaultLocale } from '@/lib/i18n';
 
+function getPreferredLocale(request: NextRequest): string {
+    const acceptLanguage = request.headers.get('accept-language');
+    if (!acceptLanguage) return defaultLocale;
+
+    try {
+        const parsedLangs = acceptLanguage.split(',').map(lang => {
+            const [code, qVal] = lang.split(';q=');
+            return {
+                code: code.trim().split('-')[0].toLowerCase(),
+                q: qVal ? parseFloat(qVal) : 1.0
+            };
+        });
+
+        parsedLangs.sort((a, b) => b.q - a.q);
+
+        for (const lang of parsedLangs) {
+            if (locales.includes(lang.code as any)) {
+                return lang.code;
+            }
+        }
+    } catch (e) {
+        console.error('Error parsing accept-language header:', e);
+    }
+
+    return defaultLocale;
+}
+
 export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
 
@@ -47,9 +74,10 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    // 5. No locale in path — redirect to default locale (tr)
-    // e.g., / → /tr, /products → /tr/products
-    const newPath = `/${defaultLocale}${path === '/' ? '' : path}`;
+    // 5. No locale in path — redirect to preferred locale based on browser settings
+    // e.g., / → /en or /tr, /products → /en/products or /tr/products
+    const preferredLocale = getPreferredLocale(request);
+    const newPath = `/${preferredLocale}${path === '/' ? '' : path}`;
     return NextResponse.redirect(new URL(newPath, request.url));
 }
 

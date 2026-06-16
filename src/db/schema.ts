@@ -109,6 +109,7 @@ export const settings = pgTable('settings', {
   description: text('description'),
   descriptionEn: text('description_en'),
   logo: text('logo'),
+  logoEn: text('logo_en'),
   favicon: text('favicon'),
   contactEmail: text('contact_email'),
   contactPhone: text('contact_phone'),
@@ -133,6 +134,7 @@ export const settings = pgTable('settings', {
   ogImage: text('og_image'),
   whatsappNumber: text('whatsapp_number'),
   footerLogo: text('footer_logo'),
+  footerLogoEn: text('footer_logo_en'),
   logoHeight: integer('logo_height').default(48), // Logo height in pixels (default 48px approx h-12)
   menuFontSize: integer('menu_font_size').default(14), // Menu font size in pixels (default 14px text-sm)
   headerPadding: integer('header_padding').default(20), // Header vertical padding in pixels (default 20px py-5)

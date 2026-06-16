@@ -24,6 +24,7 @@ const Header = ({ settings, contactLocation, lang, dict }: HeaderProps) => {
     const [isQuoteOpen, setIsQuoteOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const pathname = usePathname();
+    const headerLogo = lang === 'en' ? (settings?.logoEn || settings?.logo) : settings?.logo;
 
     // Scroll effect
     useEffect(() => {
@@ -120,14 +121,14 @@ const Header = ({ settings, contactLocation, lang, dict }: HeaderProps) => {
                 <div className="container-custom flex justify-between items-center">
                     {/* Logo */}
                     <Link href={`/${lang}`} className="flex items-center gap-3 group">
-                        {settings?.logo ? (
+                        {headerLogo ? (
                             <div className="flex flex-col items-start">
                                 <div
                                     className="relative w-auto min-w-[120px]"
                                     style={{ height: settings?.logoHeight ? `${settings.logoHeight}px` : '48px' }}
                                 >
                                     <img
-                                        src={settings.logo}
+                                        src={headerLogo}
                                         alt={(lang === 'en' ? settings?.siteTitleEn : settings?.siteTitle) || settings?.siteTitle || 'Logo'}
                                         className="h-full w-auto object-contain"
                                     />

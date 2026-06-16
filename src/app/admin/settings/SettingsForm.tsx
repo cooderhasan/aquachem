@@ -26,10 +26,12 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
     const [logo, setLogo] = useState(initialSettings?.logo || '');
+    const [logoEn, setLogoEn] = useState(initialSettings?.logoEn || '');
     const [favicon, setFavicon] = useState(initialSettings?.favicon || '');
     const [aboutImage, setAboutImage] = useState(initialSettings?.aboutImage || '');
     const [ogImage, setOgImage] = useState(initialSettings?.ogImage || '');
     const [footerLogo, setFooterLogo] = useState(initialSettings?.footerLogo || '');
+    const [footerLogoEn, setFooterLogoEn] = useState(initialSettings?.footerLogoEn || '');
     const [pdfUrl, setPdfUrl] = useState(initialSettings?.catalogUrl || '');
 
     // Menu Items State (Default to hardcoded list if empty)
@@ -130,8 +132,10 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
 
             <form onSubmit={handleSubmit} className="space-y-6 pb-20">
                 <input type="hidden" name="logo" value={logo} />
+                <input type="hidden" name="logoEn" value={logoEn} />
                 <input type="hidden" name="favicon" value={favicon} />
                 <input type="hidden" name="footerLogo" value={footerLogo} />
+                <input type="hidden" name="footerLogoEn" value={footerLogoEn} />
                 <input type="hidden" name="aboutImage" value={aboutImage} />
                 <input type="hidden" name="ogImage" value={ogImage} />
                 <input type="hidden" name="menuItems" value={JSON.stringify(menuItems)} />
@@ -520,6 +524,18 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                         description="Önerilen: 200x60 px • PNG (şeffaf) • Max 1MB"
                                     />
                                 </div>
+                                <div className="mt-4">
+                                    <label className="block text-sm font-medium text-slate-700 mb-2">Site Logosu (İngilizce)</label>
+                                    <div className="max-w-xs">
+                                        <ImageUpload
+                                            value={logoEn}
+                                            onChange={(url) => setLogoEn(url)}
+                                            onRemove={() => setLogoEn('')}
+                                            label="Logo Yükle (EN)"
+                                            description="Önerilen: 200x60 px • PNG (şeffaf) • Max 1MB"
+                                        />
+                                    </div>
+                                </div>
                                 <div className="mt-4 p-4 bg-slate-50 rounded-lg space-y-3">
                                     <h4 className="font-semibold text-sm text-slate-900 border-b pb-1 mb-2">Header (Üst Kısım) Ayarları</h4>
                                     <div>
@@ -596,6 +612,16 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                             onChange={(url) => setFooterLogo(url)}
                                             onRemove={() => setFooterLogo('')}
                                             label="Footer Logo"
+                                            description="Önerilen: 200x60 px • PNG (şeffaf) • Max 1MB"
+                                        />
+                                    </div>
+                                    <div className="mt-4">
+                                        <label className="block text-sm font-medium text-slate-700 mb-2">Footer Logosu (İngilizce)</label>
+                                        <ImageUpload
+                                            value={footerLogoEn}
+                                            onChange={(url) => setFooterLogoEn(url)}
+                                            onRemove={() => setFooterLogoEn('')}
+                                            label="Footer Logo (EN)"
                                             description="Önerilen: 200x60 px • PNG (şeffaf) • Max 1MB"
                                         />
                                     </div>

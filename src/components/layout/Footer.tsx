@@ -27,6 +27,7 @@ const Footer = ({ settings, contactLocation, lang, dict }: FooterProps) => {
     const slogan = lang === 'en' ? (settings?.siteSloganEn || settings?.siteSlogan) : settings?.siteSlogan;
     const description = lang === 'en' ? (settings?.descriptionEn || settings?.description) : settings?.description;
     const address = lang === 'en' ? (contactLocation?.addressEn || contactLocation?.address) : contactLocation?.address;
+    const activeFooterLogo = lang === 'en' ? (settings?.footerLogoEn || settings?.footerLogo) : settings?.footerLogo;
 
     return (
         <footer
@@ -38,10 +39,10 @@ const Footer = ({ settings, contactLocation, lang, dict }: FooterProps) => {
                     {/* Brand Info */}
                     <div className="col-span-2 lg:col-span-1 space-y-6">
                         <Link href={`/${lang}`} className="flex flex-col items-start gap-3 group">
-                            {settings?.footerLogo ? (
+                            {activeFooterLogo ? (
                                 <div className="flex flex-col items-start">
                                     <img
-                                        src={settings.footerLogo}
+                                        src={activeFooterLogo}
                                         alt="Aquachems Logo"
                                         style={{ marginTop: settings?.footerLogoPadding ? `${settings.footerLogoPadding}px` : undefined }}
                                         className="h-16 w-auto object-contain"

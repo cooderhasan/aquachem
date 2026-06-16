@@ -22,9 +22,13 @@ export default function QuoteModal({ isOpen, onClose, productName, dict }: Quote
         title: 'Teklif Talebi',
         subtitle: 'Formu doldurun, en kısa sürede dönelim',
         name: 'Ad Soyad',
+        namePlaceholder: 'Ahmet Yılmaz',
         company: 'Şirket Adı',
+        companyPlaceholder: 'Firma Adı A.Ş.',
         email: 'E-posta',
+        emailPlaceholder: 'ahmet@firma.com',
         phone: 'Telefon',
+        phonePlaceholder: '0532 000 00 00',
         quantityNote: 'Miktar / Açıklama',
         quantityPlaceholder: 'İhtiyaç duyduğunuz miktar, kullanım alanı veya özel notlarınız...',
         submit: 'Teklif Talebi Gönder',
@@ -174,7 +178,7 @@ export default function QuoteModal({ isOpen, onClose, productName, dict }: Quote
                                                         name="name"
                                                         type="text"
                                                         required
-                                                        placeholder="Ahmet Yılmaz"
+                                                        placeholder={t.namePlaceholder}
                                                         className="w-full pl-4 pr-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-slate-800 placeholder-slate-400 text-sm"
                                                     />
                                                 </div>
@@ -188,7 +192,7 @@ export default function QuoteModal({ isOpen, onClose, productName, dict }: Quote
                                                     <input
                                                         name="company"
                                                         type="text"
-                                                        placeholder="Firma Adı A.Ş."
+                                                        placeholder={t.companyPlaceholder}
                                                         className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-slate-800 placeholder-slate-400 text-sm"
                                                     />
                                                 </div>
@@ -207,7 +211,7 @@ export default function QuoteModal({ isOpen, onClose, productName, dict }: Quote
                                                         name="email"
                                                         type="email"
                                                         required
-                                                        placeholder="ahmet@firma.com"
+                                                        placeholder={t.emailPlaceholder}
                                                         className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-slate-800 placeholder-slate-400 text-sm"
                                                     />
                                                 </div>
@@ -222,7 +226,7 @@ export default function QuoteModal({ isOpen, onClose, productName, dict }: Quote
                                                         name="phone"
                                                         type="tel"
                                                         required
-                                                        placeholder="0532 000 00 00"
+                                                        placeholder={t.phonePlaceholder}
                                                         className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-slate-800 placeholder-slate-400 text-sm"
                                                     />
                                                 </div>
