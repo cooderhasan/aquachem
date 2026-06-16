@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, Loader2, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { searchProducts } from '@/app/actions/search';
+import { Locale } from '@/lib/i18n';
 
 // Simulating a useDebounce hook if not exists or just keep simple inside
 function useDebounceValue<T>(value: T, delay: number): T {
@@ -23,9 +24,10 @@ function useDebounceValue<T>(value: T, delay: number): T {
 interface SearchModalProps {
     isOpen: boolean;
     onClose: () => void;
+    lang?: Locale;
 }
 
-export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
+export default function SearchModal({ isOpen, onClose, lang = 'tr' }: SearchModalProps) {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -121,7 +123,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                             type="text"
                                             value={query}
                                             onChange={(e) => setQuery(e.target.value)}
-                                            placeholder="Ürün adı, açıklama veya özellik ara..."
+                                            placeholder={lang === 'en' ? 'Search product name, description or feature...' : 'Ürün adı, açıklama veya özellik ara...'}
                                             className="w-full h-14 text-lg md:text-xl text-slate-800 placeholder:text-slate-400 focus:outline-none bg-transparent"
                                         />
                                         {query && (
@@ -140,7 +142,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                         {isLoading && (
                                             <div className="flex flex-col items-center justify-center py-12 text-slate-400">
                                                 <Loader2 size={32} className="animate-spin mb-4 text-primary-500" />
-                                                <p>Aranıyor...</p>
+                                                <p>{lang === 'en' ? 'Searching...' : 'Aranıyor...'}</p>
                                             </div>
                                         )}
 
@@ -148,51 +150,64 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                         {!isLoading && query.length >= 2 && results.length === 0 && (
                                             <div className="flex flex-col items-center justify-center py-12 text-slate-400">
                                                 <Search size={48} className="mb-4 opacity-20" />
-                                                <p>"{query}" için sonuç bulunamadı.</p>
+                                                <p>{lang === 'en' ? `No results found for "${query}".` : `"${query}" için sonuç bulunamadı.`}</p>
                                             </div>
                                         )}
 
                                         {/* Initial State (No query) */}
                                         {!query && (
                                             <div className="py-12 px-8 text-center text-slate-400">
-                                                <p className="text-sm"> Aramaya başlamak için yazmaya başlayın.</p>
+                                                <p className="text-sm">{lang === 'en' ? 'Start typing to begin search.' : 'Aramaya başlamak için yazmaya başlayın.'}</p>
                                             </div>
                                         )}
 
                                         {/* Results List */}
                                         {!isLoading && results.length > 0 && (
                                             <div className="divide-y divide-slate-100">
-                                                {results.map((product) => (
-                                                    <Link
-                                                        key={product.id}
-                                                        href={product.categorySlug ? `/products/${product.categorySlug}/${product.slug}` : `/products/search/${product.slug}`}
-                                                        onClick={onClose}
-                                                        className="flex items-center gap-4 p-4 hover:bg-primary-50 transition-colors group"
-                                                    >
-                                                        <div className="w-16 h-16 bg-white rounded-lg border border-slate-200 p-1 flex-shrink-0 flex items-center justify-center">
-                                                            {product.image ? (
-                                                                <img src={product.image} alt={product.title} className="max-w-full max-h-full object-contain" />
-                                                            ) : (
-                                                                <Search size={20} className="text-slate-300" />
-                                                            )}
-                                                        </div>
-                                                        <div className="flex-1 min-w-0">
-                                                            <h4 className="font-bold text-slate-800 group-hover:text-primary-700 truncate">{product.title}</h4>
-                                                            <p className="text-sm text-slate-500 truncate">
-                                                                {product.shortDescription || (product.description ? product.description.substring(0, 100) : 'Ürün detaylarını inceleyin')}
-                                                            </p>
-                                                        </div>
-                                                        <div className="text-slate-300 group-hover:text-primary-400 group-hover:translate-x-1 transition-all">
-                                                            <ArrowRight size={20} />
-                                                        </div>
-                                                    </Link>
-                                                ))}
+                                                {results.map((product) => {
+                                                    const prodTitle = (lang === 'en' && product.titleEn) ? product.titleEn : product.title;
+                                                    const prodDesc = (() => {
+                                                        const desc = lang === 'en'
+                                                            ? (product.shortDescriptionEn || product.descriptionEn || '')
+                                                            : (product.shortDescription || product.description || '');
+                                                        if (desc) {
+                                                            return desc.substring(0, 100) + (desc.length > 100 ? '...' : '');
+                                                        }
+                                                        return lang === 'en' ? 'Explore product details' : 'Ürün detaylarını inceleyin';
+                                                    })();
+
+                                                    return (
+                                                        <Link
+                                                            key={product.id}
+                                                            href={product.categorySlug ? `/${lang}/products/${product.categorySlug}/${product.slug}` : `/${lang}/products/search/${product.slug}`}
+                                                            onClick={onClose}
+                                                            className="flex items-center gap-4 p-4 hover:bg-primary-50 transition-colors group"
+                                                        >
+                                                            <div className="w-16 h-16 bg-white rounded-lg border border-slate-200 p-1 flex-shrink-0 flex items-center justify-center">
+                                                                {product.image ? (
+                                                                    <img src={product.image} alt={prodTitle} className="max-w-full max-h-full object-contain" />
+                                                                ) : (
+                                                                    <Search size={20} className="text-slate-300" />
+                                                                )}
+                                                            </div>
+                                                            <div className="flex-1 min-w-0">
+                                                                <h4 className="font-bold text-slate-800 group-hover:text-primary-700 truncate">{prodTitle}</h4>
+                                                                <p className="text-sm text-slate-500 truncate">
+                                                                    {prodDesc}
+                                                                </p>
+                                                            </div>
+                                                            <div className="text-slate-300 group-hover:text-primary-400 group-hover:translate-x-1 transition-all">
+                                                                <ArrowRight size={20} />
+                                                            </div>
+                                                        </Link>
+                                                    );
+                                                })}
                                             </div>
                                         )}
                                     </div>
                                     {results.length > 0 && (
                                         <div className="bg-slate-50 p-2 text-center text-xs text-slate-400 border-t border-slate-100">
-                                            Toplam {results.length} sonuç bulundu.
+                                            {lang === 'en' ? `Found ${results.length} results in total.` : `Toplam ${results.length} sonuç bulundu.`}
                                         </div>
                                     )}
                                 </div>

@@ -285,6 +285,7 @@ const Header = ({ settings, contactLocation, lang, dict }: HeaderProps) => {
             <SearchModal
                 isOpen={isSearchOpen}
                 onClose={() => setIsSearchOpen(false)}
+                lang={lang}
             />
 
             {/* Quote Modal */}
