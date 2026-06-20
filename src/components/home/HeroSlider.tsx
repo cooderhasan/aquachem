@@ -83,14 +83,14 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
                     </div>
 
                     {/* Content */}
-                    <div className="absolute inset-0 flex items-start pt-[180px] md:pt-[220px] z-10">
+                    <div className="absolute inset-0 flex items-start pt-[160px] md:pt-[180px] xl:pt-[220px] z-10">
                         <div className="container-custom w-full text-white">
                             <div className="max-w-3xl">
                                 <motion.h1
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.2, duration: 0.5 }}
-                                    className="text-4xl md:text-6xl font-bold mb-6 tracking-tight leading-tight text-white drop-shadow-md"
+                                    className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[48px] 2xl:text-[56px] font-bold mb-6 tracking-tight leading-tight text-white drop-shadow-md"
                                 >
                                     {lang === 'en' && slides[current].titleEn ? slides[current].titleEn : slides[current].title}
                                 </motion.h1>
@@ -99,7 +99,7 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
                                         initial={{ y: 20, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
                                         transition={{ delay: 0.4, duration: 0.5 }}
-                                        className="text-xl md:text-2xl text-slate-100 mb-8 leading-relaxed font-normal drop-shadow-md"
+                                        className="text-base lg:text-lg xl:text-xl text-slate-100 mb-8 leading-relaxed font-normal drop-shadow-md"
                                     >
                                         {lang === 'en' && slides[current].descriptionEn ? slides[current].descriptionEn : slides[current].description}
                                     </motion.p>

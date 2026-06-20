@@ -159,7 +159,10 @@ async function insertRows(tableName: string, rows: Record<string, any>[]): Promi
         });
 
         const placeholders = keys.map((_, i) => `$${i + 1}`);
-        const columns = keys.map(k => `"${k}"`);
+        const columns = keys.map(k => {
+            const snakeKey = k.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+            return `"${snakeKey}"`;
+        });
 
         const query = `INSERT INTO "${tableName}" (${columns.join(', ')}) VALUES (${placeholders.join(', ')}) ON CONFLICT (id) DO NOTHING`;
 
