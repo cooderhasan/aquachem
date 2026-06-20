@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Phone, Droplets, Mail, MapPin, Facebook, Instagram, Linkedin, Twitter, Search } from 'lucide-react';
+import { Menu, X, Phone, Droplets, Mail, Facebook, Instagram, Linkedin, Twitter, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SearchModal from '@/components/ui/SearchModal';
 import QuoteModal from '@/components/shared/QuoteModal';
@@ -85,27 +85,6 @@ const Header = ({ settings, contactLocation, lang, dict }: HeaderProps) => {
                             <Phone size={14} />
                             <span>{contactLocation?.phone || '0533 683 85 63'}</span>
                         </a>
-                        <div className="hidden md:flex items-center gap-2 hover:text-white transition-colors cursor-default">
-                            <MapPin size={14} />
-                            <span className="truncate max-w-[300px]">
-                                {(() => {
-                                    const addr = contactLocation?.address;
-                                    if (!addr) return 'İstanbul, Türkiye';
-
-                                    const lower = addr.toLowerCase();
-                                    if (lower.includes('konya')) return 'Konya, Türkiye';
-                                    if (lower.includes('izmir')) return 'İzmir, Türkiye';
-                                    if (lower.includes('istanbul') || lower.includes('istanbul')) return 'İstanbul, Türkiye';
-                                    if (lower.includes('ankara')) return 'Ankara, Türkiye';
-
-                                    if (addr.includes('/')) {
-                                        return addr.split('/').pop()?.trim() + ', Türkiye';
-                                    }
-
-                                    return 'Türkiye';
-                                })()}
-                            </span>
-                        </div>
                     </div>
                 </div>
             </div>
