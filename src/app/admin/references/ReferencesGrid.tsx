@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 import { Plus, Trash2, Upload, Loader2, X } from 'lucide-react';
-import { addReference, deleteReference } from './actions';
+import { addReference, deleteReference, updateReferenceOrder } from './actions';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -97,6 +97,26 @@ export default function ReferencesGrid({ initialReferences, categories }: Refere
         }
     };
 
+    const handleOrderChange = async (id: number, order: number) => {
+        // Update local state immediately so input displays new value
+        setReferences(prev => 
+            prev.map(ref => ref.id === id ? { ...ref, order } : ref)
+        );
+
+        try {
+            const result = await updateReferenceOrder(id, order);
+            if (result.success) {
+                toast.success('Sıralama güncellendi');
+                router.refresh();
+            } else {
+                toast.error(result.error || 'Sıralama güncellenemedi');
+            }
+        } catch (error: any) {
+            console.error(error);
+            toast.error(error.message || 'Sıralama güncellenirken hata oluştu');
+        }
+    };
+
     const triggerUpload = () => {
         fileInputRef.current?.click();
     };
@@ -184,6 +204,18 @@ export default function ReferencesGrid({ initialReferences, categories }: Refere
                         <div className="absolute bottom-2 left-2 bg-slate-100 text-slate-500 text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
                             {categories.find(c => c.id === ref.categoryId)?.title || '-'}
                         </div>
+                        
+                        {/* Sıra numarası girişi (Hover durumunda görünür) */}
+                        <div className="absolute bottom-2 right-2 bg-white/95 backdrop-blur-sm border border-slate-200 rounded-lg px-2 py-1 flex items-center gap-1 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                            <span className="text-[10px] text-slate-400 font-bold">Sıra:</span>
+                            <input
+                                type="number"
+                                value={ref.order ?? 0}
+                                onChange={(e) => handleOrderChange(ref.id, parseInt(e.target.value) || 0)}
+                                className="w-10 text-center text-xs font-bold border border-slate-200 rounded focus:outline-none focus:ring-1 focus:ring-primary-500 bg-white p-0.5"
+                            />
+                        </div>
+
                         <button
                             onClick={() => handleDelete(ref.id)}
                             className="absolute top-2 right-2 bg-red-100 text-red-500 p-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-200 z-10"

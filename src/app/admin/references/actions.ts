@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/db';
 import { references } from '@/db/schema';
-import { eq, desc } from 'drizzle-orm';
+import { eq, desc, asc } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import fs from 'fs';
 import path from 'path';
@@ -10,11 +10,25 @@ import crypto from 'crypto';
 
 export async function getReferences() {
     try {
-        const result = await db.select().from(references).orderBy(desc(references.id));
+        const result = await db.select().from(references).orderBy(asc(references.order), desc(references.id));
         return result;
     } catch (error) {
         console.error('Failed to fetch references:', error);
         return [];
+    }
+}
+
+export async function updateReferenceOrder(id: number, order: number) {
+    try {
+        await db.update(references)
+            .set({ order })
+            .where(eq(references.id, id));
+        revalidatePath('/admin/references');
+        revalidatePath('/');
+        return { success: true };
+    } catch (error: any) {
+        console.error('Failed to update reference order:', error);
+        return { success: false, error: error.message || 'Failed to update reference order' };
     }
 }
 
