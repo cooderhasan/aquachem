@@ -25,7 +25,7 @@ COPY . .
 # Accept build-time env vars
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
-ENV NODE_OPTIONS="--max-old-space-size=2048"
+ENV NODE_OPTIONS="--max-old-space-size=1024"
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
