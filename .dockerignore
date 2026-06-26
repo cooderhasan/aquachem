@@ -1,0 +1,32 @@
+# Ignore dependencies
+node_modules
+/node_modules
+.npm
+/node_modules/
+
+# Ignore build outputs
+.next
+/.next
+out
+build
+dist
+.next/
+
+# Ignore local database and uploads
+sqlite.db
+public/uploads
+/public/uploads
+uploads.tar.gz
+
+# Ignore Git and metadata
+.git
+.github
+.gitignore
+.claude
+Yeni klasör
+
+# Ignore local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
