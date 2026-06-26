@@ -8,7 +8,7 @@ import { desc } from 'drizzle-orm';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 interface PageProps {
     params: Promise<{ lang: Locale }>;
@@ -73,7 +73,6 @@ export default async function CertificatesPage({ params }: PageProps) {
                                         alt={cert.title}
                                         fill
                                         className="object-contain p-4 group-hover:scale-105 transition-transform"
-                                        unoptimized
                                     />
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-800 text-center mb-3 group-hover:text-primary-700 transition-colors">

@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { FlaskConical, Lightbulb, TrendingUp } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
     const { lang } = await params;

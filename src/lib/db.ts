@@ -6,6 +6,9 @@ import * as schema from '@/db/schema';
 // Example: postgresql://user:password@localhost:5432/aquachems
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    max: 10,
+    min: 2,
+    idleTimeoutMillis: 30000,
 });
 
 export const db = drizzle(pool, { schema });

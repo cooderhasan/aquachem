@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
     const { lang } = await params;
@@ -68,7 +68,6 @@ export default async function CorporatePage({ params }: { params: Promise<{ lang
                         alt="Corporate Hero"
                         fill
                         className="object-cover opacity-50"
-                        unoptimized
                     />
                 </div>
                 <div className="container-custom relative z-20">
@@ -134,7 +133,6 @@ export default async function CorporatePage({ params }: { params: Promise<{ lang
                                         alt={dict.corporate.aboutUs}
                                         fill
                                         className="object-cover transform group-hover:scale-105 transition duration-700"
-                                        unoptimized
                                     />
 
                                     {/* Abstract decorative element */}

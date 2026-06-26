@@ -69,7 +69,6 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
                             fill
                             className="object-cover"
                             priority
-                            unoptimized
                         />
                         {/* Overlays */}
                         <div

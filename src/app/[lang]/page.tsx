@@ -20,7 +20,7 @@ import { getDictionary } from '@/lib/dictionary';
 
 const DEFAULT_SECTION_ORDER = ['intro', 'products', 'mission', 'innovation', 'activities', 'stats', 'references'];
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang: rawLang } = await params;
