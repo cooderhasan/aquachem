@@ -21,12 +21,16 @@ export async function GET(
             return NextResponse.json({ error: 'Invalid path' }, { status: 400 });
         }
 
-        if (!fs.existsSync(filePath)) {
-            console.error('File not found:', filePath);
-            return NextResponse.json({ error: 'File not found' }, { status: 404 });
+        let fileBuffer: Buffer;
+        try {
+            fileBuffer = await fs.promises.readFile(filePath);
+        } catch (readError: any) {
+            if (readError.code === 'ENOENT') {
+                console.error('File not found:', filePath);
+                return NextResponse.json({ error: 'File not found' }, { status: 404 });
+            }
+            throw readError;
         }
-
-        const fileBuffer = fs.readFileSync(filePath);
         const fileName = path.basename(filePath);
         const ext = path.extname(fileName).toLowerCase();
 
