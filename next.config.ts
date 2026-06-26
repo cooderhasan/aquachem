@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
     ],
   },
   experimental: {
-    cpus: 2,
+    cpus: 1,
     serverActions: {
       bodySizeLimit: '10mb',
     },
