@@ -27,14 +27,25 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const lang = (rawLang === 'en' ? 'en' : 'tr') as Locale;
   const dict = getDictionary(lang);
   
-  const slides = await getHeroSlides();
-  const activities = await getActivities();
-  const innovationItems = await getInnovationItems();
-  const stats = await getStats();
-  const settings = await getSettings();
-  const references = await getReferences();
-  const posts = await getPosts();
-  const missionCards = await getMissionCards();
+  const [
+    slides,
+    activities,
+    innovationItems,
+    stats,
+    settings,
+    references,
+    posts,
+    missionCards
+  ] = await Promise.all([
+    getHeroSlides(),
+    getActivities(),
+    getInnovationItems(),
+    getStats(),
+    getSettings(),
+    getReferences(),
+    getPosts(),
+    getMissionCards()
+  ]);
 
   const rawOrder = (settings?.homeSectionOrder as string[] | null);
   const sectionOrder = (rawOrder && rawOrder.length > 0) ? rawOrder : DEFAULT_SECTION_ORDER;

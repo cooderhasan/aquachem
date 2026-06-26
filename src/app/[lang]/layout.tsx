@@ -100,8 +100,10 @@ export default async function LocaleLayout({
 }) {
   const { lang: rawLang } = await params;
   const lang = (rawLang === 'en' ? 'en' : 'tr') as Locale;
-  const settings = await getSettings();
-  const contactLocation = await getMainContactLocation();
+  const [settings, contactLocation] = await Promise.all([
+    getSettings(),
+    getMainContactLocation()
+  ]);
   const dict = getDictionary(lang);
 
   const whatsappNumber = settings?.whatsappNumber || contactLocation?.phone?.replace(/\D/g, '') || "905551234567";

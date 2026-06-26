@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 
 import { Locale } from '@/lib/i18n';
 import { Dictionary } from '@/lib/dictionary';
@@ -54,32 +55,36 @@ const ReferencesCarousel = ({ references, settings, lang = 'tr', dict }: Referen
                         {references.map((ref, index) => (
                             <div
                                 key={`${ref.id}-${index}-a`}
-                                className="flex items-center justify-center transition-all duration-300 transform hover:scale-125 hover:drop-shadow-2xl"
+                                className="relative flex items-center justify-center transition-all duration-300 transform hover:scale-125 hover:drop-shadow-2xl"
                                 style={{
                                     height: settings?.referenceLogoHeight ? `${settings.referenceLogoHeight}px` : '100px',
                                     width: settings?.referenceLogoHeight ? `${Number(settings.referenceLogoHeight) * 2.2}px` : '220px'
                                 }}
                             >
-                                <img
+                                <Image
                                     src={ref.image}
                                     alt={ref.title}
-                                    className="max-w-full max-h-full object-contain mix-blend-multiply transition-all duration-300"
+                                    fill
+                                    sizes="(max-width: 768px) 150px, 220px"
+                                    className="object-contain mix-blend-multiply transition-all duration-300"
                                 />
                             </div>
                         ))}
                         {references.map((ref, index) => (
                             <div
                                 key={`${ref.id}-${index}-b`}
-                                className="flex items-center justify-center transition-all duration-300 transform hover:scale-125 hover:drop-shadow-2xl"
+                                className="relative flex items-center justify-center transition-all duration-300 transform hover:scale-125 hover:drop-shadow-2xl"
                                 style={{
                                     height: settings?.referenceLogoHeight ? `${settings.referenceLogoHeight}px` : '100px',
                                     width: settings?.referenceLogoHeight ? `${Number(settings.referenceLogoHeight) * 2.2}px` : '220px'
                                 }}
                             >
-                                <img
+                                <Image
                                     src={ref.image}
                                     alt={ref.title}
-                                    className="max-w-full max-h-full object-contain mix-blend-multiply transition-all duration-300"
+                                    fill
+                                    sizes="(max-width: 768px) 150px, 220px"
+                                    className="object-contain mix-blend-multiply transition-all duration-300"
                                 />
                             </div>
                         ))}

@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Leaf, Smile, Radio, ArrowRight, CheckCircle2 } from 'lucide-react';
 
@@ -108,10 +109,12 @@ const MissionSection = ({ cards = [], lang = 'tr', dict, settings }: MissionSect
                                 >
                                     <div className="relative h-64 rounded-[1.5rem] overflow-hidden mb-6">
                                         <div className={`absolute inset-0 ${color.bg}/10 group-hover:${color.bg}/0 transition-colors z-10`} />
-                                        <img
+                                        <Image
                                             src={card.image || 'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?q=80&w=800&auto=format&fit=crop'}
                                             alt={cardTitle}
-                                            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                            fill
+                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                            className="object-cover transform group-hover:scale-110 transition-transform duration-700"
                                         />
                                         <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-2xl z-20 shadow-lg">
                                             <IconComponent className={color.text} size={24} />
