@@ -69,6 +69,8 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
                             fill
                             className="object-cover"
                             priority
+                            sizes="100vw"
+                            quality={75}
                         />
                         {/* Overlays */}
                         <div
@@ -140,6 +142,7 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
                     <button
                         key={index}
                         onClick={() => setCurrent(index)}
+                        aria-label={`Slayt ${index + 1}`}
                         className={`w-3 h-3 rounded-full transition-all ${index === current ? 'bg-primary-500 w-8' : 'bg-white/50 hover:bg-white'
                             }`}
                     />
