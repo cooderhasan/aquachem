@@ -25,11 +25,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: Promise<{ lang?: string }>;
 }) {
   return (
-    <html>
+    <html lang="tr" suppressHydrationWarning>
       <body className={`${ubuntu.variable} ${playfair.variable} font-sans antialiased text-slate-600`}>
         {children}
       </body>

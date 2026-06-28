@@ -110,6 +110,7 @@ export default async function LocaleLayout({
 
   return (
     <>
+      <script dangerouslySetInnerHTML={{ __html: `document.documentElement.lang="${lang}"` }} />
       <Header settings={settings} contactLocation={contactLocation} lang={lang} dict={dict} />
       <main className="flex-1">
         {children}

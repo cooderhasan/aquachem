@@ -77,11 +77,11 @@ const Header = ({ settings, contactLocation, lang, dict }: HeaderProps) => {
             <div className={`bg-slate-900 text-slate-300 text-xs py-2 transition-all duration-300 overflow-hidden ${scrolled ? 'h-0 opacity-0' : 'h-10 opacity-100'}`}>
                 <div className="container-custom flex justify-end items-center h-full">
                     <div className="flex items-center gap-4 md:gap-6">
-                        <a href={`mailto:${contactLocation?.email || 'info@aquachems.com'}`} className="hidden sm:flex items-center gap-2 hover:text-white transition-colors">
+                        <a href={`mailto:${contactLocation?.email || 'info@aquachems.com'}`} className="hidden sm:flex items-center gap-2 hover:text-white transition-colors" aria-label={`E-posta: ${contactLocation?.email || 'info@aquachems.com'}`}>
                             <Mail size={14} />
                             <span>{contactLocation?.email || 'info@aquachems.com'}</span>
                         </a>
-                        <a href={`tel:${contactLocation?.phone?.replace(/\s/g, '') || '05336838563'}`} className="flex items-center gap-2 hover:text-white transition-colors whitespace-nowrap">
+                        <a href={`tel:${contactLocation?.phone?.replace(/\s/g, '') || '05336838563'}`} className="flex items-center gap-2 hover:text-white transition-colors whitespace-nowrap" aria-label={`Telefon: ${contactLocation?.phone || '0533 683 85 63'}`}>
                             <Phone size={14} />
                             <span>{contactLocation?.phone || '0533 683 85 63'}</span>
                         </a>
@@ -173,6 +173,7 @@ const Header = ({ settings, contactLocation, lang, dict }: HeaderProps) => {
 
                         <button
                             onClick={() => setIsQuoteOpen(true)}
+                            aria-label={dict.header.getQuote}
                             className={`
                                 ml-4 px-7 py-3 rounded-full font-bold text-sm transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5
                                 ${scrolled
@@ -198,6 +199,7 @@ const Header = ({ settings, contactLocation, lang, dict }: HeaderProps) => {
                         <button
                             className="text-slate-600 hover:text-primary-600 transition-colors p-2"
                             onClick={() => setIsOpen(!isOpen)}
+                            aria-label={isOpen ? dict.header.closeMenu || 'Menüyü kapat' : dict.header.openMenu || 'Menüyü aç'}
                         >
                             {isOpen ? <X size={28} /> : <Menu size={28} />}
                         </button>
@@ -231,6 +233,7 @@ const Header = ({ settings, contactLocation, lang, dict }: HeaderProps) => {
                                         setIsOpen(false);
                                         setIsQuoteOpen(true);
                                     }}
+                                    aria-label={dict.header.getQuoteMobile}
                                 >
                                     {dict.header.getQuoteMobile}
                                 </button>

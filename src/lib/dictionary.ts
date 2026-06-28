@@ -19,6 +19,8 @@ export interface Dictionary {
         getQuote: string;
         getQuoteMobile: string;
         search: string;
+        openMenu: string;
+        closeMenu: string;
     };
 
     // Footer
@@ -187,6 +189,8 @@ const dictionaries: Record<Locale, Dictionary> = {
             getQuote: 'Teklif Al',
             getQuoteMobile: 'Teklif İsteyin',
             search: 'Arama Yap',
+            openMenu: 'Menüyü aç',
+            closeMenu: 'Menüyü kapat',
         },
         footer: {
             quickLinks: 'Hızlı Erişim',
@@ -328,6 +332,8 @@ const dictionaries: Record<Locale, Dictionary> = {
             getQuote: 'Get a Quote',
             getQuoteMobile: 'Request a Quote',
             search: 'Search',
+            openMenu: 'Open menu',
+            closeMenu: 'Close menu',
         },
         footer: {
             quickLinks: 'Quick Links',
