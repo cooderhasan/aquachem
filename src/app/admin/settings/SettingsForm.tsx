@@ -33,6 +33,8 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
     const [footerLogo, setFooterLogo] = useState(initialSettings?.footerLogo || '');
     const [footerLogoEn, setFooterLogoEn] = useState(initialSettings?.footerLogoEn || '');
     const [pdfUrl, setPdfUrl] = useState(initialSettings?.catalogUrl || '');
+    const [titleColor, setTitleColor] = useState(initialSettings?.heroTitleColor || '#ffffff');
+    const [descColor, setDescColor] = useState(initialSettings?.heroDescColor || '#f1f5f9');
 
     // Menu Items State (Default to hardcoded list if empty)
     const [menuItems, setMenuItems] = useState(
@@ -712,6 +714,90 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                         }}
                                     />
                                     <p className="text-xs text-slate-500 mt-1">Yazıların altındaki geçişli siyahın yoğunluğu (Soldan sağa).</p>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-lg border border-slate-200 mt-4">
+                                <div className="space-y-4">
+                                    <h4 className="font-semibold text-sm text-slate-800 border-b pb-1">Büyük Yazı (Başlık) Ayarları</h4>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-xs font-medium text-slate-700 mb-1">Yazı Boyutu (px)</label>
+                                            <input
+                                                type="number"
+                                                name="heroTitleFontSize"
+                                                defaultValue={initialSettings?.heroTitleFontSize || 48}
+                                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-medium text-slate-700 mb-1">Yazı Rengi</label>
+                                            <div className="flex gap-2">
+                                                <input
+                                                    type="color"
+                                                    value={titleColor}
+                                                    onChange={(e) => setTitleColor(e.target.value)}
+                                                    className="w-10 h-10 border border-slate-300 rounded-lg cursor-pointer bg-white"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    name="heroTitleColor"
+                                                    value={titleColor}
+                                                    onChange={(e) => setTitleColor(e.target.value)}
+                                                    className="w-full text-sm text-slate-600 px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <h4 className="font-semibold text-sm text-slate-800 border-b pb-1">Küçük Yazı (Açıklama) Ayarları</h4>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-xs font-medium text-slate-700 mb-1">Yazı Boyutu (px)</label>
+                                            <input
+                                                type="number"
+                                                name="heroDescFontSize"
+                                                defaultValue={initialSettings?.heroDescFontSize || 18}
+                                                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-medium text-slate-700 mb-1">Yazı Rengi</label>
+                                            <div className="flex gap-2">
+                                                <input
+                                                    type="color"
+                                                    value={descColor}
+                                                    onChange={(e) => setDescColor(e.target.value)}
+                                                    className="w-10 h-10 border border-slate-300 rounded-lg cursor-pointer bg-white"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    name="heroDescColor"
+                                                    value={descColor}
+                                                    onChange={(e) => setDescColor(e.target.value)}
+                                                    className="w-full text-sm text-slate-600 px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="md:col-span-2 border-t pt-4 flex items-center gap-3">
+                                    <input
+                                        type="checkbox"
+                                        name="heroTextShadowEnabled"
+                                        id="heroTextShadowEnabled"
+                                        defaultChecked={initialSettings?.heroTextShadowEnabled !== false}
+                                        className="h-4 w-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500 cursor-pointer"
+                                    />
+                                    <div className="text-sm">
+                                        <label htmlFor="heroTextShadowEnabled" className="font-medium text-slate-700 cursor-pointer">
+                                            Yazı Gölgesini (Text-Shadow) Aktif Et
+                                        </label>
+                                        <p className="text-xs text-slate-500">Açık renkli görsellerin üzerinde yazıların okunabilirliğini artırmak için gölge ekler.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

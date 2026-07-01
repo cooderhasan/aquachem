@@ -24,6 +24,11 @@ export async function GET(request: NextRequest) {
     await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "site_slogan" text DEFAULT 'İnsanların yüzündeki gülümsemeyi görmek için çalışıyoruz'`);
     await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "site_slogan_font_size" integer DEFAULT 10`);
     await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "home_section_order" jsonb DEFAULT '[]'`);
+    await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "hero_title_font_size" integer DEFAULT 48`);
+    await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "hero_title_color" text DEFAULT '#ffffff'`);
+    await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "hero_desc_font_size" integer DEFAULT 18`);
+    await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "hero_desc_color" text DEFAULT '#f1f5f9'`);
+    await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "hero_text_shadow_enabled" boolean DEFAULT true`);
 
     // Settings English columns
     await db.execute(sql`ALTER TABLE "settings" ADD COLUMN IF NOT EXISTS "site_title_en" text`);

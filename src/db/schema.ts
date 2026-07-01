@@ -146,6 +146,11 @@ export const settings = pgTable('settings', {
   referenceLogoHeight: integer('reference_logo_height').default(100), // Reference logo height in pixels (default 100px)
   heroOverlayOpacity: integer('hero_overlay_opacity').default(60), // Hero slider image opacity (0-100)
   heroGradientOpacity: integer('hero_gradient_opacity').default(80), // Hero slider gradient opacity (0-100)
+  heroTitleFontSize: integer('hero_title_font_size').default(48), // Hero title font size in pixels (default 48)
+  heroTitleColor: text('hero_title_color').default('#ffffff'), // Hero title color (default #ffffff)
+  heroDescFontSize: integer('hero_desc_font_size').default(18), // Hero description font size in pixels (default 18)
+  heroDescColor: text('hero_desc_color').default('#f1f5f9'), // Hero description color (default #f1f5f9)
+  heroTextShadowEnabled: boolean('hero_text_shadow_enabled').default(true), // Toggle text shadow (default true)
   homeIntroTitle: text('home_intro_title'),
   homeIntroTitleEn: text('home_intro_title_en'),
   homeIntroDescription: text('home_intro_description'),

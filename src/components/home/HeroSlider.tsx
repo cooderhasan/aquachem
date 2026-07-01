@@ -49,6 +49,11 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
 
     const overlayOpacity = settings?.heroOverlayOpacity !== undefined ? settings.heroOverlayOpacity / 100 : 0.6;
     const gradientOpacity = settings?.heroGradientOpacity !== undefined ? settings.heroGradientOpacity / 100 : 0.8;
+    const titleSize = settings?.heroTitleFontSize !== undefined ? settings.heroTitleFontSize : 48;
+    const titleColor = settings?.heroTitleColor || '#ffffff';
+    const descSize = settings?.heroDescFontSize !== undefined ? settings.heroDescFontSize : 18;
+    const descColor = settings?.heroDescColor || '#f1f5f9';
+    const textShadowEnabled = settings?.heroTextShadowEnabled !== undefined ? settings.heroTextShadowEnabled : true;
 
     return (
         <section className="relative h-[600px] md:h-[700px] overflow-hidden bg-slate-900 pt-20">
@@ -97,8 +102,14 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.2, duration: 0.5 }}
-                                    className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[48px] 2xl:text-[56px] font-bold mb-6 tracking-tight leading-tight text-white"
-                                    style={{ textShadow: '0 2px 10px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.6)' }}
+                                    className="font-bold mb-6 tracking-tight leading-tight"
+                                    style={{ 
+                                        fontSize: `clamp(24px, 4.5vw, ${titleSize}px)`,
+                                        color: titleColor,
+                                        textShadow: textShadowEnabled 
+                                            ? '0 2px 10px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.6)' 
+                                            : 'none'
+                                    }}
                                 >
                                     {lang === 'en' && slides[current].titleEn ? slides[current].titleEn : slides[current].title}
                                 </motion.h1>
@@ -107,8 +118,14 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
                                         initial={{ y: 20, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
                                         transition={{ delay: 0.4, duration: 0.5 }}
-                                        className="text-base lg:text-lg xl:text-xl text-slate-100 mb-8 leading-relaxed font-normal"
-                                        style={{ textShadow: '0 1px 6px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.5)' }}
+                                        className="mb-8 leading-relaxed font-normal"
+                                        style={{ 
+                                            fontSize: `clamp(14px, 2vw, ${descSize}px)`,
+                                            color: descColor,
+                                            textShadow: textShadowEnabled 
+                                                ? '0 1px 6px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.5)' 
+                                                : 'none'
+                                        }}
                                     >
                                         {lang === 'en' && slides[current].descriptionEn ? slides[current].descriptionEn : slides[current].description}
                                     </motion.p>
