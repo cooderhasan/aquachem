@@ -67,19 +67,25 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
                             src={slides[current].image}
                             alt={slides[current].title}
                             fill
-                            className="object-cover"
+                            className="object-cover z-0"
                             priority
                             sizes="100vw"
                             quality={75}
                         />
                         {/* Overlays */}
                         <div
-                            className="absolute inset-0 bg-slate-950 transition-opacity duration-300"
-                            style={{ opacity: overlayOpacity }}
+                            className="absolute inset-0 transition-opacity duration-300"
+                            style={{ 
+                                backgroundColor: `rgba(2, 6, 23, ${overlayOpacity})`,
+                                zIndex: 1 
+                            }}
                         />
                         <div
-                            className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-transparent transition-opacity duration-300"
-                            style={{ opacity: gradientOpacity }}
+                            className="absolute inset-0 transition-opacity duration-300"
+                            style={{ 
+                                backgroundImage: `linear-gradient(to right, rgba(2, 6, 23, ${gradientOpacity}) 0%, rgba(2, 6, 23, ${gradientOpacity * 0.7}) 50%, rgba(2, 6, 23, 0) 100%)`,
+                                zIndex: 2
+                            }}
                         />
                     </div>
 
@@ -91,7 +97,8 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.2, duration: 0.5 }}
-                                    className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[48px] 2xl:text-[56px] font-bold mb-6 tracking-tight leading-tight text-white drop-shadow-md"
+                                    className="text-3xl sm:text-4xl lg:text-[42px] xl:text-[48px] 2xl:text-[56px] font-bold mb-6 tracking-tight leading-tight text-white"
+                                    style={{ textShadow: '0 2px 10px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.6)' }}
                                 >
                                     {lang === 'en' && slides[current].titleEn ? slides[current].titleEn : slides[current].title}
                                 </motion.h1>
@@ -100,7 +107,8 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
                                         initial={{ y: 20, opacity: 0 }}
                                         animate={{ y: 0, opacity: 1 }}
                                         transition={{ delay: 0.4, duration: 0.5 }}
-                                        className="text-base lg:text-lg xl:text-xl text-slate-100 mb-8 leading-relaxed font-normal drop-shadow-md"
+                                        className="text-base lg:text-lg xl:text-xl text-slate-100 mb-8 leading-relaxed font-normal"
+                                        style={{ textShadow: '0 1px 6px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 0.5)' }}
                                     >
                                         {lang === 'en' && slides[current].descriptionEn ? slides[current].descriptionEn : slides[current].description}
                                     </motion.p>
