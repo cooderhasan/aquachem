@@ -4,6 +4,8 @@ import { getMainContactLocation } from '@/app/admin/contact/actions';
 import { Locale } from '@/lib/i18n';
 import { Metadata } from 'next';
 
+import { getAlternates } from '@/lib/seo';
+
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
@@ -13,6 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
         description: lang === 'en' 
             ? 'Aquachems privacy policy regarding your personal data.' 
             : 'Kişisel verilerinizin korunması ile ilgili Aquachems gizlilik politikası.',
+        alternates: getAlternates(lang, '/privacy'),
     };
 }
 

@@ -11,6 +11,8 @@ interface PageProps {
     params: Promise<{ lang: string }>;
 }
 
+import { getAlternates } from '@/lib/seo';
+
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -20,6 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
         title: dict.seo.referencesTitle,
         description: dict.references.pageDescription,
+        alternates: getAlternates(lang, '/references'),
     };
 }
 

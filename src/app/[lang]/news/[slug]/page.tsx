@@ -7,6 +7,8 @@ import { Metadata } from 'next';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
+import { getAlternates } from '@/lib/seo';
+
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale; slug: string }> }): Promise<Metadata> {
     const resolvedParams = await params;
     const post = await getPostBySlug(resolvedParams.slug);
@@ -20,6 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
     return {
         title: title,
         description: content?.substring(0, 160),
+        alternates: getAlternates(resolvedParams.lang, `/news/${resolvedParams.slug}`),
     };
 }
 

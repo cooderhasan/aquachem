@@ -59,9 +59,11 @@ async function getRelatedProducts(categoryId: number) {
     }
 }
 
+import { getAlternates } from '@/lib/seo';
+
 // Dinamik SEO metadata
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { slug, lang } = await params;
+    const { category: categorySlug, slug, lang } = await params;
     const product = await getProduct(slug);
 
     if (!product) {
@@ -78,6 +80,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
         title: title,
         description,
+        alternates: getAlternates(lang, `/products/${categorySlug}/${slug}`),
         openGraph: {
             title: `${title} | Aquachems`,
             description,

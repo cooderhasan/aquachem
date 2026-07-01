@@ -8,6 +8,8 @@ import { desc } from 'drizzle-orm';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
+import { getAlternates } from '@/lib/seo';
+
 export const revalidate = 60;
 
 interface PageProps {
@@ -20,6 +22,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
         title: dict.seo.certificatesTitle,
         description: dict.certificates.pageDescription,
+        alternates: getAlternates(lang, '/certificates'),
     };
 }
 

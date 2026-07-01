@@ -85,11 +85,17 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
         : `/${lang}/products/${categorySlug}`;
     const canonicalUrl = `${siteUrl}${canonicalPath}`;
 
+    const queryPart = currentPage > 1 ? `?page=${currentPage}` : '';
+
     return {
         title: pageTitle,
         description,
         alternates: {
             canonical: canonicalUrl,
+            languages: {
+                tr: `/tr/products/${categorySlug}${queryPart}`,
+                en: `/en/products/${categorySlug}${queryPart}`,
+            }
         },
         openGraph: {
             title: `${pageTitle} | ${lang === 'en' ? 'Aquachems Products' : 'Aquachems Ürünleri'}`,

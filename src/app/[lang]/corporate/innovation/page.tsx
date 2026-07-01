@@ -3,6 +3,8 @@ import { Metadata } from 'next';
 import { FlaskConical, Lightbulb, TrendingUp } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
 
+import { getAlternates } from '@/lib/seo';
+
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
@@ -12,6 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
         description: lang === 'en' 
             ? 'Learn about Aquachems R&D studies, P&D processes and innovation culture.' 
             : 'Aquachems AR-GE çalışmaları, ÜR-GE süreçleri ve inovasyon kültürü hakkında bilgi edinin.',
+        alternates: getAlternates(lang, '/corporate/innovation'),
     };
 }
 

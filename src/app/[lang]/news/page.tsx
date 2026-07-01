@@ -6,6 +6,8 @@ import { Metadata } from 'next';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
+import { getAlternates } from '@/lib/seo';
+
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
@@ -14,6 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
     return {
         title: dict.news.pageTitle,
         description: dict.news.pageDescription,
+        alternates: getAlternates(lang, '/news'),
     };
 }
 

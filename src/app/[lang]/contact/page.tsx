@@ -6,6 +6,8 @@ import ContactForm from './ContactForm';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
+import { getAlternates } from '@/lib/seo';
+
 interface PageProps {
     params: Promise<{ lang: Locale }>;
 }
@@ -18,6 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
         title: dict.seo.contactTitle,
         description: dict.seo.contactDescription,
+        alternates: getAlternates(lang, '/contact'),
         openGraph: {
             title: `${dict.seo.contactTitle} | Aquachems`,
             description: dict.seo.contactDescription,

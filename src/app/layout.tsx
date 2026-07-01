@@ -23,15 +23,16 @@ export const metadata: Metadata = {
   description: 'Aquachems - İnsana ve Doğaya Saygılı Üretim',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
   params: Promise<{ lang?: string }>;
 }) {
+  const { lang } = await params;
   return (
-    <html lang="tr" suppressHydrationWarning>
+    <html lang={lang || 'tr'} suppressHydrationWarning>
       <body className={`${ubuntu.variable} ${playfair.variable} font-sans antialiased text-slate-600`}>
         {children}
       </body>

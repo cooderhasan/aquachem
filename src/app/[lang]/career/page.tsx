@@ -4,6 +4,7 @@ import { Users, Target, Heart } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 import { Metadata } from 'next';
+import { getAlternates } from '@/lib/seo';
 
 export const revalidate = 60;
 
@@ -13,6 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
     return {
         title: dict.career.pageTitle,
         description: dict.career.pageDescription,
+        alternates: getAlternates(lang, '/career'),
     };
 }
 

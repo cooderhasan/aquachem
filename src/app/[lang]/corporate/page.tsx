@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
+import { getAlternates } from '@/lib/seo';
+
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
@@ -14,6 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
     return {
         title: dict.seo.corporateTitle,
         description: dict.seo.corporateDescription,
+        alternates: getAlternates(lang, '/corporate'),
         openGraph: {
             title: `${dict.seo.corporateTitle} | Aquachems`,
             description: dict.seo.corporateDescription,

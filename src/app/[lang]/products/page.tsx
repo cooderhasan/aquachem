@@ -9,6 +9,8 @@ import { Metadata } from 'next';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
+import { getAlternates } from '@/lib/seo';
+
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
@@ -17,6 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: Loc
     return {
         title: dict.seo.productsTitle,
         description: dict.seo.productsDescription,
+        alternates: getAlternates(lang, '/products'),
         openGraph: {
             title: `${dict.seo.productsTitle} | Aquachems`,
             description: dict.seo.productsDescription,
