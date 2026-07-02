@@ -10,6 +10,11 @@ import { sendMail } from '@/lib/mail';
 
 export async function submitApplication(formData: FormData) {
     try {
+        const honeypot = formData.get('website_url') as string;
+        if (honeypot) {
+            console.log('Spam bot detected via legacy career action honeypot!');
+            return { success: true };
+        }
         const name = formData.get('name') as string;
         const email = formData.get('email') as string;
         const phone = formData.get('phone') as string;

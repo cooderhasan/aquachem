@@ -6,6 +6,11 @@ import { revalidatePath } from 'next/cache';
 import { sendMail } from '@/lib/mail';
 
 export async function submitApplication(formData: FormData) {
+    const honeypot = formData.get('website_url') as string;
+    if (honeypot) {
+        console.log('Spam bot detected via HR application honeypot!');
+        return { success: true };
+    }
     const name = formData.get('name') as string;
     const phone = formData.get('phone') as string;
     const email = formData.get('email') as string;

@@ -7,6 +7,11 @@ import { sendMail } from '@/lib/mail';
 
 export async function submitQuoteRequest(formData: FormData) {
     try {
+        const honeypot = formData.get('website_url') as string;
+        if (honeypot) {
+            console.log('Spam bot detected via quote request honeypot!');
+            return { success: true };
+        }
         const name = formData.get('name') as string;
         const email = formData.get('email') as string;
         const phone = formData.get('phone') as string;

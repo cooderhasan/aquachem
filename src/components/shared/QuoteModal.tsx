@@ -160,6 +160,10 @@ export default function QuoteModal({ isOpen, onClose, productName, dict }: Quote
                                     </motion.div>
                                 ) : (
                                     <form onSubmit={handleSubmit} className="space-y-4">
+                                        {/* Honeypot field for spam prevention */}
+                                        <div className="hidden" style={{ display: 'none' }} aria-hidden="true">
+                                            <input type="text" name="website_url" tabIndex={-1} autoComplete="off" />
+                                        </div>
                                         {status === 'error' && (
                                             <div className="bg-red-50 text-red-600 p-4 rounded-xl flex items-center gap-2 text-sm">
                                                 <AlertCircle size={16} />

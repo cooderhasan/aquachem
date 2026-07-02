@@ -9,6 +9,11 @@ import { v4 as uuidv4 } from "uuid";
 export async function POST(request: Request) {
     try {
         const formData = await request.formData();
+        const honeypot = formData.get("website_url") as string;
+        if (honeypot) {
+            console.log('Spam bot detected via Career API route honeypot!');
+            return NextResponse.json({ success: true });
+        }
         const name = formData.get("name") as string;
         const email = formData.get("email") as string;
         const phone = formData.get("phone") as string;

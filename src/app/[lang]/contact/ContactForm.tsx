@@ -62,6 +62,10 @@ export default function ContactForm({ lang, dict }: ContactFormProps) {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Honeypot field for spam prevention */}
+                <div className="hidden" style={{ display: 'none' }} aria-hidden="true">
+                    <input type="text" name="website_url" tabIndex={-1} autoComplete="off" />
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-1">{dict.contact.name}</label>

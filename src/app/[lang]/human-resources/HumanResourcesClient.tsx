@@ -149,6 +149,10 @@ export default function HumanResourcesClient({ lang }: { lang: Locale }) {
                             </div>
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-6">
+                                {/* Honeypot field for spam prevention */}
+                                <div className="hidden" style={{ display: 'none' }} aria-hidden="true">
+                                    <input type="text" name="website_url" tabIndex={-1} autoComplete="off" />
+                                </div>
                                 <h3 className="text-xl font-bold text-slate-800 mb-2">
                                     {lang === 'en' ? 'Job Application Form' : 'İş Başvuru Formu'}
                                 </h3>
