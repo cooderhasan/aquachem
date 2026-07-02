@@ -29,7 +29,7 @@ export async function submitQuoteRequest(formData: FormData) {
 
         // E-posta bildirimi
         await sendMail({
-            to: ['info@aquachems.com', 'onurvarol@aquachems.com', 'selimvarol@aquachems.com'],
+            to: ['info@aquachems.com', 'selimvarol@aquachems.com'],
             subject: `🔔 Yeni Teklif Talebi: ${productName}`,
             text: `
                 Yeni Teklif Talebi

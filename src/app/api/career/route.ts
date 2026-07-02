@@ -97,7 +97,7 @@ export async function POST(request: Request) {
         // Testing with Gmail first as requested before
         try {
             await sendMail({
-                to: ["info@aquachems.com", "onurvarol@aquachems.com", "selimvarol@aquachems.com"],
+                to: ["info@aquachems.com", "selimvarol@aquachems.com"],
                 subject: `İş Başvurusu: ${name} - ${position || "Genel"}`,
                 text,
                 html,

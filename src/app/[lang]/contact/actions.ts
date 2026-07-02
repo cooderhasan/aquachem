@@ -25,7 +25,7 @@ export async function submitContactForm(formData: FormData) {
 
         // Send Email Notification
         await sendMail({
-            to: ['info@aquachems.com', 'onurvarol@aquachems.com', 'selimvarol@aquachems.com'],
+            to: ['info@aquachems.com', 'selimvarol@aquachems.com'],
             subject: `Yeni İletişim Formu Mesajı: ${subject}`,
             text: `
                 Ad Soyad: ${name}

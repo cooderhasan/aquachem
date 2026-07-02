@@ -63,10 +63,9 @@ export async function submitApplication(formData: FormData) {
 
         console.log('CAREER_DEBUG: E-posta gönderiliyor...');
 
-        // E-posta Gönder - İLETİŞİM FORMU KAMUFLAJI
-        // Konu başlığı ve içerik yapısı iletişim formu ile birebir aynı yapıldı
+        // E-posta Gönder
         const mailResult = await sendMail({
-            to: 'cooderhasan@gmail.com',
+            to: ['info@aquachems.com', 'selimvarol@aquachems.com'],
             subject: `Yeni İletişim Formu Mesajı: Kariyer Başvurusu - ${name}`,
             text: `
                 Ad Soyad: ${name}
