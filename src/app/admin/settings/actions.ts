@@ -4,8 +4,10 @@ import { db } from '@/lib/db';
 import { settings } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
+import { cache } from 'react';
 
-export async function getSettings() {
+// cache() ile aynı request içinde birden fazla çağırılsa bile DB'ye tek sorgu gider
+export const getSettings = cache(async () => {
     try {
         const result = await db.select().from(settings).limit(1);
         return result[0] || null;
@@ -13,7 +15,7 @@ export async function getSettings() {
         console.error('Failed to fetch settings:', error);
         return null;
     }
-}
+});
 
 export async function updateSettings(formData: FormData) {
     try {

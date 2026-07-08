@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { db } from '@/lib/db';
 import { products, categories, posts } from '@/db/schema';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // 1 saatte bir yenile (her bot ziyaretinde DB sorgusu yapma)
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://aquachems.com';
