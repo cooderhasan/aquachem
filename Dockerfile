@@ -75,6 +75,8 @@ USER root
 EXPOSE 3000
 
 ENV PORT 3000
+# IPv4 üzerinde dinle (localhost IPv6 çözümleme sorununu önler)
+ENV HOSTNAME 0.0.0.0
 
 # Healthcheck: container is "healthy" only after warmup completes
 # --start-period=150s: sunucu başlaması (~30s) + warmup (~80s) için süre
@@ -82,7 +84,7 @@ ENV PORT 3000
 # --timeout=10s: her kontrol 10 sn timeout
 # --retries=3: 3 başarısız kontrol = unhealthy
 HEALTHCHECK --interval=30s --timeout=10s --start-period=150s --retries=3 \
-  CMD wget -T 5 -q -O /dev/null http://localhost:3000/api/health || exit 1
+  CMD wget -T 5 -q -O /dev/null http://127.0.0.1:3000/api/health || exit 1
 
 # Entrypoint fixes volume permissions then starts the app
 ENTRYPOINT ["/entrypoint.sh"]

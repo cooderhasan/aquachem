@@ -10,10 +10,9 @@ echo "✅ Uploads klasörü hazır: /app/public/uploads"
 warmup() {
   echo "⏳ Cache warmup bekleniyor..."
 
-  # Önce /api/health endpoint'i ile sunucunun ayakta olduğunu kontrol et
-  # Bu endpoint DB sorgusu yapmaz, anında cevap verir
+  # 127.0.0.1 kullan (localhost IPv6 çözümleme sorununu önler)
   for i in $(seq 1 90); do
-    if wget -T 3 -q -O /dev/null http://localhost:3000/api/health 2>/dev/null; then
+    if wget -T 3 -q -O /dev/null http://127.0.0.1:3000/api/health 2>/dev/null; then
       echo "🔥 Sunucu hazır! Sayfalar ısıtılıyor..."
       break
     fi
@@ -21,14 +20,14 @@ warmup() {
   done
 
   # Asıl sayfaları ısıt (DB cache dolsun) - her biri max 30s
-  wget -T 30 -q -O /dev/null http://localhost:3000/tr 2>/dev/null           && echo "  ✓ /tr"           || echo "  ⚠ /tr skip"
-  wget -T 30 -q -O /dev/null http://localhost:3000/en 2>/dev/null           && echo "  ✓ /en"           || echo "  ⚠ /en skip"
-  wget -T 30 -q -O /dev/null http://localhost:3000/tr/products 2>/dev/null  && echo "  ✓ /tr/products"  || echo "  ⚠ /tr/products skip"
-  wget -T 30 -q -O /dev/null http://localhost:3000/tr/corporate 2>/dev/null && echo "  ✓ /tr/corporate" || echo "  ⚠ /tr/corporate skip"
-  wget -T 30 -q -O /dev/null http://localhost:3000/tr/references 2>/dev/null && echo "  ✓ /tr/references" || echo "  ⚠ /tr/references skip"
-  wget -T 30 -q -O /dev/null http://localhost:3000/tr/contact 2>/dev/null   && echo "  ✓ /tr/contact"   || echo "  ⚠ /tr/contact skip"
-  wget -T 30 -q -O /dev/null http://localhost:3000/tr/certificates 2>/dev/null && echo "  ✓ /tr/certificates" || echo "  ⚠ /tr/certificates skip"
-  wget -T 30 -q -O /dev/null http://localhost:3000/tr/news 2>/dev/null      && echo "  ✓ /tr/news"      || echo "  ⚠ /tr/news skip"
+  wget -T 30 -q -O /dev/null http://127.0.0.1:3000/tr 2>/dev/null           && echo "  ✓ /tr"           || echo "  ⚠ /tr skip"
+  wget -T 30 -q -O /dev/null http://127.0.0.1:3000/en 2>/dev/null           && echo "  ✓ /en"           || echo "  ⚠ /en skip"
+  wget -T 30 -q -O /dev/null http://127.0.0.1:3000/tr/products 2>/dev/null  && echo "  ✓ /tr/products"  || echo "  ⚠ /tr/products skip"
+  wget -T 30 -q -O /dev/null http://127.0.0.1:3000/tr/corporate 2>/dev/null && echo "  ✓ /tr/corporate" || echo "  ⚠ /tr/corporate skip"
+  wget -T 30 -q -O /dev/null http://127.0.0.1:3000/tr/references 2>/dev/null && echo "  ✓ /tr/references" || echo "  ⚠ /tr/references skip"
+  wget -T 30 -q -O /dev/null http://127.0.0.1:3000/tr/contact 2>/dev/null   && echo "  ✓ /tr/contact"   || echo "  ⚠ /tr/contact skip"
+  wget -T 30 -q -O /dev/null http://127.0.0.1:3000/tr/certificates 2>/dev/null && echo "  ✓ /tr/certificates" || echo "  ⚠ /tr/certificates skip"
+  wget -T 30 -q -O /dev/null http://127.0.0.1:3000/tr/news 2>/dev/null      && echo "  ✓ /tr/news"      || echo "  ⚠ /tr/news skip"
 
   echo "✅ Cache warmup tamamlandı!"
 }
