@@ -13,7 +13,7 @@ interface PageProps {
 
 import { getAlternates } from '@/lib/seo';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { lang: rawLang } = await params;

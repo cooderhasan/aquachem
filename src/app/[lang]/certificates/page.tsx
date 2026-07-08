@@ -10,7 +10,7 @@ import { getDictionary } from '@/lib/dictionary';
 
 import { getAlternates } from '@/lib/seo';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 interface PageProps {
     params: Promise<{ lang: Locale }>;

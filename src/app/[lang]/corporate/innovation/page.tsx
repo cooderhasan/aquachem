@@ -5,7 +5,7 @@ import { Locale } from '@/lib/i18n';
 
 import { getAlternates } from '@/lib/seo';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
     const { lang } = await params;
