@@ -77,11 +77,11 @@ EXPOSE 3000
 ENV PORT 3000
 
 # Healthcheck: container is "healthy" only after warmup completes
-# --start-period=90s: warmup süresini bekle
+# --start-period=150s: sunucu başlaması (~30s) + warmup (~80s) için süre
 # --interval=30s: sonrasında 30 sn'de bir kontrol et
 # --timeout=10s: her kontrol 10 sn timeout
 # --retries=3: 3 başarısız kontrol = unhealthy
-HEALTHCHECK --interval=30s --timeout=10s --start-period=90s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=150s --retries=3 \
   CMD wget -q --spider http://localhost:3000/tr || exit 1
 
 # Entrypoint fixes volume permissions then starts the app
