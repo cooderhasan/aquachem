@@ -82,7 +82,7 @@ ENV PORT 3000
 # --timeout=10s: her kontrol 10 sn timeout
 # --retries=3: 3 başarısız kontrol = unhealthy
 HEALTHCHECK --interval=30s --timeout=10s --start-period=150s --retries=3 \
-  CMD wget -q --spider http://localhost:3000/tr || exit 1
+  CMD wget -T 5 -q -O /dev/null http://localhost:3000/api/health || exit 1
 
 # Entrypoint fixes volume permissions then starts the app
 ENTRYPOINT ["/entrypoint.sh"]

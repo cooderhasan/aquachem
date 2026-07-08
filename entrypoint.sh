@@ -9,29 +9,32 @@ echo "✅ Uploads klasörü hazır: /app/public/uploads"
 # Warmup fonksiyonu - arka planda çalışır
 warmup() {
   echo "⏳ Cache warmup bekleniyor..."
-  # Sunucunun hazır olmasını bekle (max 60 saniye)
-  for i in $(seq 1 60); do
-    if wget -q --spider http://localhost:3000/tr 2>/dev/null; then
-      echo "🔥 Sunucu hazır, cache ısıtılıyor..."
-      # -T 10: her sayfa max 10 saniye beklensin
-      wget -T 10 -q -O /dev/null http://localhost:3000/tr 2>/dev/null           && echo "  ✓ /tr"           || true
-      wget -T 10 -q -O /dev/null http://localhost:3000/en 2>/dev/null           && echo "  ✓ /en"           || true
-      wget -T 10 -q -O /dev/null http://localhost:3000/tr/products 2>/dev/null  && echo "  ✓ /tr/products"  || true
-      wget -T 10 -q -O /dev/null http://localhost:3000/tr/corporate 2>/dev/null && echo "  ✓ /tr/corporate" || true
-      wget -T 10 -q -O /dev/null http://localhost:3000/tr/references 2>/dev/null && echo "  ✓ /tr/references" || true
-      wget -T 10 -q -O /dev/null http://localhost:3000/tr/contact 2>/dev/null   && echo "  ✓ /tr/contact"   || true
-      wget -T 10 -q -O /dev/null http://localhost:3000/tr/certificates 2>/dev/null && echo "  ✓ /tr/certificates" || true
-      wget -T 10 -q -O /dev/null http://localhost:3000/tr/news 2>/dev/null      && echo "  ✓ /tr/news"      || true
-      echo "✅ Cache warmup tamamlandı! Sunucu trafiğe hazır."
-      return 0
+
+  # Önce /api/health endpoint'i ile sunucunun ayakta olduğunu kontrol et
+  # Bu endpoint DB sorgusu yapmaz, anında cevap verir
+  for i in $(seq 1 90); do
+    if wget -T 3 -q -O /dev/null http://localhost:3000/api/health 2>/dev/null; then
+      echo "🔥 Sunucu hazır! Sayfalar ısıtılıyor..."
+      break
     fi
     sleep 1
   done
-  echo "⚠️ Warmup timeout - sunucu 60 saniyede hazır olmadı"
+
+  # Asıl sayfaları ısıt (DB cache dolsun) - her biri max 30s
+  wget -T 30 -q -O /dev/null http://localhost:3000/tr 2>/dev/null           && echo "  ✓ /tr"           || echo "  ⚠ /tr skip"
+  wget -T 30 -q -O /dev/null http://localhost:3000/en 2>/dev/null           && echo "  ✓ /en"           || echo "  ⚠ /en skip"
+  wget -T 30 -q -O /dev/null http://localhost:3000/tr/products 2>/dev/null  && echo "  ✓ /tr/products"  || echo "  ⚠ /tr/products skip"
+  wget -T 30 -q -O /dev/null http://localhost:3000/tr/corporate 2>/dev/null && echo "  ✓ /tr/corporate" || echo "  ⚠ /tr/corporate skip"
+  wget -T 30 -q -O /dev/null http://localhost:3000/tr/references 2>/dev/null && echo "  ✓ /tr/references" || echo "  ⚠ /tr/references skip"
+  wget -T 30 -q -O /dev/null http://localhost:3000/tr/contact 2>/dev/null   && echo "  ✓ /tr/contact"   || echo "  ⚠ /tr/contact skip"
+  wget -T 30 -q -O /dev/null http://localhost:3000/tr/certificates 2>/dev/null && echo "  ✓ /tr/certificates" || echo "  ⚠ /tr/certificates skip"
+  wget -T 30 -q -O /dev/null http://localhost:3000/tr/news 2>/dev/null      && echo "  ✓ /tr/news"      || echo "  ⚠ /tr/news skip"
+
+  echo "✅ Cache warmup tamamlandı!"
 }
 
 # Warmup'ı ARKA PLANDA başlat (sunucu başlamayı engellemez)
 warmup &
 
-# Sunucuyu PID 1 olarak başlat (exec: crash olmaz, sinyaller düzgün iletilir)
+# Sunucuyu PID 1 olarak başlat (exec: sinyaller düzgün iletilir)
 exec node server.js
