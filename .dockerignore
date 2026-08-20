@@ -25,6 +25,12 @@ uploads.tar.gz
 .claude
 Yeni klasör
 
+# Ignore text logs and unused source data
+*.txt
+*.md
+migration_data.xml
+drizzle
+
 # Ignore local env files
 .env.local
 .env.development.local
