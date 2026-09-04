@@ -31,6 +31,18 @@ function getPreferredLocale(request: NextRequest): string {
 }
 
 export async function middleware(request: NextRequest) {
+    const host = request.headers.get('x-forwarded-host') || request.headers.get('host') || request.nextUrl.hostname;
+
+    // 0. Redirect www to non-www (301 Permanent Redirect)
+    if (host && host.startsWith('www.')) {
+        const nonWwwHost = host.replace(/^www\./, '');
+        const targetUrl = new URL(
+            request.nextUrl.pathname + request.nextUrl.search,
+            `https://${nonWwwHost}`
+        );
+        return NextResponse.redirect(targetUrl, 301);
+    }
+
     const path = request.nextUrl.pathname;
 
     // 1. Redirect /uploads/* to /api/files/* for file serving in standalone mode
@@ -54,11 +66,12 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-    // 3. Skip locale handling for admin, api, _next, static files
+    // 3. Skip locale handling for admin, api, _next, product-detail (handled by custom page), static files
     if (
         path.startsWith('/admin') ||
         path.startsWith('/api') ||
         path.startsWith('/_next') ||
+        path.startsWith('/product-detail') ||
         path.includes('.') // static files like favicon.ico, robots.txt etc.
     ) {
         return NextResponse.next();
@@ -76,9 +89,10 @@ export async function middleware(request: NextRequest) {
 
     // 5. No locale in path — redirect to preferred locale based on browser settings
     // e.g., / → /en or /tr, /products → /en/products or /tr/products
+    // Using 301 Permanent Redirect so Google indexes the localized URL and cleans up old URLs
     const preferredLocale = getPreferredLocale(request);
     const newPath = `/${preferredLocale}${path === '/' ? '' : path}`;
-    return NextResponse.redirect(new URL(newPath, request.url));
+    return NextResponse.redirect(new URL(newPath, request.url), 301);
 }
 
 export const config = {

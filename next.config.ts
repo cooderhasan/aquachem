@@ -24,6 +24,48 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '10mb',
     },
   },
+  async redirects() {
+    return [
+      // Eski WordPress Kategori URL'leri -> Yeni Ürün Kategori Sayfaları (301)
+      {
+        source: '/product-showcase/:category/page/:page',
+        destination: '/tr/products/:category?page=:page',
+        permanent: true,
+      },
+      {
+        source: '/product-showcase/:category',
+        destination: '/tr/products/:category',
+        permanent: true,
+      },
+      {
+        source: '/product-showcase',
+        destination: '/tr/products',
+        permanent: true,
+      },
+      // Eski WordPress Portfolyo URL'leri -> Referanslar Sayfası (301)
+      {
+        source: '/portfolio/:slug*',
+        destination: '/tr/references',
+        permanent: true,
+      },
+      {
+        source: '/portfolio',
+        destination: '/tr/references',
+        permanent: true,
+      },
+      // Eski WordPress Haber URL'leri -> Haberler Sayfası (301)
+      {
+        source: '/latest-news/:slug*',
+        destination: '/tr/news',
+        permanent: true,
+      },
+      {
+        source: '/latest-news',
+        destination: '/tr/news',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
