@@ -163,6 +163,9 @@ export const settings = pgTable('settings', {
   siteSloganEn: text('site_slogan_en').default("We work to see the smile on people's faces"),
   siteSloganFontSize: integer('site_slogan_font_size').default(10),
   homeSectionOrder: jsonb('home_section_order').default('[]'), // Array of section IDs in display order
+  // AI Enrichment Settings
+  aiPrompt: text('ai_prompt'), // Custom AI prompt for product description enrichment
+  aiModel: text('ai_model').default('openai/gpt-4o-mini'), // Default OpenRouter model
 });
 
 export const contactLocations = pgTable('contact_locations', {

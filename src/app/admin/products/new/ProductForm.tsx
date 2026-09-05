@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, Suspense, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, Suspense, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Loader2, Sparkles, Undo2, Settings2 } from 'lucide-react';
@@ -34,6 +34,10 @@ interface Product {
 interface ProductFormProps {
     categories: Category[];
     product?: Product;
+    initialAiSettings?: {
+        aiPrompt?: string;
+        aiModel?: string;
+    };
 }
 
 interface AIResult {
@@ -47,7 +51,7 @@ interface AIResult {
     featuresEn: string[];
 }
 
-export default function ProductForm({ categories, product }: ProductFormProps) {
+export default function ProductForm({ categories, product, initialAiSettings }: ProductFormProps) {
     const [loading, setLoading] = useState(false);
 
     // Parse existing images: combine main image and additional images
@@ -81,18 +85,16 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
     // AI-related states
     const [aiLoading, setAiLoading] = useState(false);
     const [selectedModel, setSelectedModel] = useState(() => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('ai-model') || DEFAULT_MODEL;
-        }
-        return DEFAULT_MODEL;
+        return initialAiSettings?.aiModel || (typeof window !== 'undefined' ? localStorage.getItem('ai-model') : '') || DEFAULT_MODEL;
     });
     const [showPromptSettings, setShowPromptSettings] = useState(false);
     const [customPrompt, setCustomPrompt] = useState(() => {
-        if (typeof window !== 'undefined') {
-            return localStorage.getItem('ai-custom-prompt') || '';
-        }
-        return '';
+        return initialAiSettings?.aiPrompt || (typeof window !== 'undefined' ? localStorage.getItem('ai-custom-prompt') : '') || '';
     });
+    const [savingPrompt, setSavingPrompt] = useState(false);
+    const [promptSaved, setPromptSaved] = useState(false);
+    const promptDebounceRef = useRef<NodeJS.Timeout | null>(null);
+
     const [showPreview, setShowPreview] = useState(false);
     const [aiResult, setAiResult] = useState<AIResult | null>(null);
     const [originalTexts, setOriginalTexts] = useState<{
@@ -105,21 +107,93 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
 
     const router = useRouter();
 
-    // Save model preference
+    // Sync with DB if props change or fetch on mount
+    useEffect(() => {
+        if (initialAiSettings?.aiPrompt) {
+            setCustomPrompt(initialAiSettings.aiPrompt);
+        }
+        if (initialAiSettings?.aiModel) {
+            setSelectedModel(initialAiSettings.aiModel);
+        }
+
+        fetch('/api/ai-settings')
+            .then((res) => res.json())
+            .then((res) => {
+                if (res.success && res.data) {
+                    if (res.data.aiPrompt) {
+                        setCustomPrompt(res.data.aiPrompt);
+                    }
+                    if (res.data.aiModel) {
+                        setSelectedModel(res.data.aiModel);
+                    }
+                }
+            })
+            .catch(() => {});
+    }, [initialAiSettings]);
+
+    // Save prompt to DB and localStorage
+    const savePromptToDb = useCallback(async (promptText: string) => {
+        setSavingPrompt(true);
+        try {
+            await fetch('/api/ai-settings', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ aiPrompt: promptText }),
+            });
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('ai-custom-prompt', promptText);
+            }
+            setPromptSaved(true);
+            setTimeout(() => setPromptSaved(false), 2500);
+        } catch (e) {
+            console.error('Failed to save AI prompt:', e);
+        } finally {
+            setSavingPrompt(false);
+        }
+    }, []);
+
+    // Save model preference to DB and localStorage
     const handleModelChange = useCallback((model: string) => {
         setSelectedModel(model);
         if (typeof window !== 'undefined') {
             localStorage.setItem('ai-model', model);
         }
+        fetch('/api/ai-settings', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ aiModel: model }),
+        }).catch(() => {});
     }, []);
 
-    // Save custom prompt preference
+    // Save custom prompt preference with debounce
     const handleCustomPromptChange = useCallback((prompt: string) => {
         setCustomPrompt(prompt);
         if (typeof window !== 'undefined') {
             localStorage.setItem('ai-custom-prompt', prompt);
         }
-    }, []);
+
+        if (promptDebounceRef.current) {
+            clearTimeout(promptDebounceRef.current);
+        }
+        promptDebounceRef.current = setTimeout(() => {
+            savePromptToDb(prompt);
+        }, 1200);
+    }, [savePromptToDb]);
+
+    // Load recommended default SEO prompt
+    const loadDefaultSeoPrompt = useCallback(() => {
+        const defaultSeo = `Aquachems endüstriyel kimyasal ürünleri için açıklama yazıyorsun. Şu kurallara uy:
+
+1. SEO ODAKLI YAZ: Ürün adını ve sektör anahtar kelimelerini ilk cümlede kullan. Google'da üst sıralarda çıkacak şekilde doğal keyword yerleştir.
+2. TEKNİK BİLGİYİ KORU: Mevcut metindeki teknik bilgileri, kullanım oranlarını ve güvenlik detaylarını koru, uydurma bilgi ekleme.
+3. VURGULAMA VE FORMAT: Önemli ürün avantajlarını, etki mekanizmasını ve teknik özellikleri **kalın** yazarak vurgula.
+4. ENDÜSTRİYEL KİMYA DİLİ: Su şartlandırma, kazan ve soğutma suyu, ters ozmoz (RO), membran kimyasalları, dezenfektan ve endüstriyel temizlik alanlarındaki uzmanlığı yansıt.
+5. İKİ DİL UYUMU: Türkçe ve İngilizce açıklamaların birbiriyle birebir uyumlu, profesyonel B2B ihracat standartlarında olmasını sağla.`;
+
+        setCustomPrompt(defaultSeo);
+        savePromptToDb(defaultSeo);
+        toast.success('Örnek SEO promptu yüklendi ve veritabanına kaydedildi');
+    }, [savePromptToDb]);
 
     // Call AI enrichment API
     const callAIEnrich = useCallback(async () => {
@@ -428,17 +502,49 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
 
                         {/* Custom Prompt Settings */}
                         {showPromptSettings && (
-                            <div className="mb-4 p-3 bg-white rounded-lg border border-violet-200">
-                                <label className="block text-xs font-medium text-slate-600 mb-1.5">
-                                    Özel Prompt Talimatları
-                                </label>
+                            <div className="mb-4 p-3.5 bg-white rounded-xl border border-violet-200 shadow-sm">
+                                <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                    <label className="block text-xs font-semibold text-slate-700">
+                                        Merkezi AI Prompt Talimatları (Veritabanında Saklanır)
+                                    </label>
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={loadDefaultSeoPrompt}
+                                            className="text-xs text-violet-600 hover:text-violet-800 font-medium underline cursor-pointer"
+                                        >
+                                            Örnek SEO Promptunu Yükle
+                                        </button>
+                                        {savingPrompt && (
+                                            <span className="text-[11px] text-slate-400 flex items-center gap-1">
+                                                <Loader2 size={12} className="animate-spin" /> Kaydediliyor...
+                                            </span>
+                                        )}
+                                        {promptSaved && (
+                                            <span className="text-[11px] text-emerald-600 font-medium">
+                                                ✓ Kaydedildi
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
                                 <textarea
                                     value={customPrompt}
                                     onChange={(e) => handleCustomPromptChange(e.target.value)}
                                     placeholder="Örn: Profesyonel ve teknik bir dilde yaz, madde madde listele, SEO anahtar kelimelerini doğal şekilde yerleştir..."
-                                    className="w-full p-2.5 text-sm border border-slate-200 rounded-lg outline-none focus:ring-1 focus:ring-violet-400 h-20 resize-none"
+                                    className="w-full p-2.5 text-xs text-slate-700 border border-slate-200 rounded-lg outline-none focus:ring-1 focus:ring-violet-400 h-28 resize-y leading-relaxed font-sans"
                                 />
-                                <p className="text-[10px] text-slate-400 mt-1">Bu talimatlar AI&apos;a her istekte ek yönerge olarak gönderilir. Boş bırakırsanız varsayılan prompt kullanılır.</p>
+                                <div className="flex flex-wrap items-center justify-between gap-2 mt-2 pt-2 border-t border-slate-100">
+                                    <p className="text-[11px] text-slate-500">
+                                        💾 Bu prompt veritabanında saklanır; ofiste veya evde farklı bilgisayardan bağlansanız da aynen korunur.
+                                    </p>
+                                    <button
+                                        type="button"
+                                        onClick={() => savePromptToDb(customPrompt)}
+                                        className="px-3 py-1 text-xs bg-violet-600 hover:bg-violet-700 text-white rounded-md font-medium transition-colors cursor-pointer"
+                                    >
+                                        Kaydet
+                                    </button>
+                                </div>
                             </div>
                         )}
 

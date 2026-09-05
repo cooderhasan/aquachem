@@ -1,13 +1,14 @@
 import React from 'react';
-import { getCategories, getProduct } from '../actions';
+import { getCategories, getProduct, getAiSettings } from '../actions';
 import ProductForm from '../new/ProductForm';
 
 export default async function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
     const { id: paramId } = await params;
     const id = parseInt(paramId);
-    const [categories, product] = await Promise.all([
+    const [categories, product, aiSettings] = await Promise.all([
         getCategories(),
-        getProduct(id)
+        getProduct(id),
+        getAiSettings()
     ]);
 
     if (!product) {
@@ -39,6 +40,6 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
     };
 
     return (
-        <ProductForm categories={categories} product={normalizedProduct} />
+        <ProductForm categories={categories} product={normalizedProduct} initialAiSettings={aiSettings} />
     );
 }

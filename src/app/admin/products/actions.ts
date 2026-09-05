@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/lib/db';
-import { products, categories } from '@/db/schema';
+import { products, categories, settings } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { categories as mockCategories, products as mockProducts } from '@/data/mockData';
 import { revalidatePath } from 'next/cache';
@@ -171,3 +171,48 @@ export async function deleteProduct(id: number) {
         return { success: false, message: 'Silme işlemi başarısız oldu' };
     }
 }
+
+export async function getAiSettings() {
+    try {
+        const result = await db.select({
+            aiPrompt: settings.aiPrompt,
+            aiModel: settings.aiModel,
+        }).from(settings).limit(1);
+
+        if (result.length > 0) {
+            return {
+                aiPrompt: result[0].aiPrompt || '',
+                aiModel: result[0].aiModel || 'openai/gpt-4o-mini',
+            };
+        }
+        return { aiPrompt: '', aiModel: 'openai/gpt-4o-mini' };
+    } catch (e) {
+        console.error('Failed to get AI settings:', e);
+        return { aiPrompt: '', aiModel: 'openai/gpt-4o-mini' };
+    }
+}
+
+export async function saveAiSettings(aiPrompt?: string, aiModel?: string) {
+    try {
+        const existing = await db.select({ id: settings.id }).from(settings).limit(1);
+        const updateData: Record<string, any> = {};
+        if (aiPrompt !== undefined) updateData.aiPrompt = aiPrompt;
+        if (aiModel !== undefined) updateData.aiModel = aiModel;
+
+        if (existing.length > 0) {
+            if (Object.keys(updateData).length > 0) {
+                await db.update(settings).set(updateData).where(eq(settings.id, existing[0].id));
+            }
+        } else {
+            await db.insert(settings).values({
+                aiPrompt: aiPrompt || '',
+                aiModel: aiModel || 'openai/gpt-4o-mini',
+            });
+        }
+        return { success: true };
+    } catch (e: any) {
+        console.error('Failed to save AI settings:', e);
+        return { success: false, error: e.message };
+    }
+}
+
