@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect } from 'react';
 
 interface ProductImageGalleryProps {
     images: string[];
@@ -13,6 +13,11 @@ interface ProductImageGalleryProps {
 export default function ProductImageGallery({ images, productTitle }: ProductImageGalleryProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     // Lock body scroll when lightbox is open
     useEffect(() => {
@@ -146,22 +151,35 @@ export default function ProductImageGallery({ images, productTitle }: ProductIma
                 </div>
             )}
 
-            {/* Lightbox Modal */}
-            {isLightboxOpen && (
-                <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4">
-                    {/* Close Button */}
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            setIsLightboxOpen(false);
-                        }}
-                        className="absolute top-6 right-6 text-white/80 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors z-[110]"
+            {/* Lightbox Modal - Portal to body so it escapes all parent stacking contexts */}
+            {isLightboxOpen && mounted && createPortal(
+                <div
+                    className="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 cursor-zoom-out select-none"
+                    onClick={() => setIsLightboxOpen(false)}
+                >
+                    {/* Top Bar: Title & Big Clear Close Button */}
+                    <div
+                        className="absolute top-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-between z-[100000] bg-gradient-to-b from-black/80 via-black/40 to-transparent"
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        <X size={32} />
-                    </button>
+                        <div className="text-white/90 font-medium text-sm sm:text-base truncate max-w-[70%]">
+                            {productTitle} {validImages.length > 1 && `(${currentIndex + 1} / ${validImages.length})`}
+                        </div>
+                        <button
+                            onClick={() => setIsLightboxOpen(false)}
+                            className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full flex items-center gap-2 backdrop-blur-md border border-white/25 transition-all active:scale-95 shadow-2xl text-sm font-semibold cursor-pointer"
+                            aria-label="Kapat"
+                        >
+                            <X size={20} />
+                            <span>Kapat (ESC)</span>
+                        </button>
+                    </div>
 
                     {/* Main Lightbox Image */}
-                    <div className="relative w-full h-full max-w-7xl max-h-[85vh] flex items-center justify-center">
+                    <div
+                        className="relative w-full h-full max-w-6xl max-h-[82vh] flex items-center justify-center cursor-default"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <Image
                             src={validImages[currentIndex]}
                             alt={`${productTitle} - Tam Ekran`}
@@ -172,7 +190,7 @@ export default function ProductImageGallery({ images, productTitle }: ProductIma
                         />
                     </div>
 
-                    {/* Lightbox Navigation */}
+                    {/* Lightbox Navigation - Only show if more than 1 image */}
                     {validImages.length > 1 && (
                         <>
                             <button
@@ -180,7 +198,8 @@ export default function ProductImageGallery({ images, productTitle }: ProductIma
                                     e.stopPropagation();
                                     goToPrevious();
                                 }}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-colors backdrop-blur-sm z-[110]"
+                                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/15 hover:bg-white/30 text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md border border-white/20 z-[100000] active:scale-90 cursor-pointer"
+                                aria-label="Önceki görsel"
                             >
                                 <ChevronLeft size={32} />
                             </button>
@@ -189,30 +208,35 @@ export default function ProductImageGallery({ images, productTitle }: ProductIma
                                     e.stopPropagation();
                                     goToNext();
                                 }}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-colors backdrop-blur-sm z-[110]"
+                                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/15 hover:bg-white/30 text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md border border-white/20 z-[100000] active:scale-90 cursor-pointer"
+                                aria-label="Sonraki görsel"
                             >
                                 <ChevronRight size={32} />
                             </button>
 
                             {/* Lightbox Thumbnails */}
-                            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 max-w-full overflow-x-auto p-2">
-                                {validImages.map((_, idx) => (
+                            <div
+                                className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2.5 max-w-full overflow-x-auto p-2 bg-black/50 backdrop-blur-md rounded-full border border-white/15 z-[100000]"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                {validImages.map((img, idx) => (
                                     <button
                                         key={idx}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setCurrentIndex(idx);
-                                        }}
-                                        className={`w-3 h-3 rounded-full transition-all ${idx === currentIndex
-                                            ? 'bg-white scale-125'
-                                            : 'bg-white/40 hover:bg-white/60'
-                                            }`}
-                                    />
+                                        onClick={() => setCurrentIndex(idx)}
+                                        className={`relative w-10 h-10 rounded-lg overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
+                                            idx === currentIndex
+                                                ? 'border-primary-500 scale-110 shadow-md'
+                                                : 'border-white/30 hover:border-white/60 opacity-60 hover:opacity-100'
+                                        }`}
+                                    >
+                                        <Image src={img} alt="" fill className="object-cover" />
+                                    </button>
                                 ))}
                             </div>
                         </>
                     )}
-                </div>
+                </div>,
+                document.body
             )}
         </div>
     );
