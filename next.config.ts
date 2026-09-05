@@ -20,9 +20,16 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     cpus: 1,
+    webpackMemoryOptimizations: true,
     serverActions: {
       bodySizeLimit: '10mb',
     },
+  },
+  webpack: (config, { dev }) => {
+    if (!dev) {
+      config.cache = false;
+    }
+    return config;
   },
   async redirects() {
     return [

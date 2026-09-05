@@ -14,9 +14,12 @@ dist
 
 # Ignore local database and uploads
 sqlite.db
+*.db
 public/uploads
 /public/uploads
 uploads.tar.gz
+*.tar.gz
+*.log
 
 # Ignore Git and metadata
 .git
@@ -28,6 +31,7 @@ Yeni klasör
 # Ignore text logs and unused source data
 *.txt
 *.md
+*.sql
 migration_data.xml
 drizzle
 

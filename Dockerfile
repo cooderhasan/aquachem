@@ -12,7 +12,7 @@ COPY . .
 # Accept build-time env vars
 ARG DATABASE_URL
 ENV DATABASE_URL=$DATABASE_URL
-ENV NODE_OPTIONS="--max-old-space-size=1024"
+ENV NODE_OPTIONS="--max-old-space-size=1536"
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
