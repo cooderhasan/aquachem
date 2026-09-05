@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Info, MapPin, CheckCircle2 } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
+import SimpleMarkdown from '@/components/ui/SimpleMarkdown';
 
 interface ProductTabsProps {
     description: string;
@@ -38,9 +39,7 @@ export default function ProductTabs({ description, usageArea, features, lang }: 
             <div className="prose prose-slate max-w-none mb-10 h-[300px] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-slate-200">
                 {activeTab === 'desc' && (
                     <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                        <p className="whitespace-pre-line leading-relaxed text-slate-600">
-                            {description}
-                        </p>
+                        <SimpleMarkdown content={description} />
                         {features && features.length > 0 && (
                             <ul className="mt-6 space-y-3 list-none p-0">
                                 {features.map((feature, idx) => (
@@ -56,9 +55,11 @@ export default function ProductTabs({ description, usageArea, features, lang }: 
 
                 {activeTab === 'usage' && (
                     <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                        <p className="whitespace-pre-line leading-relaxed text-slate-600 bg-slate-50 p-6 rounded-xl border border-slate-100">
-                            {usageArea || (lang === 'en' ? 'No usage instructions available for this product.' : 'Bu ürün için kullanım alanı bilgisi bulunmamaktadır.')}
-                        </p>
+                        <div className="bg-slate-50 p-6 rounded-xl border border-slate-100">
+                            <SimpleMarkdown
+                                content={usageArea || (lang === 'en' ? 'No usage instructions available for this product.' : 'Bu ürün için kullanım alanı bilgisi bulunmamaktadır.')}
+                            />
+                        </div>
                     </div>
                 )}
             </div>
