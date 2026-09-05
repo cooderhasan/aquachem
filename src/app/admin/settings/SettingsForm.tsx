@@ -1014,6 +1014,31 @@ export default function SettingsForm({ initialSettings }: SettingsFormProps) {
                                     />
                                 </div>
                             </div>
+
+                            <div className="pt-5 mt-5 border-t border-slate-200">
+                                <h3 className="text-base font-bold text-slate-800 mb-1 flex items-center gap-2">
+                                    <span>📊</span> Google Analytics & İzleme
+                                </h3>
+                                <p className="text-xs text-slate-500 mb-4">
+                                    Google Analytics 4 (GA4) Ölçüm Kimliğinizi buraya girerek tüm sayfalardaki ziyaretçi trafiğini izleyebilirsiniz.
+                                </p>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                                        Google Analytics Ölçüm Kimliği (GTAG ID)
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="googleAnalyticsId"
+                                        defaultValue={initialSettings?.googleAnalyticsId || ''}
+                                        placeholder="G-4LRD88KMRC"
+                                        className="w-full max-w-md px-4 py-2.5 border border-slate-300 rounded-lg font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50 focus:bg-white"
+                                    />
+                                    <p className="text-xs text-slate-500 mt-1.5 flex items-center gap-1.5">
+                                        <span className="text-emerald-600 font-bold">✓</span>
+                                        Örnek: <code className="bg-slate-100 px-1 py-0.5 rounded text-slate-700 font-mono">G-4LRD88KMRC</code>. Script otomatik olarak her sayfanın &lt;head&gt; alanına eklenir.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

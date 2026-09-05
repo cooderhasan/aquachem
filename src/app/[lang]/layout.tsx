@@ -4,6 +4,7 @@ import { getMainContactLocation } from '@/app/admin/contact/actions';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
+import Script from 'next/script';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
@@ -107,10 +108,27 @@ export default async function LocaleLayout({
   const dict = getDictionary(lang);
 
   const whatsappNumber = settings?.whatsappNumber || contactLocation?.phone?.replace(/\D/g, '') || "905551234567";
+  const googleAnalyticsId = settings?.googleAnalyticsId || "G-4LRD88KMRC";
 
   return (
     <>
       <script dangerouslySetInnerHTML={{ __html: `document.documentElement.lang="${lang}"` }} />
+      {googleAnalyticsId && (
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${googleAnalyticsId}');
+            `}
+          </Script>
+        </>
+      )}
       <Header settings={settings} contactLocation={contactLocation} lang={lang} dict={dict} />
       <main className="flex-1">
         {children}

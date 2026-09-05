@@ -132,6 +132,7 @@ export const settings = pgTable('settings', {
   metaDescriptionEn: text('meta_description_en'),
   metaKeywords: text('meta_keywords'),
   ogImage: text('og_image'),
+  googleAnalyticsId: text('google_analytics_id'),
   whatsappNumber: text('whatsapp_number'),
   footerLogo: text('footer_logo'),
   footerLogoEn: text('footer_logo_en'),

@@ -72,6 +72,7 @@ export async function updateSettings(formData: FormData) {
         const metaDescriptionEn = formData.get('metaDescriptionEn') as string;
         const metaKeywords = formData.get('metaKeywords') as string;
         const ogImage = formData.get('ogImage') as string;
+        const googleAnalyticsId = formData.get('googleAnalyticsId') as string;
         const whatsappNumber = formData.get('whatsappNumber') as string;
         const footerLogo = formData.get('footerLogo') as string;
         const footerLogoEn = formData.get('footerLogoEn') as string;
@@ -133,6 +134,7 @@ export async function updateSettings(formData: FormData) {
                 metaDescriptionEn: metaDescriptionEn || currentSettings.metaDescriptionEn,
                 metaKeywords: metaKeywords || currentSettings.metaKeywords,
                 ogImage: ogImage || currentSettings.ogImage,
+                googleAnalyticsId: googleAnalyticsId !== undefined ? googleAnalyticsId : currentSettings.googleAnalyticsId,
                 whatsappNumber: whatsappNumber || currentSettings.whatsappNumber,
                 footerLogo: footerLogo || currentSettings.footerLogo,
                 footerLogoEn: footerLogoEn || currentSettings.footerLogoEn,
@@ -191,6 +193,7 @@ export async function updateSettings(formData: FormData) {
                 metaDescriptionEn,
                 metaKeywords,
                 ogImage,
+                googleAnalyticsId,
                 whatsappNumber,
                 logo,
                 logoEn,
