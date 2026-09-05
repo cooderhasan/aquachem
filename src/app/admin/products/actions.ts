@@ -22,6 +22,16 @@ export async function createProduct(formData: FormData) {
         const image = formData.get('image') as string;
         const images = formData.get('images') as string;
 
+        // AI-generated fields
+        const shortDescription = formData.get('shortDescription') as string || '';
+        const shortDescriptionEn = formData.get('shortDescriptionEn') as string || '';
+        const featuresRaw = formData.get('features') as string;
+        const featuresEnRaw = formData.get('featuresEn') as string;
+        let features = null;
+        let featuresEn = null;
+        try { if (featuresRaw) features = JSON.parse(featuresRaw); } catch { /* ignore */ }
+        try { if (featuresEnRaw) featuresEn = JSON.parse(featuresEnRaw); } catch { /* ignore */ }
+
         // Use custom slugify
         const slug = slugify(title);
 
@@ -36,6 +46,10 @@ export async function createProduct(formData: FormData) {
             usageEn,
             image,
             images,
+            shortDescription: shortDescription || undefined,
+            shortDescriptionEn: shortDescriptionEn || undefined,
+            features: features || undefined,
+            featuresEn: featuresEn || undefined,
         });
 
         revalidatePath('/admin/products');
@@ -101,22 +115,40 @@ export async function updateProduct(formData: FormData) {
         const image = formData.get('image') as string;
         const images = formData.get('images') as string;
 
+        // AI-generated fields
+        const shortDescription = formData.get('shortDescription') as string || '';
+        const shortDescriptionEn = formData.get('shortDescriptionEn') as string || '';
+        const featuresRaw = formData.get('features') as string;
+        const featuresEnRaw = formData.get('featuresEn') as string;
+        let features = null;
+        let featuresEn = null;
+        try { if (featuresRaw) features = JSON.parse(featuresRaw); } catch { /* ignore */ }
+        try { if (featuresEnRaw) featuresEn = JSON.parse(featuresEnRaw); } catch { /* ignore */ }
+
         // Use custom slugify
         const slug = slugify(title);
 
+        const updateData: Record<string, any> = {
+            title,
+            titleEn,
+            slug,
+            categoryId,
+            description,
+            descriptionEn,
+            usage,
+            usageEn,
+            image,
+            images,
+        };
+
+        // Only update AI fields if they have values (don't overwrite with empty)
+        if (shortDescription) updateData.shortDescription = shortDescription;
+        if (shortDescriptionEn) updateData.shortDescriptionEn = shortDescriptionEn;
+        if (features) updateData.features = features;
+        if (featuresEn) updateData.featuresEn = featuresEn;
+
         await db.update(products)
-            .set({
-                title,
-                titleEn,
-                slug,
-                categoryId,
-                description,
-                descriptionEn,
-                usage,
-                usageEn,
-                image,
-                images,
-            })
+            .set(updateData)
             .where(eq(products.id, id));
 
         revalidatePath('/admin/products');
