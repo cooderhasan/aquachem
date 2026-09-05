@@ -36,7 +36,7 @@ export default function ProductTabs({ description, usageArea, features, lang }: 
             </div>
 
             {/* Tab Content */}
-            <div className="prose prose-slate max-w-none mb-10 h-[300px] overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-slate-200">
+            <div className="prose prose-slate max-w-none mb-8 min-h-[160px]">
                 {activeTab === 'desc' && (
                     <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
                         <SimpleMarkdown content={description} />
