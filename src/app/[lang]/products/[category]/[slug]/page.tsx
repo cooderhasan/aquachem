@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ShieldCheck, Award, Package, Truck } from 'lucide-react';
 import { db } from '@/lib/db';
 import { products, categories } from '@/db/schema';
 import { eq } from 'drizzle-orm';
@@ -12,6 +12,8 @@ import RelatedProducts from './RelatedProducts';
 import QuoteButton from './QuoteButton';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
+import { getSettings } from '@/app/admin/settings/actions';
+import { getMainContactLocation } from '@/app/admin/contact/actions';
 
 interface PageProps {
     params: Promise<{ category: string; slug: string; lang: Locale }>;
@@ -100,9 +102,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
     const { category: categorySlug, slug: productSlug, lang } = await params;
     const dict = getDictionary(lang);
 
-    const [product, category] = await Promise.all([
+    const [product, category, settings, contactLocation] = await Promise.all([
         getProduct(productSlug),
-        getCategory(categorySlug)
+        getCategory(categorySlug),
+        getSettings(),
+        getMainContactLocation()
     ]);
 
     if (!product || !category) {
@@ -135,6 +139,16 @@ export default async function ProductDetailPage({ params }: PageProps) {
     const productUsage = (lang === 'en' && product.usageEn) ? product.usageEn : (product.usage || '');
     const productFeatures = (lang === 'en' && product.featuresEn) ? (product.featuresEn as string[]) : (product.features as string[]);
 
+    // WhatsApp Contact URL
+    const rawPhone = settings?.whatsappNumber || contactLocation?.phone?.replace(/\D/g, '') || "905336838563";
+    const cleanPhone = rawPhone.replace(/\D/g, '');
+    const whatsappText = encodeURIComponent(
+        lang === 'en'
+            ? `Hello, I would like to get technical info and a price quote for "${productTitle}".`
+            : `Merhaba, "${productTitle}" ürünü hakkında teknik bilgi ve fiyat teklifi almak istiyorum.`
+    );
+    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${whatsappText}`;
+
     return (
         <div className="bg-white min-h-screen pb-20 pt-36">
 
@@ -149,19 +163,102 @@ export default async function ProductDetailPage({ params }: PageProps) {
                 </div>
             </div>
 
-            <div className="container-custom py-12">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="container-custom py-10 lg:py-12">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
-                    {/* Product Image Gallery */}
-                    <ProductImageGallery
-                        images={allImages}
-                        productTitle={productTitle}
-                    />
+                    {/* Sol Sütun: Yapışkan (Sticky) Ürün Görsel Galerisi & Hızlı Bilgi */}
+                    <div className="lg:col-span-5 lg:sticky lg:top-36 space-y-4 self-start">
+                        <ProductImageGallery
+                            images={allImages}
+                            productTitle={productTitle}
+                        />
 
-                    {/* Product Info */}
-                    <div>
-                        <h1 className="text-4xl font-bold text-slate-900 mb-2" style={{ fontFamily: 'var(--font-ubuntu)' }}>{productTitle}</h1>
-                        <p className="text-xl text-slate-500 mb-8">{productShortDesc}</p>
+                        {/* Hızlı Aksiyon & Güvence Kartı */}
+                        <div className="bg-slate-50 rounded-2xl border border-slate-200/80 p-5 space-y-4 shadow-sm">
+                            <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2.5">
+                                <div className="flex-1">
+                                    <QuoteButton
+                                        productName={productTitle}
+                                        lang={lang}
+                                        dict={dict}
+                                        className="w-full bg-primary-600 hover:bg-primary-700 text-white px-5 py-3 rounded-xl font-bold transition-all active:scale-95 text-center flex items-center gap-2 justify-center shadow-sm text-sm"
+                                    />
+                                </div>
+                                <a
+                                    href={whatsappUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white px-5 py-3 rounded-xl font-bold transition-all active:scale-95 shadow-sm text-sm whitespace-nowrap"
+                                    aria-label="WhatsApp"
+                                >
+                                    <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+                                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.59-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
+                                    </svg>
+                                    <span>{lang === 'en' ? 'WhatsApp Support' : 'WhatsApp Destek'}</span>
+                                </a>
+                            </div>
+
+                            {/* Güvence Rozetleri */}
+                            <div className="grid grid-cols-2 gap-2.5 pt-3 border-t border-slate-200/80 text-xs text-slate-600">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-6 h-6 rounded-md bg-primary-100 text-primary-700 flex items-center justify-center shrink-0">
+                                        <ShieldCheck size={14} />
+                                    </div>
+                                    <span className="font-medium truncate">{lang === 'en' ? 'High Performance' : 'Konsantre Güç'}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-6 h-6 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                                        <Award size={14} />
+                                    </div>
+                                    <span className="font-medium truncate">{lang === 'en' ? 'ISO Standard' : 'ISO Kalite'}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-6 h-6 rounded-md bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                                        <Package size={14} />
+                                    </div>
+                                    <span className="font-medium truncate">{lang === 'en' ? 'Bulk / Packaging' : 'Endüstriyel Bidon'}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-6 h-6 rounded-md bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
+                                        <Truck size={14} />
+                                    </div>
+                                    <span className="font-medium truncate">{lang === 'en' ? 'Fast Delivery' : 'Hızlı Sevkiyat'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Sağ Sütun: Ürün Bilgisi & Zengin AI Metinleri */}
+                    <div className="lg:col-span-7 space-y-6">
+                        <div>
+                            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary-50 text-primary-700 border border-primary-100 mb-3">
+                                {categoryTitle}
+                            </div>
+                            <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-3 tracking-tight" style={{ fontFamily: 'var(--font-ubuntu)' }}>
+                                {productTitle}
+                            </h1>
+                            {productShortDesc && (
+                                <p className="text-lg text-slate-600 leading-relaxed">
+                                    {productShortDesc}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Üst Hızlı Aksiyon Barı */}
+                        <div className="flex flex-wrap items-center gap-3 pb-6 border-b border-slate-100">
+                            <QuoteButton productName={productTitle} lang={lang} dict={dict} />
+                            <a
+                                href={whatsappUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition-all active:scale-95"
+                            >
+                                <svg className="w-4 h-4 fill-current text-[#25D366]" viewBox="0 0 24 24">
+                                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.59-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
+                                </svg>
+                                <span>{lang === 'en' ? 'Quick Inquiry' : 'WhatsApp ile Danışın'}</span>
+                            </a>
+                        </div>
 
                         <ProductTabs
                             description={productDesc || (lang === 'en' ? 'Product description not added yet.' : 'Ürün açıklaması henüz eklenmemiş.')}
@@ -170,8 +267,25 @@ export default async function ProductDetailPage({ params }: PageProps) {
                             lang={lang}
                         />
 
-                        <div className="flex gap-4">
-                            <QuoteButton productName={productTitle} lang={lang} dict={dict} />
+                        {/* Alt Aksiyon Çubuğu */}
+                        <div className="pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                            <div className="flex items-center gap-3">
+                                <QuoteButton productName={productTitle} lang={lang} dict={dict} />
+                                <a
+                                    href={whatsappUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all active:scale-95"
+                                >
+                                    <svg className="w-4 h-4 fill-current text-emerald-600" viewBox="0 0 24 24">
+                                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.59-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
+                                    </svg>
+                                    <span>{lang === 'en' ? 'Direct WhatsApp' : 'Soru Sor'}</span>
+                                </a>
+                            </div>
+                            <span className="text-xs text-slate-400">
+                                {lang === 'en' ? 'Direct factory sales & technical engineering support' : 'Fabrikadan doğrudan satış ve teknik destek'}
+                            </span>
                         </div>
                     </div>
 

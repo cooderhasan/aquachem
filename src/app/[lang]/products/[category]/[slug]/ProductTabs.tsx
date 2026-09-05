@@ -24,7 +24,7 @@ export default function ProductTabs({ description, usageArea, features, lang }: 
                     className={`flex items-center gap-2 px-6 py-3 font-medium border-b-2 transition-colors ${activeTab === 'desc' ? 'border-primary-600 text-primary-600' : 'border-transparent text-slate-500 hover:text-slate-700'}`}
                 >
                     <Info size={18} />
-                    {lang === 'en' ? 'Description' : 'Kullanıldığı Yerler'}
+                    {lang === 'en' ? 'Description & Features' : 'Ürün Açıklaması & Özellikler'}
                 </button>
                 <button
                     onClick={() => setActiveTab('usage')}
