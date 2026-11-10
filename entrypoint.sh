@@ -4,6 +4,9 @@
 mkdir -p /app/public/uploads
 chmod -R 777 /app/public/uploads
 
+# Optimized image cache (persistent volume in Coolify, survives deploys)
+mkdir -p /app/.next/cache/images
+
 echo "✅ Uploads klasörü hazır: /app/public/uploads"
 
 # Warmup fonksiyonu - arka planda çalışır

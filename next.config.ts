@@ -9,7 +9,9 @@ const nextConfig: NextConfig = {
   },
 
   images: {
-    formats: ['image/avif', 'image/webp'],
+    // WebP only: AVIF encoding is several times slower on the single-CPU server and only ~5-10% smaller,
+    // which made product images appear seconds late on a cold cache.
+    formats: ['image/webp'],
     minimumCacheTTL: 2592000,
     remotePatterns: [
       {
