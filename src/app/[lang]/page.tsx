@@ -17,6 +17,7 @@ import { getMissionCards } from '@/app/admin/mission/actions';
 import { getPosts } from '@/lib/data';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
+import { notFound } from 'next/navigation';
 
 const DEFAULT_SECTION_ORDER = ['intro', 'products', 'mission', 'innovation', 'activities', 'stats', 'references'];
 
@@ -24,7 +25,9 @@ export const revalidate = 3600;
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang: rawLang } = await params;
-  const lang = (rawLang === 'en' ? 'en' : 'tr') as Locale;
+  // Paths like /favicon.png that slip past the middleware would otherwise render the TR homepage.
+  if (rawLang !== 'tr' && rawLang !== 'en') notFound();
+  const lang = rawLang as Locale;
   const dict = getDictionary(lang);
   
   const [
@@ -77,9 +80,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   };
 
   return (
-    <main className="flex flex-col min-h-screen bg-white">
+    <div className="flex flex-col min-h-screen bg-white">
       <HeroSlider slides={slides} settings={settings} lang={lang} dict={dict} />
       {sectionOrder.map((sectionId) => sectionComponents[sectionId] ?? null)}
-    </main>
+    </div>
   );
 }

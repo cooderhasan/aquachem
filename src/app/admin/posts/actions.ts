@@ -36,7 +36,7 @@ export async function createPost(formData: FormData) {
         });
 
         revalidatePath('/admin/posts');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Error creating post:', error);
@@ -76,7 +76,7 @@ export async function updatePost(id: number, formData: FormData) {
             .where(eq(posts.id, id));
 
         revalidatePath('/admin/posts');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Error updating post:', error);
@@ -88,7 +88,7 @@ export async function deletePost(id: number) {
     try {
         await db.delete(posts).where(eq(posts.id, id));
         revalidatePath('/admin/posts');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Error deleting post:', error);

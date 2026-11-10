@@ -6,22 +6,19 @@ import Image from 'next/image';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
-import { getAlternates } from '@/lib/seo';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
     const { lang } = await params;
     const dict = getDictionary(lang);
-    return {
+    return buildPageMetadata({
+        lang,
+        path: '/corporate',
         title: dict.seo.corporateTitle,
         description: dict.seo.corporateDescription,
-        alternates: getAlternates(lang, '/corporate'),
-        openGraph: {
-            title: `${dict.seo.corporateTitle} | Aquachems`,
-            description: dict.seo.corporateDescription,
-        },
-    };
+    });
 }
 
 export default async function CorporatePage({ params }: { params: Promise<{ lang: Locale }> }) {

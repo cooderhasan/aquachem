@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Package, FileText } from 'lucide-react';
 import QuoteModal from '@/components/shared/QuoteModal';
 import { Locale } from '@/lib/i18n';
@@ -83,10 +84,12 @@ export default function CategoryProducts({ products, categorySlug, categoryTitle
                             <Link href={`/${lang}/products/${categorySlug}/${product.slug}`} className="block">
                                 <div className="aspect-square relative bg-slate-100 overflow-hidden">
                                     {product.image ? (
-                                        <img
+                                        <Image
                                             src={product.image}
                                             alt={title}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            fill
+                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
                                         />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center text-slate-400">

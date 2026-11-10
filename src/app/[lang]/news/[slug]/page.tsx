@@ -1,34 +1,52 @@
-import React from 'react';
+import React, { cache } from 'react';
 import Link from 'next/link';
-import { getPostBySlug } from '@/lib/data';
+import Image from 'next/image';
 import { Calendar, ChevronLeft, User, Clock, Share2 } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import { eq } from 'drizzle-orm';
+import { db } from '@/lib/db';
+import { posts } from '@/db/schema';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
+import { SITE_URL, absoluteUrl, breadcrumbJsonLd, buildPageMetadata, jsonLd, toMetaDescription } from '@/lib/seo';
 
-import { getAlternates } from '@/lib/seo';
+// Rendered on first visit, then cached (ISR) — see [lang]/layout.tsx.
+export function generateStaticParams() {
+    return [];
+}
+
+// DB errors are thrown (not swallowed) so a temporary outage is never cached as a 404.
+const getPostBySlug = cache(async (slug: string) => {
+    const result = await db.select().from(posts).where(eq(posts.slug, slug)).limit(1);
+    return result[0] || null;
+});
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale; slug: string }> }): Promise<Metadata> {
-    const resolvedParams = await params;
-    const post = await getPostBySlug(resolvedParams.slug);
+    const { lang, slug } = await params;
+    const post = await getPostBySlug(slug);
     if (!post) {
         return {
-            title: resolvedParams.lang === 'en' ? 'News Not Found' : 'Haber Bulunamadı'
+            title: lang === 'en' ? 'News Not Found' : 'Haber Bulunamadı',
+            robots: { index: false, follow: true },
         };
     }
-    const title = (resolvedParams.lang === 'en' && post.titleEn) ? post.titleEn : post.title;
-    const content = (resolvedParams.lang === 'en' && post.contentEn) ? post.contentEn : post.content;
-    return {
-        title: title,
-        description: content?.substring(0, 160),
-        alternates: getAlternates(resolvedParams.lang, `/news/${resolvedParams.slug}`),
-    };
+    const title = (lang === 'en' && post.titleEn) ? post.titleEn : post.title;
+    const content = (lang === 'en' && post.contentEn) ? post.contentEn : post.content;
+    return buildPageMetadata({
+        lang,
+        path: `/news/${post.slug}`,
+        title,
+        description: toMetaDescription(content) || title,
+        images: [post.image],
+        type: 'article',
+        publishedTime: post.createdAt ? new Date(post.createdAt).toISOString() : undefined,
+        available: post.titleEn ? ['tr', 'en'] : ['tr'],
+    });
 }
 
 export default async function NewsDetailPage({ params }: { params: Promise<{ lang: Locale; slug: string }> }) {
-    const resolvedParams = await params;
-    const { lang, slug } = resolvedParams;
+    const { lang, slug } = await params;
     const dict = getDictionary(lang);
     const post = await getPostBySlug(slug);
 
@@ -39,8 +57,29 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ lan
     const postTitle = (lang === 'en' && post.titleEn) ? post.titleEn : post.title;
     const postContent = (lang === 'en' && post.contentEn) ? post.contentEn : post.content;
 
+    const postPath = `/${lang}/news/${post.slug}`;
+    const articleLd = {
+        '@context': 'https://schema.org',
+        '@type': 'NewsArticle',
+        headline: postTitle,
+        description: toMetaDescription(postContent),
+        image: post.image ? [absoluteUrl(post.image)] : undefined,
+        datePublished: post.createdAt ? new Date(post.createdAt).toISOString() : undefined,
+        inLanguage: lang,
+        mainEntityOfPage: absoluteUrl(postPath),
+        author: { '@type': 'Organization', name: 'Aquachems', url: SITE_URL },
+        publisher: { '@id': `${SITE_URL}/#organization` },
+    };
+    const breadcrumbLd = breadcrumbJsonLd([
+        { name: dict.nav.home, path: `/${lang}` },
+        { name: dict.nav.news, path: `/${lang}/news` },
+        { name: postTitle, path: postPath },
+    ]);
+
     return (
         <div className="bg-white min-h-screen pb-20 pt-36">
+            <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(articleLd)} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(breadcrumbLd)} />
             <div className="container-custom max-w-4xl">
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-sm text-slate-500 mb-6">
@@ -73,10 +112,13 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ lan
                     {/* Featured Image */}
                     {post.image && (
                         <div className="relative w-full aspect-video rounded-2xl overflow-hidden mb-10 shadow-lg">
-                            <img
+                            <Image
                                 src={post.image}
                                 alt={postTitle}
-                                className="w-full h-full object-cover"
+                                fill
+                                priority
+                                sizes="(max-width: 896px) 100vw, 896px"
+                                className="object-cover"
                             />
                         </div>
                     )}

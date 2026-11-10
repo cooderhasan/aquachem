@@ -8,7 +8,7 @@ import { desc } from 'drizzle-orm';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
-import { getAlternates } from '@/lib/seo';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const revalidate = 3600;
 
@@ -19,11 +19,12 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { lang } = await params;
     const dict = getDictionary(lang);
-    return {
+    return buildPageMetadata({
+        lang,
+        path: '/certificates',
         title: dict.seo.certificatesTitle,
         description: dict.certificates.pageDescription,
-        alternates: getAlternates(lang, '/certificates'),
-    };
+    });
 }
 
 async function getCertificates() {

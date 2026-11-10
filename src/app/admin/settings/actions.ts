@@ -230,7 +230,6 @@ export async function updateSettings(formData: FormData) {
         }
 
         revalidatePath('/admin/settings');
-        revalidatePath('/corporate');
         revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {

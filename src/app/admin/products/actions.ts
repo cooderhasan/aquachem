@@ -53,7 +53,7 @@ export async function createProduct(formData: FormData) {
         });
 
         revalidatePath('/admin/products');
-        revalidatePath('/products');
+        revalidatePath('/', 'layout');
         return { success: true, message: 'Ürün başarıyla eklendi' };
     } catch (error) {
         console.error('Failed to create product:', error);
@@ -152,7 +152,7 @@ export async function updateProduct(formData: FormData) {
             .where(eq(products.id, id));
 
         revalidatePath('/admin/products');
-        revalidatePath('/products');
+        revalidatePath('/', 'layout');
         return { success: true, message: 'Ürün başarıyla güncellendi' };
     } catch (error) {
         console.error('Failed to update product:', error);
@@ -164,7 +164,7 @@ export async function deleteProduct(id: number) {
     try {
         await db.delete(products).where(eq(products.id, id));
         revalidatePath('/admin/products');
-        revalidatePath('/products');
+        revalidatePath('/', 'layout');
         return { success: true, message: 'Ürün başarıyla silindi' };
     } catch (error) {
         console.error('Failed to delete product:', error);

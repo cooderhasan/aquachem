@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Package } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
 
@@ -51,10 +52,12 @@ export default function RelatedProducts({ products, categorySlug, currentProduct
                                 <div className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col">
                                     <div className="aspect-square relative bg-slate-100 overflow-hidden">
                                         {product.image ? (
-                                            <img
+                                            <Image
                                                 src={product.image}
                                                 alt={title}
-                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                fill
+                                                sizes="(max-width: 640px) 50vw, 25vw"
+                                                className="object-cover group-hover:scale-105 transition-transform duration-500"
                                             />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center text-slate-400">

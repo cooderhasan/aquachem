@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { cache } from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { ChevronRight, ShieldCheck, Award, Package, Truck } from 'lucide-react';
 import { db } from '@/lib/db';
 import { products, categories } from '@/db/schema';
@@ -14,32 +14,28 @@ import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 import { getSettings } from '@/app/admin/settings/actions';
 import { getMainContactLocation } from '@/app/admin/contact/actions';
+import { SITE_URL, absoluteUrl, breadcrumbJsonLd, buildPageMetadata, jsonLd, toMetaDescription } from '@/lib/seo';
+
+// Rendered on first visit, then cached (ISR) — see [lang]/layout.tsx.
+export function generateStaticParams() {
+    return [];
+}
 
 interface PageProps {
     params: Promise<{ category: string; slug: string; lang: Locale }>;
 }
 
-// Ürün verilerini çek
-async function getProduct(slug: string) {
-    try {
-        const result = await db.select().from(products).where(eq(products.slug, slug)).limit(1);
-        return result[0] || null;
-    } catch (error) {
-        console.error('Failed to fetch product:', error);
-        return null;
-    }
-}
+// DB errors are thrown (not swallowed) so a temporary outage is never cached as a 404.
+const getProduct = cache(async (slug: string) => {
+    const result = await db.select().from(products).where(eq(products.slug, slug)).limit(1);
+    return result[0] || null;
+});
 
-// Kategori verilerini çek
-async function getCategory(slug: string) {
-    try {
-        const result = await db.select().from(categories).where(eq(categories.slug, slug)).limit(1);
-        return result[0] || null;
-    } catch (error) {
-        console.error('Failed to fetch category:', error);
-        return null;
-    }
-}
+const getCategoryById = cache(async (id: number | null) => {
+    if (!id) return null;
+    const result = await db.select().from(categories).where(eq(categories.id, id)).limit(1);
+    return result[0] || null;
+});
 
 // Aynı kategorideki ürünleri çek
 async function getRelatedProducts(categoryId: number) {
@@ -61,74 +57,85 @@ async function getRelatedProducts(categoryId: number) {
     }
 }
 
-import { getAlternates } from '@/lib/seo';
+function parseImages(product: { image: string | null; images: string | null }) {
+    const all: string[] = [];
+    if (product.image) all.push(product.image);
+    if (product.images) {
+        try {
+            const parsed = JSON.parse(product.images);
+            if (Array.isArray(parsed)) {
+                all.push(...parsed.filter((img: string) => img && img !== product.image));
+            }
+        } catch {
+            // ignore
+        }
+    }
+    return all;
+}
+
+function hasEnglish(product: { titleEn: string | null }) {
+    return !!product.titleEn?.trim();
+}
 
 // Dinamik SEO metadata
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { category: categorySlug, slug, lang } = await params;
+    const { slug, lang } = await params;
     const product = await getProduct(slug);
+    const category = product ? await getCategoryById(product.categoryId) : null;
 
-    if (!product) {
+    if (!product || !category) {
         return {
             title: lang === 'en' ? 'Product Not Found' : 'Ürün Bulunamadı',
+            robots: { index: false, follow: true },
         };
     }
 
-    const title = (lang === 'en' && product.titleEn) ? product.titleEn : product.title;
-    const description = (lang === 'en' && product.descriptionEn) 
-        ? product.descriptionEn 
-        : (product.shortDescription || product.description?.substring(0, 160) || `${title} - Aquachems`);
+    const isEn = lang === 'en';
+    const title = (isEn && product.titleEn) ? product.titleEn : product.title;
+    const description = toMetaDescription(
+        isEn
+            ? (product.shortDescriptionEn || product.descriptionEn)
+            : (product.shortDescription || product.description)
+    ) || `${title} - Aquachems`;
 
-    return {
-        title: title,
+    return buildPageMetadata({
+        lang,
+        // Canonical always uses the product's real category, even if reached via another URL.
+        path: `/products/${category.slug}/${product.slug}`,
+        title,
         description,
-        alternates: getAlternates(lang, `/products/${categorySlug}/${slug}`),
-        openGraph: {
-            title: `${title} | Aquachems`,
-            description,
-            images: product.image ? [{ url: product.image }] : [],
-            type: 'website',
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title: title,
-            description,
-            images: product.image ? [product.image] : [],
-        },
-    };
+        images: parseImages(product).slice(0, 1),
+        available: hasEnglish(product) ? ['tr', 'en'] : ['tr'],
+    });
 }
 
 export default async function ProductDetailPage({ params }: PageProps) {
     const { category: categorySlug, slug: productSlug, lang } = await params;
     const dict = getDictionary(lang);
 
-    const [product, category, settings, contactLocation] = await Promise.all([
-        getProduct(productSlug),
-        getCategory(categorySlug),
+    const product = await getProduct(productSlug);
+    if (!product) {
+        notFound();
+    }
+
+    const [category, settings, contactLocation] = await Promise.all([
+        getCategoryById(product.categoryId),
         getSettings(),
         getMainContactLocation()
     ]);
 
-    if (!product || !category) {
+    if (!category) {
         notFound();
+    }
+
+    // Product reached through a wrong category URL -> 308 to the single correct URL (no duplicate content).
+    if (category.slug !== categorySlug) {
+        permanentRedirect(`/${lang}/products/${category.slug}/${product.slug}`);
     }
 
     const relatedProducts = await getRelatedProducts(category.id);
 
-    let allImages: string[] = [];
-    if (product.image) {
-        allImages.push(product.image);
-    }
-    if (product.images) {
-        try {
-            const parsed = JSON.parse(product.images);
-            if (Array.isArray(parsed)) {
-                allImages.push(...parsed.filter((img: string) => img && img !== product.image));
-            }
-        } catch {
-            // ignore
-        }
-    }
+    const allImages = parseImages(product);
 
     const categoryTitle = (lang === 'en' && category.titleEn) ? category.titleEn : category.title;
     const productTitle = (lang === 'en' && product.titleEn) ? product.titleEn : product.title;
@@ -149,8 +156,29 @@ export default async function ProductDetailPage({ params }: PageProps) {
     );
     const whatsappUrl = `https://wa.me/${cleanPhone}?text=${whatsappText}`;
 
+    const productPath = `/${lang}/products/${category.slug}/${product.slug}`;
+    const productLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: productTitle,
+        url: absoluteUrl(productPath),
+        description: toMetaDescription(productShortDesc || productDesc, 500),
+        image: allImages.map((img) => absoluteUrl(img)),
+        category: categoryTitle,
+        brand: { '@type': 'Brand', name: 'Aquachems' },
+        manufacturer: { '@id': `${SITE_URL}/#organization` },
+    };
+    const breadcrumbLd = breadcrumbJsonLd([
+        { name: dict.nav.home, path: `/${lang}` },
+        { name: dict.nav.products, path: `/${lang}/products` },
+        { name: categoryTitle, path: `/${lang}/products/${category.slug}` },
+        { name: productTitle, path: productPath },
+    ]);
+
     return (
         <div className="bg-white min-h-screen pb-20 pt-36">
+            <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(productLd)} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(breadcrumbLd)} />
 
             {/* Breadcrumb / Nav */}
             <div className="bg-slate-50 border-b border-slate-200 py-4">

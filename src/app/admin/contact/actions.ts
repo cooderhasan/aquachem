@@ -73,10 +73,7 @@ export async function addContactLocation(formData: FormData) {
 
         revalidatePath('/', 'layout'); // Tüm siteyi yenile
         revalidatePath('/admin/contact');
-        revalidatePath('/contact');
-        revalidatePath('/privacy');
-        revalidatePath('/terms');
-        revalidatePath('/cookies');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to add contact location:', error);
@@ -89,10 +86,7 @@ export async function deleteContactLocation(id: number) {
         await db.delete(contactLocations).where(eq(contactLocations.id, id));
         revalidatePath('/', 'layout');
         revalidatePath('/admin/contact');
-        revalidatePath('/contact');
-        revalidatePath('/privacy');
-        revalidatePath('/terms');
-        revalidatePath('/cookies');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to delete contact location:', error);
@@ -124,10 +118,7 @@ export async function updateContactLocation(id: number, formData: FormData) {
 
         revalidatePath('/', 'layout');
         revalidatePath('/admin/contact');
-        revalidatePath('/contact');
-        revalidatePath('/privacy');
-        revalidatePath('/terms');
-        revalidatePath('/cookies');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to update contact location:', error);

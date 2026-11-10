@@ -1,23 +1,25 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getPosts } from '@/lib/data';
 import { Calendar, ChevronRight, Newspaper } from 'lucide-react';
 import { Metadata } from 'next';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
-import { getAlternates } from '@/lib/seo';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
     const { lang } = await params;
     const dict = getDictionary(lang);
-    return {
+    return buildPageMetadata({
+        lang,
+        path: '/news',
         title: dict.news.pageTitle,
         description: dict.news.pageDescription,
-        alternates: getAlternates(lang, '/news'),
-    };
+    });
 }
 
 export default async function NewsPage({ params }: { params: Promise<{ lang: Locale }> }) {
@@ -52,10 +54,12 @@ export default async function NewsPage({ params }: { params: Promise<{ lang: Loc
                                     {/* Image Placeholder or Actual Image */}
                                     <div className="h-48 bg-slate-100 relative overflow-hidden">
                                         {post.image ? (
-                                            <img
+                                            <Image
                                                 src={post.image}
                                                 alt={postTitle}
-                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                fill
+                                                sizes="(max-width: 768px) 100vw, 33vw"
+                                                className="object-cover group-hover:scale-105 transition-transform duration-500"
                                             />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center text-slate-300 bg-slate-50">

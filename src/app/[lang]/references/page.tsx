@@ -11,7 +11,7 @@ interface PageProps {
     params: Promise<{ lang: string }>;
 }
 
-import { getAlternates } from '@/lib/seo';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const revalidate = 3600;
 
@@ -19,11 +19,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const { lang: rawLang } = await params;
     const lang = (rawLang === 'en' ? 'en' : 'tr') as Locale;
     const dict = getDictionary(lang);
-    return {
+    return buildPageMetadata({
+        lang,
+        path: '/references',
         title: dict.seo.referencesTitle,
         description: dict.references.pageDescription,
-        alternates: getAlternates(lang, '/references'),
-    };
+    });
 }
 
 export default async function ReferencesPage({ params }: PageProps) {

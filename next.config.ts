@@ -85,7 +85,8 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: '/api/:path*',
+        // Everything under /api except uploaded files (/api/files/*), which must stay indexable for Google Images.
+        source: '/api/:path((?!files/).*)',
         headers: [
           {
             key: 'X-Robots-Tag',

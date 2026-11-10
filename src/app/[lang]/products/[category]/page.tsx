@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { cache } from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import Image from 'next/image';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { ArrowLeft, Package, ChevronLeft, ChevronRight } from 'lucide-react';
 import { db } from '@/lib/db';
 import { products as productsTable, categories as categoriesTable } from '@/db/schema';
-import { eq, sql } from 'drizzle-orm';
+import { asc, eq, sql } from 'drizzle-orm';
 import CategoryProducts from './CategoryProducts';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
+import { breadcrumbJsonLd, buildPageMetadata, jsonLd, toMetaDescription } from '@/lib/seo';
 
 const PRODUCTS_PER_PAGE = 12;
 
@@ -17,15 +19,18 @@ interface PageProps {
     searchParams: Promise<{ page?: string }>;
 }
 
-// Kategori verilerini çek
-async function getCategory(slug: string) {
-    try {
-        const result = await db.select().from(categoriesTable).where(eq(categoriesTable.slug, slug)).limit(1);
-        return result[0] || null;
-    } catch (error) {
-        console.error('Failed to fetch category:', error);
-        return null;
-    }
+// Kategori verilerini çek (DB hatası fırlatılır; geçici bir hata 404 olarak cache'lenmesin)
+const getCategory = cache(async (slug: string) => {
+    const result = await db.select().from(categoriesTable).where(eq(categoriesTable.slug, slug)).limit(1);
+    return result[0] || null;
+});
+
+/** Returns the page number, or null when the ?page value is invalid/redundant and should redirect. */
+function parsePage(page?: string): number | null {
+    if (page === undefined) return 1;
+    if (!/^\d+$/.test(page)) return null;
+    const n = parseInt(page, 10);
+    return n >= 2 ? n : null;
 }
 
 // Kategoriye ait ürünleri pagination ile çek
@@ -34,6 +39,7 @@ async function getProductsByCategory(categoryId: number, page: number) {
         const offset = (page - 1) * PRODUCTS_PER_PAGE;
         const result = await db.select().from(productsTable)
             .where(eq(productsTable.categoryId, categoryId))
+            .orderBy(asc(productsTable.id)) // stable order so pagination never repeats/skips products
             .limit(PRODUCTS_PER_PAGE)
             .offset(offset);
         return result;
@@ -60,64 +66,54 @@ async function getTotalProductCount(categoryId: number) {
 export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
     const { category: categorySlug, lang } = await params;
     const { page } = await searchParams;
-    const currentPage = Math.max(1, parseInt(page || '1', 10));
+    const currentPage = parsePage(page) ?? 1;
     const category = await getCategory(categorySlug);
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://aquachems.com';
 
     if (!category) {
         return {
             title: lang === 'en' ? 'Category Not Found' : 'Kategori Bulunamadı',
+            robots: { index: false, follow: true },
         };
     }
 
     const categoryTitle = (lang === 'en' && category.titleEn) ? category.titleEn : category.title;
-    const categoryDesc = (lang === 'en' && category.descriptionEn) 
-        ? category.descriptionEn 
-        : (category.description || (lang === 'en' ? `Explore all Aquachems products in the ${categoryTitle} category.` : `${categoryTitle} kategorisindeki tüm Aquachems ürünlerini inceleyin.`));
+    const categoryDesc = toMetaDescription((lang === 'en' ? category.descriptionEn : category.description))
+        || (lang === 'en'
+            ? `Explore all Aquachems products in the ${categoryTitle} category.`
+            : `${categoryTitle} kategorisindeki tüm Aquachems ürünlerini inceleyin.`);
 
     const pageTitle = currentPage > 1
         ? `${categoryTitle} - ${lang === 'en' ? 'Page' : 'Sayfa'} ${currentPage}`
         : categoryTitle;
-    const description = categoryDesc;
 
-    const canonicalPath = currentPage > 1
-        ? `/${lang}/products/${categorySlug}?page=${currentPage}`
-        : `/${lang}/products/${categorySlug}`;
-    const canonicalUrl = `${siteUrl}${canonicalPath}`;
-
-    const queryPart = currentPage > 1 ? `?page=${currentPage}` : '';
-
-    return {
+    return buildPageMetadata({
+        lang,
+        path: `/products/${category.slug}`,
+        query: currentPage > 1 ? `?page=${currentPage}` : '',
         title: pageTitle,
-        description,
-        alternates: {
-            canonical: canonicalUrl,
-            languages: {
-                tr: `/tr/products/${categorySlug}${queryPart}`,
-                en: `/en/products/${categorySlug}${queryPart}`,
-            }
-        },
-        openGraph: {
-            title: `${pageTitle} | ${lang === 'en' ? 'Aquachems Products' : 'Aquachems Ürünleri'}`,
-            description,
-            url: canonicalUrl,
-            images: category.image ? [{ url: category.image }] : [],
-            type: 'website',
-        },
-    };
+        description: categoryDesc,
+        images: [category.image],
+        available: category.titleEn ? ['tr', 'en'] : ['tr'],
+    });
 }
 
 export default async function CategoryPage({ params, searchParams }: PageProps) {
     const { category: categorySlug, lang } = await params;
     const dict = getDictionary(lang);
     const { page } = await searchParams;
-    const currentPage = Math.max(1, parseInt(page || '1', 10));
+    const parsedPage = parsePage(page);
 
     const category = await getCategory(categorySlug);
 
     if (!category) {
         notFound();
     }
+
+    // ?page=1, ?page=abc, ?page=0 ... -> 308 to the clean category URL
+    if (parsedPage === null) {
+        permanentRedirect(`/${lang}/products/${category.slug}`);
+    }
+    const currentPage = parsedPage;
 
     const [products, totalProducts] = await Promise.all([
         getProductsByCategory(category.id, currentPage),
@@ -140,17 +136,27 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
         ? ` (${lang === 'en' ? 'Page' : 'Sayfa'} ${currentPage}/${totalPages})`
         : '';
 
+    const breadcrumbLd = breadcrumbJsonLd([
+        { name: dict.nav.home, path: `/${lang}` },
+        { name: dict.nav.products, path: `/${lang}/products` },
+        { name: categoryTitle, path: `/${lang}/products/${category.slug}` },
+    ]);
+
     return (
         <div className="bg-slate-50 min-h-screen pb-20 pt-28">
+            <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(breadcrumbLd)} />
             {/* Rich Header Banner */}
             <div className="relative h-[300px] flex items-center justify-center overflow-hidden">
                 {/* Background Image */}
                 <div className="absolute inset-0">
                     {category.image ? (
-                        <img
+                        <Image
                             src={category.image}
                             alt={categoryTitle}
-                            className="w-full h-full object-cover"
+                            fill
+                            priority
+                            sizes="100vw"
+                            className="object-cover"
                         />
                     ) : (
                         <div className="w-full h-full bg-gradient-to-br from-primary-600 to-primary-800" />

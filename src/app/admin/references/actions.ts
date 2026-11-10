@@ -24,7 +24,7 @@ export async function updateReferenceOrder(id: number, order: number) {
             .set({ order })
             .where(eq(references.id, id));
         revalidatePath('/admin/references');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error: any) {
         console.error('Failed to update reference order:', error);
@@ -83,6 +83,7 @@ export async function addReference(formData: FormData) {
         });
 
         revalidatePath('/admin/references');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error: any) {
         console.error('Failed to add reference:', error);
@@ -101,6 +102,7 @@ export async function deleteReference(id: number) {
         // if (ref?.image) { ... fs.unlink ... }
 
         revalidatePath('/admin/references');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to delete reference:', error);

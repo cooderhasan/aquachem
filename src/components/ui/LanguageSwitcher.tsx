@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { locales, localeNames, localeFlags, type Locale } from '@/lib/i18n';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe } from 'lucide-react';
@@ -10,29 +11,20 @@ interface LanguageSwitcherProps {
     currentLocale: Locale;
 }
 
+/** Same page in another language: swaps (or prepends) the /tr|/en prefix. */
+function localizedHref(pathname: string, locale: Locale) {
+    const segments = pathname.split('/').filter(Boolean);
+    if (locales.includes(segments[0] as Locale)) {
+        segments[0] = locale;
+    } else {
+        segments.unshift(locale);
+    }
+    return '/' + segments.join('/');
+}
+
 export default function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps) {
-    const pathname = usePathname();
-    const router = useRouter();
+    const pathname = usePathname() || '/';
     const [isOpen, setIsOpen] = useState(false);
-
-    const switchLocale = (newLocale: Locale) => {
-        // Replace /tr/ or /en/ prefix in the pathname
-        const segments = pathname.split('/').filter(Boolean);
-        const firstSegment = segments[0];
-        
-        let newPath: string;
-        if (locales.includes(firstSegment as Locale)) {
-            // Has a locale prefix — replace it
-            segments[0] = newLocale;
-            newPath = '/' + segments.join('/');
-        } else {
-            // No locale prefix — prepend
-            newPath = `/${newLocale}/${segments.join('/')}`;
-        }
-
-        setIsOpen(false);
-        router.push(newPath);
-    };
 
     return (
         <div className="relative">
@@ -40,11 +32,21 @@ export default function LanguageSwitcher({ currentLocale }: LanguageSwitcherProp
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-full text-sm font-semibold text-slate-600 hover:text-primary-700 hover:bg-slate-50 transition-all"
                 aria-label="Change language"
+                aria-expanded={isOpen}
             >
                 <Globe size={16} />
                 <span className="hidden sm:inline">{localeFlags[currentLocale]} {currentLocale.toUpperCase()}</span>
                 <span className="sm:hidden">{localeFlags[currentLocale]}</span>
             </button>
+
+            {/* Crawlable links to the other language versions (hidden visually; the dropdown below is the UI). */}
+            <nav aria-label="Language" className="sr-only">
+                {locales.filter((l) => l !== currentLocale).map((locale) => (
+                    <a key={locale} href={localizedHref(pathname, locale)} hrefLang={locale} lang={locale}>
+                        {localeNames[locale]}
+                    </a>
+                ))}
+            </nav>
 
             <AnimatePresence>
                 {isOpen && (
@@ -63,9 +65,13 @@ export default function LanguageSwitcher({ currentLocale }: LanguageSwitcherProp
                             className="absolute right-0 top-full mt-2 w-36 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden z-50"
                         >
                             {locales.map((locale) => (
-                                <button
+                                <Link
                                     key={locale}
-                                    onClick={() => switchLocale(locale)}
+                                    href={localizedHref(pathname, locale)}
+                                    hrefLang={locale}
+                                    lang={locale}
+                                    onClick={() => setIsOpen(false)}
+                                    aria-current={locale === currentLocale ? 'true' : undefined}
                                     className={`w-full flex items-center gap-2.5 px-4 py-3 text-sm font-medium transition-colors
                                         ${locale === currentLocale
                                             ? 'bg-primary-50 text-primary-700 font-bold'
@@ -77,7 +83,7 @@ export default function LanguageSwitcher({ currentLocale }: LanguageSwitcherProp
                                     {locale === currentLocale && (
                                         <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary-600" />
                                     )}
-                                </button>
+                                </Link>
                             ))}
                         </motion.div>
                     </>

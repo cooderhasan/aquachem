@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import { products, categories } from '@/db/schema';
 import { eq } from 'drizzle-orm';
@@ -106,6 +107,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    revalidatePath('/', 'layout');
     return NextResponse.json({
       success: true,
       translatedCategoriesCount,

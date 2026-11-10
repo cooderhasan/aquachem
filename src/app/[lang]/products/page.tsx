@@ -9,22 +9,19 @@ import { Metadata } from 'next';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
-import { getAlternates } from '@/lib/seo';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
     const { lang } = await params;
     const dict = getDictionary(lang);
-    return {
+    return buildPageMetadata({
+        lang,
+        path: '/products',
         title: dict.seo.productsTitle,
         description: dict.seo.productsDescription,
-        alternates: getAlternates(lang, '/products'),
-        openGraph: {
-            title: `${dict.seo.productsTitle} | Aquachems`,
-            description: dict.seo.productsDescription,
-        },
-    };
+    });
 }
 
 export default async function ProductsPage({ params }: { params: Promise<{ lang: Locale }> }) {

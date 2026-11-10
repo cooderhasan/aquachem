@@ -21,9 +21,10 @@ interface FooterProps {
     contactLocation?: ContactLocation | null;
     lang: Locale;
     dict: Dictionary;
+    categories?: { slug: string; title: string; titleEn?: string | null }[];
 }
 
-const Footer = ({ settings, contactLocation, lang, dict }: FooterProps) => {
+const Footer = ({ settings, contactLocation, lang, dict, categories = [] }: FooterProps) => {
     const slogan = lang === 'en' ? (settings?.siteSloganEn || settings?.siteSlogan) : settings?.siteSlogan;
     const description = lang === 'en' ? (settings?.descriptionEn || settings?.description) : settings?.description;
     const address = lang === 'en' ? (contactLocation?.addressEn || contactLocation?.address) : contactLocation?.address;
@@ -107,11 +108,13 @@ const Footer = ({ settings, contactLocation, lang, dict }: FooterProps) => {
                     <div>
                         <h3 className="text-white font-bold text-lg mb-6">{dict.footer.productGroups}</h3>
                         <ul className="space-y-3 text-sm">
-                            <li><Link href={`/${lang}/products/genel-temizlik`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{lang === 'en' ? 'General Cleaning' : 'Genel Temizlik'}</Link></li>
-                            <li><Link href={`/${lang}/products/likit-cilt-temizleme`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{lang === 'en' ? 'Liquid Skin Cleaning' : 'Likit Cilt Temizleme'}</Link></li>
-                            <li><Link href={`/${lang}/products/dezenfektan-grubu`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{lang === 'en' ? 'Disinfectant Group' : 'Dezenfektan Grubu'}</Link></li>
-                            <li><Link href={`/${lang}/products/oto-bakim-grubu`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{lang === 'en' ? 'Auto Care Group' : 'Oto Bakım Grubu'}</Link></li>
-                            <li><Link href={`/${lang}/products/teknik-grup`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">{lang === 'en' ? 'Technical Group' : 'Teknik Grup'}</Link></li>
+                            {categories.map((cat) => (
+                                <li key={cat.slug}>
+                                    <Link href={`/${lang}/products/${cat.slug}`} className="hover:text-primary-400 hover:translate-x-1 transition-all inline-block">
+                                        {(lang === 'en' && cat.titleEn) ? cat.titleEn : cat.title}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 

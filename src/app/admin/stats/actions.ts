@@ -43,7 +43,7 @@ export async function addStat(formData: FormData) {
             order
         });
         revalidatePath('/admin/stats');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to create stat:', error);
@@ -67,7 +67,7 @@ export async function updateStat(id: number, formData: FormData) {
             })
             .where(eq(stats.id, id));
         revalidatePath('/admin/stats');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to update stat:', error);
@@ -79,7 +79,7 @@ export async function deleteStat(id: number) {
     try {
         await db.delete(stats).where(eq(stats.id, id));
         revalidatePath('/admin/stats');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to delete stat:', error);

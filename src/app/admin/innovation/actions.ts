@@ -33,7 +33,7 @@ export async function updateInnovationItem(id: number, formData: FormData) {
         }).where(eq(innovationItems.id, id));
 
         revalidatePath('/admin/innovation');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to update innovation item:', error);
@@ -62,7 +62,7 @@ export async function addInnovationItem(formData: FormData) {
         });
 
         revalidatePath('/admin/innovation');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to add innovation item:', error);
@@ -74,7 +74,7 @@ export async function deleteInnovationItem(id: number) {
     try {
         await db.delete(innovationItems).where(eq(innovationItems.id, id));
         revalidatePath('/admin/innovation');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to delete innovation item:', error);

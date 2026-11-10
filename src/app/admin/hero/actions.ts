@@ -51,7 +51,7 @@ export async function createHeroSlide(formData: FormData) {
         });
 
         revalidatePath('/admin/hero');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         redirect('/admin/hero');
     } catch (error) {
         console.error('Failed to create hero slide:', error);
@@ -85,7 +85,7 @@ export async function updateHeroSlide(formData: FormData) {
         }).where(eq(heroSlides.id, id));
 
         revalidatePath('/admin/hero');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         redirect('/admin/hero');
     } catch (error) {
         console.error('Failed to update hero slide:', error);
@@ -97,7 +97,7 @@ export async function deleteHeroSlide(id: number) {
     try {
         await db.delete(heroSlides).where(eq(heroSlides.id, id));
         revalidatePath('/admin/hero');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
     } catch (error) {
         console.error('Failed to delete hero slide:', error);
         throw error;

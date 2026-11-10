@@ -51,7 +51,7 @@ export async function updateMissionCard(id: number, formData: FormData) {
             featuresEn,
         }).where(eq(missionCards.id, id));
 
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         revalidatePath('/admin/mission');
         return { success: true };
     } catch (error) {

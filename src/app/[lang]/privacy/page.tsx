@@ -4,19 +4,18 @@ import { getMainContactLocation } from '@/app/admin/contact/actions';
 import { Locale } from '@/lib/i18n';
 import { Metadata } from 'next';
 
-import { getAlternates } from '@/lib/seo';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
     const { lang } = await params;
-    return {
+    return buildPageMetadata({
+        lang,
+        path: '/privacy',
         title: lang === 'en' ? 'Privacy Policy' : 'Gizlilik Politikası',
-        description: lang === 'en' 
-            ? 'Aquachems privacy policy regarding your personal data.' 
-            : 'Kişisel verilerinizin korunması ile ilgili Aquachems gizlilik politikası.',
-        alternates: getAlternates(lang, '/privacy'),
-    };
+        description: lang === 'en' ? 'Aquachems privacy policy regarding your personal data.' : 'Kişisel verilerinizin korunması ile ilgili Aquachems gizlilik politikası.',
+    });
 }
 
 export default async function PrivacyPage({ params }: { params: Promise<{ lang: Locale }> }) {

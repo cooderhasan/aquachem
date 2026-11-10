@@ -16,16 +16,18 @@ interface HeroSliderProps {
 
 const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
     const [current, setCurrent] = useState(0);
+    const slideCount = slides?.length || 0;
+
+    useEffect(() => {
+        if (slideCount < 2) return;
+        const timer = setInterval(() => {
+            setCurrent((prev) => (prev === slideCount - 1 ? 0 : prev + 1));
+        }, 5000);
+        return () => clearInterval(timer);
+    }, [slideCount]);
 
     // If no slides, show nothing or a default placeholder
     if (!slides || slides.length === 0) return null;
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-        }, 5000);
-        return () => clearInterval(timer);
-    }, [slides.length]);
 
     const nextSlide = () => {
         setCurrent(current === slides.length - 1 ? 0 : current + 1);
@@ -57,7 +59,8 @@ const HeroSlider = ({ slides, settings, lang, dict }: HeroSliderProps) => {
 
     return (
         <section className="relative h-[600px] md:h-[700px] overflow-hidden bg-slate-900 pt-20">
-            <AnimatePresence mode="wait">
+            {/* initial={false}: the first slide (image + H1 = LCP) renders visible immediately, no fade-in */}
+            <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                     key={current}
                     initial={{ opacity: 0 }}

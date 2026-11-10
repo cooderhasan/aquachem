@@ -1,5 +1,6 @@
 
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import { missionCards } from '@/db/schema';
 
@@ -38,6 +39,7 @@ export async function GET() {
         await db.delete(missionCards);
         await db.insert(missionCards).values(cards);
 
+        revalidatePath('/', 'layout');
         return NextResponse.json({ success: true, message: 'Mission cards seeded successfully!' });
     } catch (error) {
         console.error('Error seeding mission cards:', error);

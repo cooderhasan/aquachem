@@ -4,18 +4,19 @@ import { Users, Target, Heart } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 import { Metadata } from 'next';
-import { getAlternates } from '@/lib/seo';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
     const { lang } = await params;
     const dict = getDictionary(lang);
-    return {
+    return buildPageMetadata({
+        lang,
+        path: '/career',
         title: dict.career.pageTitle,
         description: dict.career.pageDescription,
-        alternates: getAlternates(lang, '/career'),
-    };
+    });
 }
 
 export default async function CareerPage({ params }: { params: Promise<{ lang: Locale }> }) {

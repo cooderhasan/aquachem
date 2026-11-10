@@ -46,9 +46,10 @@ export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
 
     // 1. Redirect /uploads/* to /api/files/* for file serving in standalone mode
+    // Rewrite (not redirect) so old /uploads/* image URLs stay valid and indexable without a redirect hop.
     if (path.startsWith('/uploads/')) {
         const fileName = path.replace('/uploads/', '');
-        return NextResponse.redirect(new URL(`/api/files/${fileName}`, request.url));
+        return NextResponse.rewrite(new URL(`/api/files/${fileName}`, request.url));
     }
 
     // 2. Protect /admin routes
@@ -78,21 +79,31 @@ export async function middleware(request: NextRequest) {
     }
 
     // 4. Check if the pathname already has a supported locale
-    const pathLocale = locales.find(
-        (locale) => path === `/${locale}` || path.startsWith(`/${locale}/`)
-    );
-
-    if (pathLocale) {
+    const firstSegment = path.split('/')[1] || '';
+    if (locales.includes(firstSegment as any)) {
         // Already has a valid locale, continue
         return NextResponse.next();
     }
 
+    // 4b. Upper/mixed-case locale (/TR, /En/products) -> 301 to the lowercase URL
+    if (locales.includes(firstSegment.toLowerCase() as any)) {
+        const fixed = `/${firstSegment.toLowerCase()}${path.slice(firstSegment.length + 1)}`;
+        return NextResponse.redirect(new URL(fixed + request.nextUrl.search, request.url), 301);
+    }
+
     // 5. No locale in path — redirect to preferred locale based on browser settings
     // e.g., / → /en or /tr, /products → /en/products or /tr/products
-    // Using 301 Permanent Redirect so Google indexes the localized URL and cleans up old URLs
     const preferredLocale = getPreferredLocale(request);
     const newPath = `/${preferredLocale}${path === '/' ? '' : path}`;
-    return NextResponse.redirect(new URL(newPath, request.url), 301);
+    // The homepage redirect depends on the visitor's language, so it must be temporary (302)
+    // and vary on Accept-Language; hreflang x-default tells Google which version is the default.
+    // Other unprefixed (legacy) URLs are moved permanently.
+    const response = NextResponse.redirect(
+        new URL(newPath + request.nextUrl.search, request.url),
+        path === '/' ? 302 : 301
+    );
+    response.headers.set('Vary', 'Accept-Language');
+    return response;
 }
 
 export const config = {

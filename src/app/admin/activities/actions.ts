@@ -43,7 +43,7 @@ export async function addActivity(formData: FormData) {
             isActive
         });
         revalidatePath('/admin/activities');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to create activity:', error);
@@ -67,7 +67,7 @@ export async function updateActivity(id: number, formData: FormData) {
             })
             .where(eq(activityItems.id, id));
         revalidatePath('/admin/activities');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to update activity:', error);
@@ -79,7 +79,7 @@ export async function deleteActivity(id: number) {
     try {
         await db.delete(activityItems).where(eq(activityItems.id, id));
         revalidatePath('/admin/activities');
-        revalidatePath('/');
+        revalidatePath('/', 'layout');
         return { success: true };
     } catch (error) {
         console.error('Failed to delete activity:', error);

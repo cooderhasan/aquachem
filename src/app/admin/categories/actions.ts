@@ -50,8 +50,7 @@ export async function createCategory(formData: FormData) {
 
         revalidatePath('/admin/categories');
         revalidatePath('/admin/products');
-        revalidatePath('/products');
-        revalidatePath('/'); // Ana sayfa cache'ini temizle
+        revalidatePath('/', 'layout');
 
         return { success: true };
     } catch (error) {
@@ -93,8 +92,7 @@ export async function updateCategory(formData: FormData) {
 
         revalidatePath('/admin/categories');
         revalidatePath('/admin/products');
-        revalidatePath('/products');
-        revalidatePath('/'); // Ana sayfa cache'ini temizle
+        revalidatePath('/', 'layout');
 
         return { success: true };
     } catch (error) {
@@ -109,8 +107,7 @@ export async function deleteCategory(id: number) {
 
         revalidatePath('/admin/categories');
         revalidatePath('/admin/products');
-        revalidatePath('/products');
-        revalidatePath('/'); // Ana sayfa cache'ini temizle
+        revalidatePath('/', 'layout');
 
         return { success: true };
     } catch (error) {

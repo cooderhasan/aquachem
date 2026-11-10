@@ -6,7 +6,7 @@ import ContactForm from './ContactForm';
 import { Locale } from '@/lib/i18n';
 import { getDictionary } from '@/lib/dictionary';
 
-import { getAlternates } from '@/lib/seo';
+import { buildPageMetadata } from '@/lib/seo';
 
 interface PageProps {
     params: Promise<{ lang: Locale }>;
@@ -17,15 +17,12 @@ export const revalidate = 3600;
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { lang } = await params;
     const dict = getDictionary(lang);
-    return {
+    return buildPageMetadata({
+        lang,
+        path: '/contact',
         title: dict.seo.contactTitle,
         description: dict.seo.contactDescription,
-        alternates: getAlternates(lang, '/contact'),
-        openGraph: {
-            title: `${dict.seo.contactTitle} | Aquachems`,
-            description: dict.seo.contactDescription,
-        },
-    };
+    });
 }
 
 export default async function ContactPage({ params }: PageProps) {

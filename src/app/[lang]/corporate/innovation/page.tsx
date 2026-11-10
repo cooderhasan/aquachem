@@ -3,19 +3,18 @@ import { Metadata } from 'next';
 import { FlaskConical, Lightbulb, TrendingUp } from 'lucide-react';
 import { Locale } from '@/lib/i18n';
 
-import { getAlternates } from '@/lib/seo';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Locale }> }): Promise<Metadata> {
     const { lang } = await params;
-    return {
+    return buildPageMetadata({
+        lang,
+        path: '/corporate/innovation',
         title: lang === 'en' ? 'R&D and Innovation' : 'AR-GE ve İnovasyon',
-        description: lang === 'en' 
-            ? 'Learn about Aquachems R&D studies, P&D processes and innovation culture.' 
-            : 'Aquachems AR-GE çalışmaları, ÜR-GE süreçleri ve inovasyon kültürü hakkında bilgi edinin.',
-        alternates: getAlternates(lang, '/corporate/innovation'),
-    };
+        description: lang === 'en' ? 'Learn about Aquachems R&D studies, P&D processes and innovation culture.' : 'Aquachems AR-GE çalışmaları, ÜR-GE süreçleri ve inovasyon kültürü hakkında bilgi edinin.',
+    });
 }
 
 export default async function InnovationPage({ params }: { params: Promise<{ lang: Locale }> }) {

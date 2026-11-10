@@ -1,16 +1,18 @@
 import { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/seo';
 
 export default function robots(): MetadataRoute.Robots {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://aquachems.com';
-
     return {
         rules: [
             {
                 userAgent: '*',
-                allow: '/',
-                disallow: ['/admin', '/api'],
+                // Uploaded product/news images are served from /api/files — allow them explicitly
+                // (more specific rule wins over the /api disallow).
+                allow: ['/', '/api/files/'],
+                disallow: ['/admin', '/api/'],
             },
         ],
-        sitemap: `${baseUrl}/sitemap.xml`,
+        sitemap: `${SITE_URL}/sitemap.xml`,
+        host: SITE_URL,
     };
 }
