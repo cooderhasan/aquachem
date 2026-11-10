@@ -62,7 +62,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: {
       default: title,
-      template: `%s | ${siteName}`,
+      // Short brand suffix keeps product titles within what Google shows (~60 chars).
+      template: `%s | Aquachems`,
     },
     description,
     ...(lang === 'tr' && settings?.metaKeywords ? { keywords: settings.metaKeywords } : {}),

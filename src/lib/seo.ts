@@ -76,11 +76,23 @@ interface PageMetadataInput {
     publishedTime?: string;
 }
 
+/** Site-wide share image from admin settings (OG image, else logo). */
+async function getDefaultShareImage(): Promise<string | undefined> {
+    try {
+        const { getSettings } = await import('@/app/admin/settings/actions');
+        const settings = await getSettings();
+        return settings?.ogImage || settings?.logo || undefined;
+    } catch {
+        return undefined;
+    }
+}
+
 /**
  * Full per-page metadata. Child pages must set their own openGraph object because Next
  * replaces (not merges) the parent's openGraph — otherwise og:url would point to the homepage.
+ * Pages without their own image fall back to the site-wide share image.
  */
-export function buildPageMetadata({
+export async function buildPageMetadata({
     lang,
     path,
     title,
@@ -90,10 +102,14 @@ export function buildPageMetadata({
     query,
     available = locales,
     publishedTime,
-}: PageMetadataInput): Metadata {
+}: PageMetadataInput): Promise<Metadata> {
     const alternates = getAlternates(lang, path, { query, available });
     const url = absoluteUrl(alternates.canonical)!;
-    const imageUrls = images.map((i) => absoluteUrl(i)).filter(Boolean) as string[];
+    let imageUrls = images.map((i) => absoluteUrl(i)).filter(Boolean) as string[];
+    if (!imageUrls.length) {
+        const fallback = absoluteUrl(await getDefaultShareImage());
+        if (fallback) imageUrls = [fallback];
+    }
     const ogTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
     const desc = description || undefined;
     const isUntranslated = !available.includes(lang);
